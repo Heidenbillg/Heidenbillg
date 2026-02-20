@@ -1,1 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEIDENBILLG_OS v7.0</title>
+<link href="https://fonts.googleapis.com" rel="stylesheet">
+<style>
+:root{ --blue:#0000ff; --gray:#8a8a8a; --white:#ffffff; --red:#ff0000; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{ background:var(--white); font-family:"JetBrains Mono",monospace; color:var(--blue); min-height:100vh; display:flex; justify-content:center; align-items:center; overflow-x:hidden; }
+.terminal{ width:100%; max-width:1000px; padding:40px 20px; display:flex; flex-direction:column; gap:20px; }
+.countdown{ font-size:2.4rem; font-weight:600; text-align:center; letter-spacing:0.1em; margin-bottom: 10px;}
+.status{ font-size:0.75rem; opacity:0.6; letter-spacing:0.15em; text-align: center; text-transform: uppercase;}
+.divider{ height:1px; background:var(--blue); opacity:.2; margin: 10px 0;}
+.directory{ display:flex; flex-direction:column; gap:12px; font-size:0.9rem; }
+.folder { cursor: pointer; padding: 6px 10px; border-left: 3px solid transparent; transition: all 0.2s; background: rgba(0,0,255,0.03); }
+.folder:hover { background: rgba(0,0,255,0.08); border-left: 3px solid var(--blue); }
+.file-list { display: none; margin-left: 25px; flex-direction: column; gap: 6px; border-left: 1px solid var(--blue); padding-left: 15px; margin-top: 5px; margin-bottom: 15px;}
+.file { font-size: 0.8rem; color: var(--gray); text-decoration: none; cursor: not-allowed; display: flex; align-items: center; justify-content: space-between; }
+.file.unlocked { color: var(--blue); cursor: pointer; font-weight: 600; }
+.file.unlocked:hover { text-decoration: underline; }
+.locked-msg { color: var(--red); font-size: 0.65rem; margin-left: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;}
+#pdf-viewer { display: none; width: 100%; height: 500px; border: 1px solid var(--blue); margin-top: 15px; }
+.footer{ display:flex; justify-content:space-between; font-size:0.7rem; opacity:0.5; margin-top:15px;}
+.cursor{ animation:blink 1.1s steps(2,start) infinite; }
+@keyframes blink{ to{visibility:hidden;} }
+@media(max-width:600px){ .countdown{font-size:1.4rem;} .file{flex-direction: column; align-items: flex-start;} }
+</style>
+</head>
+<body>
 
+<div class="terminal">
+    <div class="countdown" id="countdown">000d 00h 00m 00s</div>
+    <div class="status">HEIDENBILLG_OS v7.0 // STATUS: ENCRYPTED // SECTOR: HB_01-07</div>
+    <div class="divider"></div>
+
+    <div class="directory">
+        <!-- DIV 01 -->
+        <div class="folder" onclick="toggle('dir1')">[DIR] 01_AERO_ENG <span class="locked-msg">[LOCKED DECLASSIFICATION: FEB 24]</span></div>
+        <div id="dir1" class="file-list">
+            <div class="file" onclick="deny()"><span>HB_AE_MHD_01</span></div>
+            <div class="file" onclick="deny()"> <span>HB_AE_SRP_02</span></div>
+            <div class="file" onclick="deny()"> <span>HB_AE_VAS_03</span></div>
+            <div class="file" onclick="deny()"><span>HB_AE_RTJ_04</span></div>
+            <div class="file" onclick="deny()"> <span>HB_AE_TPS_05</span></div>
+            <div class="file" onclick="deny()"><span>HB_AE_CFS_06</span></div>
+        </div>
+
+        <!-- DIV 02 -->
+        <div class="folder" onclick="toggle('dir2')">[DIR] 02_ARCH_PLAN <span class="locked-msg">[LOCKED DECLASSIFICATION: FEB 26]</span></div>
+        <div id="dir2" class="file-list">
+            <div class="file" onclick="deny()"> <span>HB_AR_ACC_01</span></div>
+            <div class="file" onclick="deny()"><span>HB_AR_KEA_02</span></div>
+            <div class="file" onclick="deny()"><span>HB_AR_BAB_03</span></div>
+            <div class="file" onclick="deny()"><span>HB_AR_SLT_04</span></div>
+            <div class="file" onclick="deny()"> <span>HB_AR_UGS_05</span></div>
+            <div class="file" onclick="deny()"><span>HB_AR_SHP_06</span></div>
+        </div>
+
+        <!-- DIV 03 -->
+        <div class="folder" onclick="toggle('dir3')">[DIR] 03_TECH_SYS <span class="locked-msg">[LOCKED DECLASSIFICATION: FEB 28]</span></div>
+        <div id="dir3" class="file-list">
+            <div class="file" onclick="deny()"><span>HB_TS_QKD_01</span></div>
+            <div class="file" onclick="deny()"><span>HB_TS_DHL_02</span></div>
+            <div class="file" onclick="deny()"><span>HB_TS_ADM_03</span></div>
+            <div class="file" onclick="deny()"><span>HB_TS_PDM_04</span></div>
+            <div class="file" onclick="deny()"> <span>HB_TS_NII_05</span></div>
+            <div class="file" onclick="deny()"> <span>HB_TS_AFD_06</span></div>
+        </div>
+
+        <!-- DIV 04 (UNLOCKED) -->
+        <div class="folder" onclick="toggle('dir4')" style="background: rgba(0,0,255,0.1); font-weight:600;">[DIR] 04_PHYS_RES [UNLOCKED READ ACCESS GRANTED]</div>
+        <div id="dir4" class="file-list" style="display:flex;">
+            <div class="file unlocked" onclick="viewPDF()"> <span>HB_PH_AMD_01 [OPEN]</span></div>
+            <div class="file" onclick="deny()"><span>HB_PH_AGV_02</span></div>
+            <div class="file" onclick="deny()"><span>HB_PH_BEC_03</span></div>
+            <div class="file" onclick="deny()"><span>HB_PH_CDC_04</span></div>
+            <div class="file" onclick="deny()"><span>HB_PH_PND_05</span></div>
+            <div class="file" onclick="deny()"><span>HB_PH_FES_06</span></div>
+        </div>
+
+        <!-- DIV 05 -->
+        <div class="folder" onclick="toggle('dir5')">[DIR] 05_MATH_MOD <span class="locked-msg">[LOCKED DECLASSIFICATION: MAR 02]</span></div>
+        <div id="dir5" class="file-list">
+            <div class="file" onclick="deny()"> <span>HB_MA_SPE_01</span></div>
+            <div class="file" onclick="deny()"> <span>HB_MA_NLC_02</span></div>
+            <div class="file" onclick="deny()"> <span>HB_MA_GTO_03</span></div>
+            <div class="file" onclick="deny()"><span>HB_MA_MCS_04</span></div>
+            <div class="file" onclick="deny()"><span>HB_MA_MVS_05</span></div>
+            <div class="file" onclick="deny()"><span>HB_MA_FGA_06</span></div>
+        </div>
+
+        <!-- DIV 06 -->
+        <div class="folder" onclick="toggle('dir6')">[DIR] 06_EXP_LOGS <span class="locked-msg">[LOCKED DECLASSIFICATION: MAR 04]</span></div>
+        <div id="dir6" class="file-list">
+            <div class="file" onclick="deny()"> <span>HB_EX_EDS_01</span></div>
+            <div class="file" onclick="deny()"> <span>HB_EX_PBR_02</span></div>
+            <div class="file" onclick="deny()"> <span>HB_EX_PIA_03</span></div>
+            <div class="file" onclick="deny()"><span>HB_EX_RMR_04</span></div>
+            <div class="file" onclick="deny()"> <span>HB_EX_CSA_05</span></div>
+            <div class="file" onclick="deny()"><span>HB_EX_MCE_06</span></div>
+        </div>
+
+        <!-- DIV 07 -->
+        <div class="folder" onclick="toggle('dir7')">[DIR] 07_DATA_ANL <span class="locked-msg">[LOCKED DECLASSIFICATION: MAR 06]</span></div>
+        <div id="dir7" class="file-list">
+            <div class="file" onclick="deny()"> <span>HB_DA_VMM_01</span></div>
+            <div class="file" onclick="deny()"><span>HB_DA_PDS_02</span></div>
+            <div class="file" onclick="deny()"> <span>HB_DA_CAS_03</span></div>
+            <div class="file" onclick="deny()"> <span>HB_DA_EFE_04</span></div>
+            <div class="file" onclick="deny()"><span>HB_DA_LFE_05</span></div>
+            <div class="file" onclick="deny()"><span>HB_DA_MLR_06</span></div>
+        </div>
+    </div>
+
+        <!-- DIV 08 -->
+        <div class="folder" onclick="toggle('dir8')" style="border-left: 3px solid #ffaa00; background: rgba(255,170,0,0.05); font-weight: 600;">[DIR] 08_CONSTITUTION [GOVERNANCE_CHARTER_V1]</div>
+        <div id="dir8" class="file-list">
+            <div class="file unlocked" onclick="viewPDF()">ARTICLE_01 [HB_CONST_RATIFIED]</div>
+            <div class="file" onclick="deny()">ARTICLE_02</div>
+            <div class="file" onclick="deny()">ARTICLE_03</div>
+            <div class="file" onclick="deny()">ARTICLE_04</div>
+            <div class="file" onclick="deny()">ARTICLE_05</div>
+            <div class="file" onclick="deny()">ARTICLE_06</div>
+            <div class="file" onclick="deny()">ARTICLE_07</div>
+            <div class="file" onclick="deny()">ARTICLE_08</div>
+            <div class="file" onclick="deny()">ARTICLE_09</div>
+            <div class="file" onclick="deny()">ARTICLE_10</div>
+            <div class="file" onclick="deny()">ARTICLE_11</div>
+            <div class="file" onclick="deny()">ARTICLE_12</div>
+            <div class="file" onclick="deny()">ARTICLE_13</div>
+            <div class="file" onclick="deny()">ARTICLE_14</div>
+            <div class="file" onclick="deny()">ARTICLE_15</div>
+        </div>
+
+
+    <iframe id="pdf-viewer" src="about:blank"></iframe>
+    <div class="divider"></div>
+
+    <div class="footer">
+        <div>&gt;<span class="cursor">_</span> RUNNING: CORE_KERNEL_7.0</div>
+        <div>KEY_AUTH: [YOUR_CRYPTO_ADDRESS_HERE]</div>
+    </div>
+</div>
+
+<script>
+const target = new Date("June 1, 2026 00:00:00 UTC").getTime();
+function update(){
+    const now = new Date().getTime();
+    let diff = target - now;
+    if(diff < 0) diff = 0;
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor(diff/(1000*60*60)%24);
+    const m = Math.floor(diff/(1000*60)%60);
+    const s = Math.floor(diff/1000%60);
+    document.getElementById("countdown").innerText = `${String(d).padStart(3,"0")}d ${String(h).padStart(2,"0")}h ${String(m).padStart(2,"0")}m ${String(s).padStart(2,"0")}s`;
+}
+setInterval(update, 1000); update();
+
+function toggle(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function viewPDF() {
+    const url = 'RUTA_DE_TU_ARCHIVO.pdf';
+    window.open(url, '_blank');
+}
+
+
+function deny() { alert("ENCRYPTION ERROR: ACCESS DENIED. LEVEL 7 CLEARANCE REQUIRED UNTIL DECLASSIFICATION."); }
+</script>
+</body>
+</html>
