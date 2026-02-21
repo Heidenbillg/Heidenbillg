@@ -145,9 +145,9 @@ body{ background:var(--white); font-family:"JetBrains Mono",monospace; color:var
 </div>
 
 <script>
-    // --- 1. CONTADOR ---
+   // --- 1. CONTADOR ---
     const target = new Date("June 1, 2026 00:00:00 UTC").getTime();
-    function update(){
+    function updateCountdown(){
         const now = new Date().getTime();
         let diff = target - now;
         if(diff < 0) diff = 0;
@@ -158,28 +158,25 @@ body{ background:var(--white); font-family:"JetBrains Mono",monospace; color:var
         document.getElementById("countdown").innerText = 
             `${String(d).padStart(3,"0")}d ${String(h).padStart(2,"0")}h ${String(m).padStart(2,"0")}m ${String(s).padStart(2,"0")}s`;
     }
-    setInterval(update, 1000); 
-    update();
+    setInterval(updateCountdown, 1000); 
+    updateCountdown();
 
     // --- 2. CARPETAS ---
     function toggle(id) {
         const el = document.getElementById(id);
-        // Si el estilo está vacío o es 'none', lo ponemos en 'flex'
-        if (el.style.display === 'flex') {
-            el.style.display = 'none';
-        } else {
-            el.style.display = 'flex';
-        }
+        const isFlex = window.getComputedStyle(el).display === 'flex';
+        el.style.display = isFlex ? 'none' : 'flex';
     }
 
     // --- 3. ABRIR PDF ---
     function viewPDF(nombreArchivo) {
+        // Esto abre el archivo en la misma carpeta del repositorio
         window.open(nombreArchivo, '_blank');
     }
 
     // --- 4. ACCESO DENEGADO ---
     function deny() { 
-        alert("ENCRYPTION ERROR: ACCESS DENIED. LEVEL 7 CLEARANCE REQUIRED UNTIL DECLASSIFICATION."); 
+        alert("ENCRYPTION ERROR: ACCESS DENIED. LEVEL 7 CLEARANCE REQUIRED."); 
     }
 </script>
 </body>
