@@ -36,7 +36,7 @@ body{ background:var(--white); font-family:"JetBrains Mono",monospace; color:var
     <div class="divider"></div>
 
     <div class="directory">
-        <!-- DIV 01 -->
+        <!-- DIV 01 (UNLOCKED) -->
         <div class="folder" onclick="toggle('dir1')" style="background: rgba(0,0,255,0.1); font-weight:600;">[DIR] 01_AERO_ENG [UNLOCKED READ ACCESS GRANTED]</div>
         <div id="dir4" class="file-list" style="display:flex;">
             <div class="file unlocked" onclick="viewPDF('HB_AE_MHD_01__Magnetohydrodynamic_Propulsion_in_High_Viscosity_Planetary_Fluids (1).pdf')"><span>HB_AE_MHD_01 [OPEN] </span></div>
@@ -47,10 +47,10 @@ body{ background:var(--white); font-family:"JetBrains Mono",monospace; color:var
             <div class="file" onclick="deny()"><span>HB_AE_CFS_06</span></div>
         </div>
 
-        <!-- DIV 02 -->
-        <div class="folder" onclick="toggle('dir2')">[DIR] 02_ARCH_PLAN <span class="locked-msg">[LOCKED DECLASSIFICATION: FEB 24]</span></div>
+        <!-- DIV 02 (UNLOCKED) -->
+        <div class="folder" onclick="toggle('dir2')"style="background: rgba(0,0,255,0.1); font-weight:600;>[DIR] 02_ARCH_PLAN [UNLOCKED READ ACCESS GRANTED] </div>
         <div id="dir2" class="file-list">
-            <div class="file" onclick="deny()"> <span>HB_AR_ACC_01</span></div>
+            <div class="file unlocked" onclick="viewPDF('HB_AR_ACC_01__Automated_Contour_Crafting_of_Sintered_Basalt_Load_Bearing_Walls.pdf')"> <span>HB_AR_ACC_01 [OPEN]</span></div>
             <div class="file" onclick="deny()"><span>HB_AR_KEA_02</span></div>
             <div class="file" onclick="deny()"><span>HB_AR_BAB_03</span></div>
             <div class="file" onclick="deny()"><span>HB_AR_SLT_04</span></div>
