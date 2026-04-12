@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEIDENBILLG | Official Portal</title>
+    <title>HEIDENBILLG | Official State Portal</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="scanline"></div>
+    <div class="grid-overlay"></div>
     
     <header>
         <nav>
@@ -22,32 +23,96 @@
         </nav>
     </header>
 
-    <main class="hero">
-        <section class="mission-info">
-            <h2 class="status-badge">SYSTEM STATUS: ACTIVE</h2>
-            <h1>HSA-13 WAVERIDER</h1>
-            <p class="subtitle">PRIMERA MISIÓN TRIPULADA A MARTE | 5 TRIPULANTES</p>
-            
-            <div class="countdown-container">
-                <div id="countdown">
-                    00D : 00H : 00M : 00S
-                </div>
-                <p class="launch-date">LAUNCH DATE: APRIL 01, 2027 - EL ARENOSILLO</p>
+    <main class="hero-long">
+        <section class="hero-content">
+            <div class="status-box">
+                <span class="pulse"></span> SISTEMA OPERATIVO: H-LOGIC v1.0
             </div>
-
-            <div class="cta-group">
-                <a href="mars.html" class="btn-primary">EXPEDITION DETAILS</a>
-                <a href="law.html" class="btn-secondary">LEGAL FRAMEWORK</a>
+            <h1>EL FUTURO <br><span class="outline">NO SE HEREDA</span></h1>
+            <p class="hero-subtitle">SE IMPLEMENTA. 2027 ES EL AÑO DE LA RUPTURA JURÍDICA Y ESPACIAL.</p>
+            
+            <div class="countdown-block">
+                <p class="label">T-MINUS TO MARS INVASION (HSA-13)</p>
+                <div id="countdown">00D : 00H : 00M : 00S</div>
             </div>
         </section>
     </main>
 
+    <section class="data-scroll">
+        <div class="data-track">
+            <span>HSA-13 WAVERIDER //</span>
+            <span>72 HORAS A MARTE //</span>
+            <span>PROPULSIÓN AV-E //</span>
+            <span>ESCUDO DE HAFNIO //</span>
+            <span>5 TRIPULANTES //</span>
+            <span>EL ARENOSILLO 01-04-2027 //</span>
+        </div>
+    </section>
+
+    <section class="infrastructure-preview">
+        <div class="container">
+            <h2 class="section-title">LA SEDE CENTRAL</h2>
+            <p class="section-desc">Más que un complejo, es el Nodo Maestro de la soberanía. 33 edificios blindados bajo jurisdicción exclusiva.</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="num">01</span>
+                    <h4>CENTRO DE INTEGRACIÓN (SECTOR A)</h4>
+                    <p>Hangares de grado atmosférico para el ensamblaje del HSA-13 y sistemas de soporte vital.</p>
+                </div>
+                <div class="info-item">
+                    <span class="num">02</span>
+                    <h4>EL NÚCLEO (THE CORE)</h4>
+                    <p>Búnker de computación cuántica. Aquí reside H-Logic, el cerebro legal y operativo del Estado.</p>
+                </div>
+                <div class="info-item">
+                    <span class="num">03</span>
+                    <h4>CUSTODIA ARMADA</h4>
+                    <p>Residencias de seguridad y protocolos de defensa activa para la protección de activos críticos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-reveal">
+        <div class="reveal-content">
+            <h2>TECNOLOGÍA DE NIVEL VII</h2>
+            <div class="tech-cards-container">
+                <div class="tech-card">
+                    <h3>AV-E MOTOR</h3>
+                    <p>Active Vacuum Entrainment. Energía de vacío para aceleración constante. El fin del cohete químico.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>H-LINK</h3>
+                    <p>Red de comunicación cifrada punto a punto. Inmune a interceptación gubernamental externa.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>H-CREDIT</h3>
+                    <p>La primera moneda respaldada por Julios de energía real, no por deuda política.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-final">
+        <div class="cta-box">
+            <h2>¿ESTÁS PREPARADO PARA LA INTEGRACIÓN?</h2>
+            <p>El acceso a Heidenbillg no es para todos. Es una decisión de evolución.</p>
+            <div class="btn-group">
+                <a href="law.html" class="btn-primary">LEER CONSTITUCIÓN</a>
+                <a href="mars.html" class="btn-secondary">VER HSA-13</a>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>© 2026 HEIDENBILLG GROUP - TOP SECRET NIVEL VII - ENCRYPTED CONNECTION</p>
+        <div class="footer-content">
+            <div class="f-logo">HEIDENBILLG GROUP</div>
+            <div class="f-info">TOP SECRET - DISTRIBUCIÓN RESTRINGIDA - © 2026</div>
+        </div>
     </footer>
 
     <script>
-        // Cuenta atrás para el 1 de abril de 2027
         const launchDate = new Date("April 1, 2027 00:00:00").getTime();
         setInterval(function() {
             const now = new Date().getTime();
