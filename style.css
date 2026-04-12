@@ -1,452 +1,57 @@
-/* ============================================================
-   HEIDENBILLG MASTER STYLE - NIVEL VII
-   ============================================================ */
-
 :root {
     --bg: #050505;
     --accent: #ffffff;
-    --accent-red: #ff3e3e;
-    --accent-orange: #ff4500;
-    --gray-dark: #121212;
-    --gray-med: #333;
-    --text-dim: #888;
-    --font-main: 'Inter', sans-serif;
+    --red: #ff3e3e;
+    --orange: #ff4500;
+    --gray: #1a1a1a;
     --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* 1. BASE & ESTRUCTURA */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--accent); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-body {
-    background-color: var(--bg);
-    color: var(--accent);
-    font-family: var(--font-main);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
+/* REJILLA Y ESCANEO */
+.grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 50px 50px; z-index: -1; }
+.scanline { width: 100%; height: 5px; background: rgba(255,255,255,0.03); position: fixed; z-index: 1000; animation: move 8s linear infinite; pointer-events: none; }
+@keyframes move { from { top: -10%; } to { top: 110%; } }
 
-/* Fondo de Rejilla Global (Grid Overlay) */
-.grid-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: 
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    z-index: -1;
-    pointer-events: none;
-}
+/* NAVBAR */
+nav { display: flex; justify-content: space-between; padding: 40px 60px; position: fixed; width: 100%; top: 0; z-index: 999; background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); }
+.logo { font-weight: 900; letter-spacing: 10px; font-size: 1.2rem; }
+.menu a { text-decoration: none; color: #666; font-family: var(--font-mono); font-size: 0.7rem; margin-left: 30px; transition: 0.3s; }
+.menu a:hover, .highlight-link { color: var(--accent) !important; }
 
-/* Línea de escaneo (Scanline) */
-.scanline {
-    width: 100%;
-    height: 100px;
-    z-index: 100;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0) 100%);
-    opacity: 0.1;
-    position: fixed;
-    bottom: 100%;
-    animation: scan 6s linear infinite;
-    pointer-events: none;
-}
+/* SECCIONES (SUPER SCROLL) */
+section { min-height: 100vh; padding: 100px 10%; display: flex; align-items: center; border-bottom: 1px solid var(--gray); }
 
-@keyframes scan {
-    0% { bottom: 110%; }
-    100% { bottom: -10%; }
-}
+/* HERO */
+.hero-section { flex-direction: column; justify-content: center; text-align: center; }
+h1 { font-size: 7rem; font-weight: 900; line-height: 0.8; letter-spacing: -5px; }
+.outline { -webkit-text-stroke: 1px white; color: transparent; }
+#countdown { font-family: var(--font-mono); font-size: 4rem; margin-top: 20px; }
 
-/* 2. NAVEGACIÓN */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 60px;
-    border-bottom: 1px solid var(--gray-med);
-    background: rgba(5, 5, 5, 0.8);
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
+/* VISION */
+.vision-section { background: white; color: black; }
+.vision-section .section-tag { color: var(--red); font-family: var(--font-mono); font-weight: bold; }
+.vision-section h2 { font-size: 4rem; margin-bottom: 30px; }
+.lead { font-size: 2rem; font-weight: 300; margin-bottom: 60px; }
+.pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.pillar h4 { font-family: var(--font-mono); border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 15px; }
 
-.logo {
-    font-weight: 900;
-    letter-spacing: 8px;
-    font-size: 1.4rem;
-}
+/* MARS */
+.mars-section { background: var(--bg); }
+.tech-main { display: flex; gap: 100px; align-items: center; width: 100%; }
+.engine-circle { width: 300px; height: 300px; border: 1px solid var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); color: var(--orange); box-shadow: 0 0 50px rgba(255,69,0,0.1); animation: pulse-ring 4s infinite; }
+@keyframes pulse-ring { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
 
-.menu a {
-    color: var(--text-dim);
-    text-decoration: none;
-    margin-left: 30px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* LAW CTA */
+.law-cta { text-align: center; justify-content: center; background: var(--red); color: white; }
+.btn-mega { display: inline-block; margin-top: 40px; padding: 30px 60px; background: white; color: black; text-decoration: none; font-weight: 900; font-family: var(--font-mono); transition: 0.3s; }
+.btn-mega:hover { transform: scale(1.1); background: var(--bg); color: white; }
 
-.menu a:hover, .menu a.active {
-    color: var(--accent);
-    letter-spacing: 2px;
-}
+/* MARQUÉE */
+.data-scroll { background: white; color: black; padding: 15px 0; font-family: var(--font-mono); overflow: hidden; white-space: nowrap; font-weight: bold; }
+.data-track { display: inline-block; animation: marquee 20s linear infinite; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-/* 3. HERO (INDEX LARGA) */
-.hero-long {
-    height: 90vh;
-    display: flex;
-    align-items: center;
-    padding: 0 10% ;
-}
-
-h1 {
-    font-size: 5rem;
-    font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -2px;
-    margin: 20px 0;
-}
-
-h1 .outline {
-    -webkit-text-stroke: 1px var(--accent);
-    color: transparent;
-}
-
-.hero-subtitle {
-    font-family: var(--font-mono);
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    max-width: 500px;
-}
-
-.status-box {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: #00ff00;
-    border: 1px solid #00ff00;
-    display: inline-block;
-    padding: 4px 12px;
-}
-
-.pulse {
-    display: inline-block;
-    width: 6px; height: 6px;
-    background: #00ff00;
-    border-radius: 50%;
-    margin-right: 8px;
-    animation: blink 1s infinite;
-}
-
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-
-/* 4. CUENTA ATRÁS */
-.countdown-block {
-    margin-top: 50px;
-}
-
-#countdown {
-    font-family: var(--font-mono);
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--accent);
-}
-
-.label {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    letter-spacing: 3px;
-}
-
-/* 5. SECCIONES DE CONTENIDO */
-.infrastructure-preview, .tech-reveal, .vision-container, .mars-container, .law-container {
-    padding: 120px 10%;
-    border-bottom: 1px solid var(--gray-dark);
-}
-
-.section-title { font-size: 3rem; margin-bottom: 20px; text-transform: uppercase; }
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 50px;
-}
-
-.info-item .num { 
-    font-family: var(--font-mono); 
-    color: var(--gray-med); 
-    font-size: 3rem; 
-    font-weight: 900; 
-}
-
-/* 6. PÁGINA DE LEY (LAW) */
-.doc-header { margin-bottom: 60px; border-bottom: 2px solid white; padding-bottom: 20px; }
-.edition { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); }
-
-.chapter {
-    display: flex;
-    border-bottom: 1px solid var(--gray-dark);
-    padding: 30px 0;
-    transition: 0.4s;
-}
-
-.chapter:hover {
-    background: rgba(255,255,255,0.03);
-    padding-left: 20px;
-}
-
-.ch-num { font-family: var(--font-mono); min-width: 100px; color: var(--text-dim); font-weight: bold; }
-.highlight h2 { color: var(--accent-red); }
-
-/* 7. BOTONES */
-.btn-primary {
-    background: var(--accent);
-    color: black;
-    padding: 18px 35px;
-    text-decoration: none;
-    font-weight: bold;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    display: inline-block;
-}
-
-.btn-secondary {
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    padding: 18px 35px;
-    text-decoration: none;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    margin-left: 20px;
-    display: inline-block;
-}
-
-/* 8. FOOTER */
-footer {
-    padding: 60px;
-    border-top: 1px solid var(--gray-dark);
-    text-align: center;
-}
-
-.f-logo { font-weight: 900; letter-spacing: 5px; margin-bottom: 10px; }
-.f-info { font-family: var(--font-mono); color: #444; font-size: 0.65rem; }
-
-/* 9. MARQUÉE (CINTA DE DATOS) */
-.data-scroll {
-    background: var(--accent);
-    color: black;
-    padding: 12px 0;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.data-track {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-weight: bold;
-    animation: marquee 30s linear infinite;
-}
-
-@keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* 10. RESPONSIVE */
-@media (max-width: 768px) {
-    h1 { font-size: 3rem; }
-    #countdown { font-size: 2rem; }
-    nav { padding: 20px; }
-    .hero-long { padding: 0 20px; }
-    .info-grid { grid-template-columns: 1fr; }
-}
-
-/* ESTILOS ESPECÍFICOS PARA MARS EXTENDED */
-.mars-hero {
-    text-align: center;
-    padding: 100px 0;
-}
-
-.mission-date {
-    font-family: var(--font-mono);
-    color: var(--accent-orange);
-    letter-spacing: 5px;
-    font-weight: bold;
-}
-
-.tech-section {
-    display: flex;
-    gap: 50px;
-    align-items: center;
-    background: rgba(255, 69, 0, 0.03);
-    padding: 60px;
-    border: 1px solid rgba(255, 69, 0, 0.2);
-    margin-bottom: 80px;
-}
-
-.spec-list {
-    list-style: none;
-    margin-top: 20px;
-}
-
-.spec-list li {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    color: #ccc;
-}
-
-.engine-core {
-    width: 200px;
-    height: 200px;
-    border: 2px solid var(--accent-orange);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    padding: 20px;
-    box-shadow: 0 0 30px rgba(255, 69, 0, 0.2);
-    animation: rotate 10s linear infinite;
-}
-
-@keyframes rotate { 100% { transform: rotate(360deg); } }
-
-.materials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 100px;
-}
-
-.material-card {
-    border-top: 3px solid var(--accent-orange);
-    background: #0a0a0a;
-    padding: 30px;
-}
-
-.crew-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    margin-top: 40px;
-}
-
-.crew-role {
-    background: #111;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #222;
-}
-
-.crew-role span {
-    font-family: var(--font-mono);
-    color: var(--accent-orange);
-    font-size: 0.8rem;
-}
-
-.landing-protocol {
-    padding: 100px 0;
-    text-align: center;
-}
-
-.protocol-box {
-    border: 1px dashed var(--accent-orange);
-    padding: 50px;
-    max-width: 700px;
-    margin: 0 auto;
-}
-/* ESTILOS PARA VISION EXTENDED */
-.vision-hero {
-    margin-bottom: 100px;
-}
-
-.lead-text {
-    font-size: 1.8rem;
-    font-weight: 300;
-    color: var(--text-dim);
-    line-height: 1.4;
-    margin-top: 30px;
-}
-
-.pillars-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    margin-bottom: 150px;
-}
-
-.pillar-card {
-    padding: 40px;
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid var(--gray-dark);
-    position: relative;
-}
-
-.pillar-num {
-    font-family: var(--font-mono);
-    color: var(--accent-red);
-    font-weight: bold;
-    position: absolute;
-    top: 20px; right: 20px;
-}
-
-.philosophy-section {
-    background: white;
-    color: black;
-    padding: 100px 10%;
-    margin: 0 -10%; /* Para que rompa el contenedor y ocupe todo el ancho */
-}
-
-.philosophy-content h2 { font-size: 3rem; margin-bottom: 30px; }
-
-.quote-box {
-    margin-top: 50px;
-    border-left: 5px solid black;
-    padding-left: 30px;
-}
-
-blockquote {
-    font-size: 2rem;
-    font-weight: 900;
-    font-style: italic;
-}
-
-.roadmap-section { padding-top: 150px; }
-
-.timeline {
-    border-left: 2px solid var(--gray-med);
-    margin-top: 50px;
-    padding-left: 40px;
-}
-
-.time-item {
-    margin-bottom: 50px;
-    position: relative;
-}
-
-.time-item::before {
-    content: '';
-    position: absolute;
-    left: -46px; top: 5px;
-    width: 10px; height: 10px;
-    background: var(--gray-med);
-    border-radius: 50%;
-}
-
-.active-item::before {
-    background: var(--accent-red);
-    box-shadow: 0 0 10px var(--accent-red);
-}
-
-.year {
-    font-family: var(--font-mono);
-    font-weight: bold;
-    color: var(--accent);
-    display: block;
-    font-size: 1.5rem;
-}
+footer { padding: 40px; text-align: center; font-family: var(--font-mono); font-size: 0.7rem; color: #444; }
