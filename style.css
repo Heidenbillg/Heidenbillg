@@ -129,3 +129,78 @@ footer {
     color: #333;
     border-top: 1px solid var(--gray);
 }
+
+/* Estilos para Mars Page */
+.mars-container {
+    padding: 100px 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-tag {
+    font-family: var(--font-mono);
+    color: #ff4500; /* Naranja marciano */
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.mission-statement {
+    font-size: 1.5rem;
+    color: #888;
+    max-width: 700px;
+    line-height: 1.4;
+    margin-bottom: 80px;
+}
+
+.tech-specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 100px;
+}
+
+.spec-card {
+    background: #0a0a0a;
+    padding: 40px;
+    border: 1px solid #222;
+    transition: 0.3s;
+}
+
+.spec-card:hover {
+    border-color: #ff4500;
+}
+
+.spec-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #444;
+}
+
+.spec-card h3 {
+    margin: 15px 0;
+    font-size: 1.5rem;
+}
+
+.blueprint-section h2 {
+    font-family: var(--font-mono);
+    border-bottom: 1px solid #222;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.blueprint-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.blueprint-grid h4 {
+    color: #ff4500;
+    margin-bottom: 10px;
+}
+
+.blueprint-grid p {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.5;
+}
