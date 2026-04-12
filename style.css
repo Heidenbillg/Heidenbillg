@@ -360,3 +360,93 @@ footer {
     max-width: 700px;
     margin: 0 auto;
 }
+/* ESTILOS PARA VISION EXTENDED */
+.vision-hero {
+    margin-bottom: 100px;
+}
+
+.lead-text {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.4;
+    margin-top: 30px;
+}
+
+.pillars-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 150px;
+}
+
+.pillar-card {
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--gray-dark);
+    position: relative;
+}
+
+.pillar-num {
+    font-family: var(--font-mono);
+    color: var(--accent-red);
+    font-weight: bold;
+    position: absolute;
+    top: 20px; right: 20px;
+}
+
+.philosophy-section {
+    background: white;
+    color: black;
+    padding: 100px 10%;
+    margin: 0 -10%; /* Para que rompa el contenedor y ocupe todo el ancho */
+}
+
+.philosophy-content h2 { font-size: 3rem; margin-bottom: 30px; }
+
+.quote-box {
+    margin-top: 50px;
+    border-left: 5px solid black;
+    padding-left: 30px;
+}
+
+blockquote {
+    font-size: 2rem;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.roadmap-section { padding-top: 150px; }
+
+.timeline {
+    border-left: 2px solid var(--gray-med);
+    margin-top: 50px;
+    padding-left: 40px;
+}
+
+.time-item {
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.time-item::before {
+    content: '';
+    position: absolute;
+    left: -46px; top: 5px;
+    width: 10px; height: 10px;
+    background: var(--gray-med);
+    border-radius: 50%;
+}
+
+.active-item::before {
+    background: var(--accent-red);
+    box-shadow: 0 0 10px var(--accent-red);
+}
+
+.year {
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: var(--accent);
+    display: block;
+    font-size: 1.5rem;
+}
