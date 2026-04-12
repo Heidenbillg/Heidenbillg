@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MARS 2027 | HSA-13 WAVERIDER</title>
+    <title>MARS 2027 | HSA-13 TECHNICAL SPECS</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="grid-overlay"></div>
     <header>
         <nav>
             <div class="logo">HEIDENBILLG</div>
@@ -22,50 +23,83 @@
 
     <main class="mars-container">
         <section class="mars-hero">
-            <h2 class="section-tag">// MISSION: RED HORIZON</h2>
-            <h1>TARGET: MARS 2027</h1>
-            <p class="mission-statement">Establecimiento de la soberanía física de Heidenbillg mediante el despliegue del Activo Hipersónico Soberano HSA-13.</p>
+            <span class="classification">MISSION CRITICAL // NIVEL VII</span>
+            <h1>ACTIVO HSA-13 <br><span class="outline">WAVERIDER</span></h1>
+            <p class="mission-date">LAUNCH WINDOW: 01.04.2027 | SITE: EL ARENOSILLO</p>
         </section>
 
-        <section class="tech-specs">
-            <div class="spec-card">
-                <span class="spec-label">VEHÍCULO</span>
-                <h3>HSA-13 WAVERIDER</h3>
-                <p>Nave de sustentación hipersónica diseñada para reentrada múltiple y aceleración constante.</p>
+        <section class="tech-section">
+            <div class="tech-text">
+                <h2>PROPULSIÓN: ACTIVE VACUUM ENTRAINMENT</h2>
+                <p>El motor AV-E rompe la dependencia del combustible químico tradicional. Utiliza un sistema de **Inducción Magnética de Protones** para capturar y acelerar el viento solar en un radio de 250km.</p>
+                <ul class="spec-list">
+                    <li><strong>ACELERACIÓN:</strong> Mantenida a 1g (Gravedad Artificial por empuje).</li>
+                    <li><strong>TIEMPO DE TRÁNSITO:</strong> 72 Horas (Tierra-Marte).</li>
+                    <li><strong>EFICIENCIA:</strong> Consumo de masa reactiva nulo en fase de crucero.</li>
+                </ul>
             </div>
-            <div class="spec-card">
-                <span class="spec-label">PROPULSIÓN</span>
-                <h3>AV-E MOTOR</h3>
-                <p>Inducción Magnética de Protones (Active Vacuum Entrainment). Aceleración mantenida de 1g.</p>
-            </div>
-            <div class="spec-card">
-                <span class="spec-label">TRÁNSITO</span>
-                <h3>72 HORAS</h3>
-                <p>Reducción del tiempo de viaje Tierra-Marte mediante vectores de interceptación de alta energía.</p>
+            <div class="tech-visual">
+                <div class="engine-core">AV-E CORE ACTIVE</div>
             </div>
         </section>
 
-        <section class="blueprint-section">
-            <h2>ESPECIFICACIONES DE NIVEL VII</h2>
-            <div class="blueprint-grid">
-                <div class="item">
-                    <h4>ESCUDO TÉRMICO</h4>
-                    <p>Compuestos de Carburo de Hafnio con capacidad de disipación > 4000°C.</p>
+        <section class="materials-grid">
+            <div class="material-card">
+                <h3>ESCUDO DE HAFNIO</h3>
+                <p>Compuestos de **Carburo de Hafnio (HfC)** integrados en una matriz cerámica avanzada. Soporta temperaturas de reentrada superiores a los 4000°C sin degradación estructural.</p>
+            </div>
+            <div class="material-card">
+                <h3>SISTEMA TDS PATHFINDER</h3>
+                <p>Navegación por triangulación de ruido solar. El HSA-13 es capaz de posicionarse en el espacio profundo con un error de <1 metro sin necesidad de señales terrestres.</p>
+            </div>
+            <div class="material-card">
+                <h3>BLINDAJE ELECTROMAGNÉTICO</h3>
+                <p>Capa activa de plasma que desvía la radiación cósmica y las tormentas solares, protegiendo la integridad biológica de la tripulación.</p>
+            </div>
+        </section>
+
+        <section class="crew-section">
+            <h2>PROTOCOLOS DE TRIPULACIÓN</h2>
+            <p class="section-desc">El HSA-13 transporta a los primeros 5 Integrantes del Ecosistema bajo jurisdicción de la Heidenbillg Law.</p>
+            <div class="crew-grid">
+                <div class="crew-role">
+                    <span>H-01</span>
+                    <h4>COMMANDER</h4>
+                    <p>Enlace directo con el Board y H-Logic.</p>
                 </div>
-                <div class="item">
-                    <h4>NAVEGACIÓN TDS</h4>
-                    <p>Sistema Pathfinder autónomo. Independencia total de redes GNSS/GPS terrestres.</p>
+                <div class="crew-role">
+                    <span>H-02</span>
+                    <h4>CORE ENGINEER</h4>
+                    <p>Mantenimiento del motor AV-E y sistemas cuánticos.</p>
                 </div>
-                <div class="item">
-                    <h4>TRIPULACIÓN</h4>
-                    <p>5 Especialistas bajo protocolo de custodia H-Logic. Unidad de soporte vital de ciclo cerrado.</p>
+                <div class="crew-role">
+                    <span>H-03</span>
+                    <h4>BIO-LOGISTICS</h4>
+                    <p>Soporte vital y biomasa marciana.</p>
                 </div>
+                <div class="crew-role">
+                    <span>H-04</span>
+                    <h4>MISSION SPECIALIST</h4>
+                    <p>Protocolos de adquisición de recursos (HRAN).</p>
+                </div>
+                <div class="crew-role">
+                    <span>H-05</span>
+                    <h4>SECURITY ENFORCER</h4>
+                    <p>Custodia armada y cumplimiento de la Constitución.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-protocol">
+            <div class="protocol-box">
+                <h3>PROYECTO RED HORIZON: NODO 001</h3>
+                <p>El aterrizaje el 04.04.2027 marcará la creación de la primera **Zona de Soberanía Exclusiva** en Marte. El HSA-13 se convertirá en el núcleo energético del asentamiento inicial mediante sus reactores de fusión integrados.</p>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2026 HEIDENBILLG - PROYECTO DE SOBERANÍA EXTRA-ATMOSFÉRICA</p>
+        <p>© 2026 HEIDENBILLG - MARS DIVISION - NO EXTERNAL ACCESS ALLOWED</p>
     </footer>
 </body>
 </html>
