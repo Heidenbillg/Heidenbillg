@@ -265,3 +265,34 @@ blockquote {
     margin-top: 20px;
     letter-spacing: 5px;
 }
+
+.separator {
+    border: 0;
+    height: 1px;
+    background: #333;
+    margin: 50px 0;
+}
+
+h2 {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.legal-notice {
+    background: rgba(255, 0, 0, 0.05);
+    border: 1px solid #ff3e3e;
+    padding: 20px;
+    margin-top: 60px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #ff3e3e;
+}
+
+strong {
+    color: var(--accent);
+    font-family: var(--font-mono);
+}
