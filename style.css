@@ -204,3 +204,64 @@ footer {
     color: #777;
     line-height: 1.5;
 }
+
+/* Estilos para Vision Page */
+.vision-container {
+    padding: 100px 50px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.vision-header h1 {
+    font-size: 3.5rem;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+.manifesto-text .lead {
+    font-size: 1.8rem;
+    color: var(--accent);
+    line-height: 1.3;
+    margin-bottom: 80px;
+    font-weight: 300;
+}
+
+.pillar {
+    margin-bottom: 60px;
+    border-top: 1px solid #222;
+    padding-top: 30px;
+}
+
+.pillar h3 {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.pillar p {
+    color: #888;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.final-quote {
+    margin-top: 100px;
+    text-align: center;
+    border-top: 1px solid var(--accent);
+    padding-top: 50px;
+}
+
+blockquote {
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-style: italic;
+    margin: 0;
+}
+
+.author {
+    font-family: var(--font-mono);
+    color: #444;
+    margin-top: 20px;
+    letter-spacing: 5px;
+}
