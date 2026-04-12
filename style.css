@@ -263,3 +263,100 @@ footer {
     .hero-long { padding: 0 20px; }
     .info-grid { grid-template-columns: 1fr; }
 }
+
+/* ESTILOS ESPECÍFICOS PARA MARS EXTENDED */
+.mars-hero {
+    text-align: center;
+    padding: 100px 0;
+}
+
+.mission-date {
+    font-family: var(--font-mono);
+    color: var(--accent-orange);
+    letter-spacing: 5px;
+    font-weight: bold;
+}
+
+.tech-section {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    background: rgba(255, 69, 0, 0.03);
+    padding: 60px;
+    border: 1px solid rgba(255, 69, 0, 0.2);
+    margin-bottom: 80px;
+}
+
+.spec-list {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.spec-list li {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.engine-core {
+    width: 200px;
+    height: 200px;
+    border: 2px solid var(--accent-orange);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.2);
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 100px;
+}
+
+.material-card {
+    border-top: 3px solid var(--accent-orange);
+    background: #0a0a0a;
+    padding: 30px;
+}
+
+.crew-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.crew-role {
+    background: #111;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #222;
+}
+
+.crew-role span {
+    font-family: var(--font-mono);
+    color: var(--accent-orange);
+    font-size: 0.8rem;
+}
+
+.landing-protocol {
+    padding: 100px 0;
+    text-align: center;
+}
+
+.protocol-box {
+    border: 1px dashed var(--accent-orange);
+    padding: 50px;
+    max-width: 700px;
+    margin: 0 auto;
+}
