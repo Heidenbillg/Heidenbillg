@@ -385,6 +385,39 @@
         .legal-grid { grid-template-columns: 1fr; }
     }
 </style>
+<!-- BLOQUE DE CENSO CRÍTICO -->
+<section id="census-mission" style="background: linear-gradient(180deg, #080808, #000); padding: 60px 10%; border-top: 1px solid var(--accent);">
+    <div class="mono label" style="color: var(--accent);">OBJETIVO DE SOBERANÍA: 100.000 CIUDADANOS</div>
+    <h2 style="font-size: 2.5rem; margin: 20px 0;">HACIA EL <span class="outline">ESTADO REAL</span></h2>
+    
+    <div class="census-container">
+        <div class="census-bar-bg">
+            <div id="census-progress" class="census-bar-fill" style="width: 0.85%;"></div> <!-- Ajusta el % según los que ya tengas -->
+        </div>
+        <div class="census-stats mono">
+            <span id="current-census">850</span> / 100.000 <br>
+            <small style="color: #444;">PARA RECONOCIMIENTO SEGÚN CONVENCIÓN DE MONTEVIDEO</small>
+        </div>
+    </div>
+
+    <p style="color: #666; margin-top: 30px; font-size: 0.9rem;">
+        Heidenbillg opera actualmente como una jurisdicción digital. Al alcanzar los 100.000 HID activos, el **Estatuto** se activará como entidad soberana física. Tu registro no es solo un alias, es un voto por la independencia técnica.
+    </p>
+</section>
+
+<style>
+    .census-container { margin-top: 30px; }
+    .census-bar-bg {
+        width: 100%; height: 10px; background: #111;
+        border: 1px solid #222; position: relative; overflow: hidden;
+    }
+    .census-bar-fill {
+        height: 100%; background: var(--accent);
+        box-shadow: 0 0 15px var(--accent);
+        transition: width 2s ease-in-out;
+    }
+    .census-stats { margin-top: 15px; font-size: 1.2rem; letter-spacing: 2px; }
+</style>
 
 
         <!-- BLOQUE 3: EL HID -->
@@ -478,6 +511,20 @@
             window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
             
             alert("Sincronización completa. Revise su cliente de correo para finalizar el envío.");
+            // ... dentro del último setTimeout de startSync() ...
+            log.innerHTML = "> HID EXTERIOR GENERADO: [VALIDADO]";
+    
+            // Abrir correo
+            window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
+    
+            // Efecto de Censo +1
+            let censusElement = document.getElementById("current-census");
+            let current = parseInt(censusElement.innerText.replace('.', ''));
+            censusElement.innerText = (current + 1).toLocaleString();
+            document.getElementById("census-progress").style.width = ((current + 1) / 100000 * 100) + "%";
+
+            alert("CIUDADANO REGISTRADO. Tu identidad se ha sumado al censo para la soberanía real.");
+
         }, 2000);
     }, 1500);
 }
