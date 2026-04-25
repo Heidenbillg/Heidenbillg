@@ -402,7 +402,10 @@
                     <span class="mono label">Identidad / Nombre</span>
                     <input type="text" id="nombre" placeholder="EJ: KALEB VOLKOV" required>
                 </div>
-
+                <div class="input-group">
+                    <span class="mono label">Email de Enlace</span>
+                    <input type="email" id="user-email" placeholder="SU-EMAIL@SERVER.COM" required>
+                </div>
                 <div class="input-group">
                     <span class="mono label">Nacionalidad de Origen</span>
                     <input type="text" id="nacionalidad" placeholder="EJ: UNIÓN EUROPEA / DISTRITO 4" required>
@@ -429,19 +432,56 @@
     </section>
 
     <script>
-        function sendToHeidenbillg() {
-            const log = document.getElementById('status-log');
-            const data = {
-                nombre: document.getElementById('nombre').value,
-                nacionalidad: document.getElementById('nacionalidad').value,
-                trabajo: document.getElementById('trabajo').value,
-                resumen: document.getElementById('resumen').value
-            };
+        function startSync() {
+    const log = document.getElementById('status-log');
+    
+    // Captura de datos actualizada
+    const data = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('user-email').value, // NUEVO CAMPO
+        nacionalidad: document.getElementById('nacionalidad').value,
+        trabajo: document.getElementById('trabajo').value,
+        resumen: document.getElementById('resumen').value
+    };
 
-            if(!data.nombre || !data.nacionalidad || !data.trabajo) {
-                log.innerHTML = "ERROR: CAMPOS OBLIGATORIOS INCOMPLETOS";
-                return;
-            }
+    // Validación: El email es crítico
+    if(data.nombre === "" || data.email === "" || data.trabajo === "") {
+        log.innerHTML = "ERROR: IDENTIDAD, EMAIL Y ESPECIALIDAD REQUERIDOS";
+        log.style.color = "#ff3e3e";
+        return;
+    }
+
+    log.style.color = "var(--accent)";
+    log.innerHTML = "> Iniciando escaneo de mérito...";
+
+    setTimeout(() => {
+        log.innerHTML = "> Buscando registro en HCSG...";
+        
+        setTimeout(() => {
+            log.innerHTML = "> HID EXTERIOR GENERADO: [VALIDADO]";
+            
+            // Cuerpo del correo mejorado
+            const subject = encodeURIComponent(`SOLICITUD HID EXTERIOR - ${data.nombre}`);
+            const body = encodeURIComponent(
+                `SOLICITUD DE CIUDADANÍA HEIDENBILLG\n` +
+                `----------------------------------\n` +
+                `CIUDADANO: ${data.nombre}\n` +
+                `EMAIL DE ENLACE: ${data.email}\n` + // Aquí aparece el email
+                `ORIGEN: ${data.nacionalidad}\n` +
+                `ÁREA TÉCNICA: ${data.trabajo}\n\n` +
+                `RESUMEN DE MÉRITO:\n${data.resumen}\n\n` +
+                `----------------------------------\n` +
+                `ESTADO: VALIDACIÓN AUTOMÁTICA H-LOGIC COMPLETA`
+            );
+
+            // Esto abre el correo con todo listo
+            window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
+            
+            alert("Sincronización completa. Revise su cliente de correo para finalizar el envío.");
+        }, 2000);
+    }, 1500);
+}
+
 
             log.innerHTML = "CIFRANDO DATOS PARA EL NIVEL VII...";
 
