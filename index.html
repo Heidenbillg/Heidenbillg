@@ -89,7 +89,19 @@
             position: fixed; top: 0; width: 100%; padding: 40px 10%;
             display: flex; justify-content: space-between; z-index: 500;
             background: linear-gradient(to bottom, var(--bg), transparent);
+            <div class="mono" onclick="openLogin()" style="cursor:pointer;">Heidenbillg</div>
         }
+        /* --- NUEVOS ESTILOS PARA DASHBOARD Y LOGIN --- */
+            #dashboard {
+                display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                grid-template-columns: 300px 1fr; background: var(--bg); z-index: 3000;
+            }
+            .sidebar { padding: 20px; border-right: 1px solid var(--dim); background: #050505; overflow-y: auto; }
+            .main-view { padding: 40px; overflow-y: auto; background: radial-gradient(circle at center, #0a0a0a, #000); }
+            .stat-box { margin-bottom: 20px; }
+            .stat-label { font-size: 0.6rem; color: var(--dim); text-transform: uppercase; }
+            .stat-value { font-size: 1rem; color: var(--text); margin-top: 5px; }
+            .op-card { background: rgba(255,255,255,0.02); border: 1px solid #111; padding: 20px; margin-bottom: 20px; 
     </style>
 </head>
 <body>
@@ -108,7 +120,7 @@
         
         <!-- CONTADOR DE LANZAMIENTO -->
         <div class="launch-counter">
-            <span class="mono label">CUENTA REGRESIVA // VENTANA DE LANZAMIENTO: 01.04.2027</span>
+            <span class="mono label">CUENTA REGRESIVA // VENTANA DE LANZAMIENTO: 01.04.2028</span>
             <div id="countdown" class="mono" style="font-size: clamp(1.5rem, 5vw, 3rem); font-weight: 700; color: var(--text);">
                 00D : 00H : 00M : 00S
             </div>
@@ -463,6 +475,61 @@
             <div id="status-log" class="mono" style="margin-top: 20px; font-size: 0.7rem; color: var(--accent); text-align: center;"></div>
         </div>
     </section>
+    <!-- MODAL DE LOGIN -->
+            <div id="login-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:4000; align-items:center; justify-content:center;">
+                <div class="request-box" style="width:350px; background:#000; border:1px solid var(--accent); padding:30px;">
+                    <span class="mono label">// IDENT_REQUIRED</span>
+                    <input type="text" id="hid-input" placeholder="HID ID" style="width:100%; margin-bottom:10px; background:transparent; border:1px solid var(--dim); color:white; padding:10px;">
+                    <input type="password" id="key-input" placeholder="LLAVE_ENCRIPTACIÓN" style="width:100%; margin-bottom:10px; background:transparent; border:1px solid var(--dim); color:white; padding:10px;">
+                    <button class="btn-sync" onclick="authenticate()">SINCRONIZAR</button>
+                    <button onclick="document.getElementById('login-modal').style.display='none'" style="background:none; border:none; color:var(--dim); cursor:pointer; margin-top:10px; width:100%; font-size:0.6rem; font-family:var(--font-mono);">CANCELAR</button>
+                </div>
+            </div>
+
+    <!-- INTERFAZ DASHBOARD -->
+            <div id="dashboard">
+                <aside class="sidebar">
+                    <div class="stat-box" style="border: 1px solid var(--accent); padding: 15px; text-align: center; margin-bottom: 30px;">
+                        <div class="mono" style="font-size: 0.5rem; color: var(--accent); margin-bottom: 10px;">BIO_SCAN_ACTIVE</div>
+                        <div id="user-hid-display" class="mono" style="font-size: 0.8rem;">---</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Identidad</span>
+                        <div id="user-name" class="stat-value">---</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Rango</span>
+                        <div id="user-role" class="stat-value" style="color: var(--accent);">---</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">H-Credit</span>
+                        <div id="user-credits" class="stat-value" style="color: #00ff00;">0.00</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Sincronización Vital</span>
+                        <div style="width:100%; height:4px; background:#111; margin-top:10px;">
+                            <div id="user-health" style="height:100%; background:#00ff00; width:0%; transition: 1.5s;"></div>
+                        </div>
+                        <div id="health-percentage" class="mono" style="font-size:0.6rem; margin-top:5px; text-align:right;">0%</div>
+                        </div>
+                </aside>
+
+                <main class="main-view">
+                    <div class="mono" style="color:var(--accent); font-size:0.7rem;">> SESIÓN INICIADA // NODO_CENTRAL</div>
+                    <h1 id="welcome-msg" style="font-size: 2.5rem; margin: 20px 0;">HOLA, CIUDADANO</h1>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="op-card">
+                            <div class="mono label">MENSAJES LOGIC</div>
+                            <p style="font-size: 0.8rem;">Lanzamiento HSA-13 en ventana 2028.</p>
+                        </div>
+                        <div class="op-card">
+                            <div class="mono label">MISIÓN ACTIVA</div>
+                            <p style="font-size: 0.8rem;">Censo: Faltan 99.150 para Soberanía.</p>
+                        </div>
+                    </div>
+                    <button class="btn-sync" onclick="location.reload()" style="margin-top:20px; width:auto;">LOGOUT</button>
+                </main>
+            </div>
 
     <script>
         function startSync() {
