@@ -3,18 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HEIDENBILLG CORE // SYSTEM NODE</title>
+<title>HEIDENBILLG CORE // OS</title>
 
 <style>
 :root{
-  --bg:#050505;
-  --bg2:#0a0a0a;
-  --panel:#0e0e0e;
+  --bg:#040404;
+  --bg2:#090909;
+  --panel:#0d0d0d;
+  --panel2:#111111;
   --accent:#ff3e3e;
-  --accent2:#ff7b7b;
+  --accent2:#ff7a7a;
   --text:#ffffff;
-  --dim:#7a7a7a;
-  --line:#161616;
+  --muted:#8b8b8b;
+  --line:#171717;
   --ok:#22c55e;
   --warn:#f59e0b;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -26,24 +27,23 @@ html{scroll-behavior:smooth}
 body{
   margin:0;
   background:
-    radial-gradient(circle at top, rgba(255,62,62,.08), transparent 30%),
-    linear-gradient(180deg, #030303 0%, #050505 100%);
+    radial-gradient(circle at top, rgba(255,62,62,.08), transparent 32%),
+    linear-gradient(180deg, #030303, #050505);
   color:var(--text);
   font-family:var(--mono);
   overflow-x:hidden;
 }
 
-/* Global effects */
 .scanline{
   position:fixed;
   top:0;
   left:0;
   width:100%;
   height:2px;
-  pointer-events:none;
   background:rgba(255,255,255,0.03);
   z-index:9998;
-  animation:scan 8s linear infinite;
+  pointer-events:none;
+  animation:scan 7s linear infinite;
 }
 @keyframes scan{
   from{transform:translateY(0)}
@@ -53,9 +53,9 @@ body{
 .noise{
   position:fixed;
   inset:0;
-  pointer-events:none;
-  opacity:.04;
   z-index:9997;
+  pointer-events:none;
+  opacity:.05;
   background-image:
     linear-gradient(transparent 50%, rgba(255,255,255,.12) 50%),
     linear-gradient(90deg, transparent 50%, rgba(255,255,255,.08) 50%);
@@ -63,7 +63,7 @@ body{
   mix-blend-mode:screen;
 }
 
-/* Navigation */
+/* NAV */
 nav{
   position:fixed;
   top:0;
@@ -74,57 +74,57 @@ nav{
   justify-content:space-between;
   align-items:center;
   padding:18px 28px;
-  background:linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,.0));
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,.03);
+  background:linear-gradient(to bottom, rgba(0,0,0,.96), rgba(0,0,0,0));
+  backdrop-filter: blur(10px);
 }
-.nav-brand{
+.nav-left{
   display:flex;
   align-items:center;
   gap:12px;
   cursor:pointer;
   user-select:none;
 }
-.brand-mark{
+.brand-dot{
   width:10px;
   height:10px;
   border-radius:50%;
   background:var(--accent);
   box-shadow:0 0 20px rgba(255,62,62,.8);
 }
-.nav-title{
-  font-size:13px;
-  letter-spacing:3px;
+.brand{
   text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:13px;
 }
 .nav-right{
   display:flex;
+  gap:10px;
+  flex-wrap:wrap;
   align-items:center;
-  gap:14px;
-  font-size:12px;
-  color:var(--dim);
 }
 .badge{
   padding:6px 10px;
   border:1px solid rgba(255,255,255,.08);
   background:rgba(255,255,255,.02);
   border-radius:999px;
+  font-size:11px;
+  letter-spacing:1px;
+  color:#d9d9d9;
 }
 
-/* Sections */
+/* SECTIONS */
 section{
   min-height:100vh;
   padding:120px 10% 80px;
   border-bottom:1px solid var(--line);
-  position:relative;
 }
 .kicker{
   display:inline-block;
   font-size:11px;
   letter-spacing:3px;
-  color:var(--accent);
   text-transform:uppercase;
-  margin-bottom:16px;
+  color:var(--accent);
+  margin-bottom:18px;
 }
 h1{
   margin:0 0 18px;
@@ -134,7 +134,7 @@ h1{
 }
 h2{
   margin:0 0 14px;
-  font-size:clamp(2rem, 4vw, 3.2rem);
+  font-size:clamp(2rem, 4vw, 3.4rem);
   line-height:1;
 }
 h3{
@@ -143,29 +143,22 @@ h3{
 }
 p{
   margin:0;
-  max-width:760px;
-  color:#b9b9b9;
+  max-width:800px;
+  color:#bdbdbd;
   line-height:1.8;
   font-family:var(--sans);
 }
-
 .outline{
   color:transparent;
   -webkit-text-stroke:1px var(--text);
-  text-stroke:1px var(--text);
 }
-.accent{
-  color:var(--accent);
-}
-.dim{
-  color:var(--dim);
-}
+.accent{ color:var(--accent); }
+.muted{ color:var(--muted); }
 
-/* Layout blocks */
 .grid-2{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:28px;
+  grid-template-columns:1.1fr .9fr;
+  gap:24px;
   align-items:start;
 }
 .grid-3{
@@ -174,16 +167,16 @@ p{
   gap:20px;
 }
 .card{
-  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.015));
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
   border:1px solid rgba(255,255,255,.06);
-  border-radius:18px;
+  border-radius:20px;
   padding:22px;
-  box-shadow:0 20px 60px rgba(0,0,0,.28);
+  box-shadow:0 24px 70px rgba(0,0,0,.3);
 }
 .card:hover{
-  border-color:rgba(255,62,62,.35);
+  border-color:rgba(255,62,62,.3);
   transform:translateY(-2px);
-  transition:.25s ease;
+  transition:.22s ease;
 }
 .card-head{
   display:flex;
@@ -200,8 +193,20 @@ p{
 }
 .small{
   font-size:12px;
-  color:var(--dim);
-  line-height:1.7;
+  line-height:1.8;
+  color:var(--muted);
+  font-family:var(--sans);
+}
+.timeline{
+  display:grid;
+  gap:14px;
+  margin-top:20px;
+}
+.timeline-item{
+  padding:18px 18px 18px 20px;
+  border-left:2px solid var(--accent);
+  border-radius:0 14px 14px 0;
+  background:rgba(255,255,255,.02);
 }
 
 /* Buttons */
@@ -225,24 +230,33 @@ button, .button{
 }
 button:hover, .button:hover{
   background:var(--accent);
-  transform:translateY(-1px);
   box-shadow:0 0 24px rgba(255,62,62,.2);
+  transform:translateY(-1px);
 }
-.button.secondary{
+.button.secondary, button.secondary{
   border-color:rgba(255,255,255,.14);
 }
-.button.secondary:hover{
+.button.secondary:hover, button.secondary:hover{
   background:rgba(255,255,255,.07);
   box-shadow:none;
 }
-.button.full{
+.button.ghost, button.ghost{
+  border-color:rgba(255,255,255,.08);
+}
+.button.full, button.full{
   width:100%;
+}
+.button.ok, button.ok{
+  border-color:rgba(34,197,94,.45);
+}
+.button.warn, button.warn{
+  border-color:rgba(245,158,11,.5);
 }
 
 /* Inputs */
 input, textarea{
   width:100%;
-  background:rgba(0,0,0,.35);
+  background:rgba(0,0,0,.4);
   color:var(--text);
   border:1px solid rgba(255,255,255,.12);
   border-radius:14px;
@@ -260,17 +274,100 @@ textarea{
   min-height:120px;
 }
 
-/* Top hero / boot */
+.bar{
+  width:100%;
+  height:10px;
+  background:#101010;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  overflow:hidden;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  box-shadow:0 0 20px rgba(255,62,62,.35);
+  transition:width .8s ease;
+}
+.stat-line{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  color:#d8d8d8;
+  font-size:13px;
+}
+.stat-line span:last-child{ color:#fff; }
+
+.metric-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:28px;
+}
+.metric{
+  min-width:168px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:rgba(255,255,255,.02);
+}
+.metric .label{
+  display:block;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.metric .value{
+  font-size:18px;
+  color:var(--text);
+}
+
+.terminal{
+  min-height:200px;
+  max-height:300px;
+  overflow:auto;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:#020202;
+  color:#a7a7a7;
+  font-size:12px;
+  line-height:1.8;
+  white-space:pre-wrap;
+}
+
+.feed{
+  display:grid;
+  gap:12px;
+}
+.feed-item{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  background:rgba(255,255,255,.02);
+  font-size:12px;
+  line-height:1.8;
+}
+.grid-dashboard{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:20px;
+  margin-top:18px;
+}
+
+/* Boot */
 #boot{
   position:fixed;
   inset:0;
   z-index:10000;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
+  flex-direction:column;
   background:
-    radial-gradient(circle at center, rgba(255,62,62,.08), transparent 36%),
+    radial-gradient(circle at center, rgba(255,62,62,.1), transparent 34%),
     #000;
   transition:opacity .6s ease, transform .6s ease;
 }
@@ -280,7 +377,7 @@ textarea{
   transform:scale(1.01);
 }
 .boot-panel{
-  width:min(760px, 90vw);
+  width:min(820px, 90vw);
   border:1px solid rgba(255,255,255,.1);
   border-radius:24px;
   background:rgba(255,255,255,.02);
@@ -321,94 +418,60 @@ textarea{
   gap:20px;
   margin-top:16px;
   font-size:11px;
-  color:var(--dim);
+  color:var(--muted);
   letter-spacing:1px;
   text-transform:uppercase;
 }
 
-/* Landing */
+/* Public landing */
 #landing{
   display:flex;
   align-items:center;
 }
 .hero-copy{
-  max-width:860px;
+  max-width:900px;
 }
 .hero-actions{
   display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-top:28px;
-}
-.metric-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px;
-  margin-top:28px;
-}
-.metric{
-  min-width:160px;
-  padding:16px 18px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  background:rgba(255,255,255,.02);
-}
-.metric .label{
-  display:block;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:2px;
-  color:var(--dim);
-  margin-bottom:8px;
-}
-.metric .value{
-  font-size:18px;
-  color:var(--text);
-}
-
-/* Timeline cards */
-.timeline{
-  display:grid;
-  gap:14px;
-  margin-top:22px;
-}
-.timeline-item{
-  padding:18px 18px 18px 20px;
-  border-left:2px solid var(--accent);
-  background:rgba(255,255,255,.02);
-  border-radius:0 14px 14px 0;
-}
-
-/* Census */
-.bar{
-  width:100%;
-  height:10px;
-  background:#111;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:999px;
-  overflow:hidden;
-}
-.fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg, var(--accent), var(--accent2));
-  box-shadow:0 0 20px rgba(255,62,62,.35);
-  transition:width .8s ease;
-}
-.census-box{
-  display:grid;
   gap:12px;
-  margin-top:22px;
+  flex-wrap:wrap;
+  margin-top:28px;
 }
-.stat-line{
+.docs-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:14px;
+  margin-top:18px;
+}
+.doc-card{
+  padding:18px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.02);
+  display:grid;
+  gap:10px;
+}
+.doc-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.saved-list{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+.saved-item{
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  background:rgba(255,255,255,.02);
+  font-size:12px;
+  color:#d8d8d8;
   display:flex;
   justify-content:space-between;
-  gap:12px;
-  font-size:13px;
-  color:#d1d1d1;
-}
-.stat-line span:last-child{
-  color:var(--text);
+  gap:10px;
+  align-items:center;
 }
 
 /* Modal */
@@ -423,17 +486,15 @@ textarea{
   align-items:center;
   padding:24px;
 }
-.modal.open{
-  display:flex;
-}
+.modal.open{ display:flex; }
 .modal-panel{
-  width:min(860px, 100%);
+  width:min(980px, 100%);
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:20px;
 }
 .modal-card{
-  background:rgba(10,10,10,.96);
+  background:rgba(10,10,10,.97);
   border:1px solid rgba(255,255,255,.08);
   border-radius:20px;
   padding:24px;
@@ -450,7 +511,7 @@ textarea{
   font-size:11px;
   text-transform:uppercase;
   letter-spacing:2px;
-  color:var(--dim);
+  color:var(--muted);
 }
 .credentials{
   margin-top:14px;
@@ -469,6 +530,27 @@ textarea{
   justify-content:flex-end;
 }
 
+/* Doc viewer */
+.viewer{
+  width:min(1100px, 100%);
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  height:min(92vh, 920px);
+}
+.viewer-frame{
+  width:100%;
+  height:100%;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;
+  background:#000;
+}
+.viewer-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
 /* Dashboard */
 #dashboard{
   display:none;
@@ -476,7 +558,7 @@ textarea{
   inset:0;
   z-index:4000;
   background:
-    radial-gradient(circle at top left, rgba(255,62,62,.07), transparent 30%),
+    radial-gradient(circle at top left, rgba(255,62,62,.08), transparent 28%),
     linear-gradient(180deg, #070707, #030303);
 }
 .dashboard-grid{
@@ -509,48 +591,17 @@ textarea{
 }
 .profile .name{
   font-size:20px;
-  color:var(--text);
+  color:#fff;
   margin-bottom:8px;
 }
 .profile .role{
-  color:var(--dim);
+  color:var(--muted);
   font-size:13px;
 }
 .side-block{
   margin-top:18px;
   padding-top:18px;
   border-top:1px solid rgba(255,255,255,.08);
-}
-.feed{
-  display:grid;
-  gap:12px;
-}
-.feed-item{
-  padding:14px 16px;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:14px;
-  background:rgba(255,255,255,.02);
-  font-size:12px;
-  line-height:1.7;
-}
-.terminal{
-  min-height:180px;
-  max-height:240px;
-  overflow:auto;
-  padding:16px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  background:#020202;
-  color:#9f9f9f;
-  font-size:12px;
-  line-height:1.8;
-  white-space:pre-wrap;
-}
-.grid-dashboard{
-  display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:20px;
-  margin-top:18px;
 }
 .tabs{
   display:flex;
@@ -571,10 +622,27 @@ textarea{
   background:rgba(255,62,62,.08);
   color:#fff;
 }
+.panel{
+  display:none;
+}
+.panel.active{
+  display:block;
+}
+
+/* Dock */
+.dock{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.dock button{
+  min-width:140px;
+}
 
 /* Responsive */
-@media (max-width: 980px){
-  .grid-2, .grid-3, .modal-panel, .dashboard-grid, .grid-dashboard{
+@media (max-width: 1040px){
+  .grid-2,.grid-3,.modal-panel,.dashboard-grid,.grid-dashboard,.docs-grid{
     grid-template-columns:1fr;
   }
   section{
@@ -590,55 +658,56 @@ textarea{
 }
 @media (max-width: 560px){
   h1{font-size:clamp(2.2rem, 14vw, 4rem)}
-  .hero-actions{flex-direction:column}
-  .hero-actions > *{width:100%}
+  .hero-actions,.dock,.viewer-actions{flex-direction:column}
+  .hero-actions > *, .dock > *, .viewer-actions > *{width:100%}
 }
 </style>
 </head>
-
 <body>
+
 <div class="scanline"></div>
 <div class="noise"></div>
 
-<!-- BOOT SEQUENCE -->
+<!-- BOOT -->
 <div id="boot">
   <div class="boot-panel">
-    <div class="boot-title">HEIDENBILLG CORE SYSTEM // BOOT SEQUENCE</div>
+    <div class="boot-title">HEIDENBILLG CORE SYSTEM // OS BOOT</div>
     <div id="boot-log" class="boot-line"></div>
     <div class="boot-progress"><div id="boot-fill" class="boot-fill"></div></div>
     <div class="boot-footer">
       <div id="boot-state">INITIALIZING</div>
-      <div>NODE 001 • SECURE CORE</div>
+      <div>NODE 001 • SECURE SURFACE</div>
     </div>
   </div>
 </div>
 
 <nav>
-  <div class="nav-brand" onclick="openAuth()">
-    <div class="brand-mark"></div>
-    <div class="nav-title">HEIDENBILLG</div>
+  <div class="nav-left" onclick="openAuth()">
+    <div class="brand-dot"></div>
+    <div class="brand">Heidenbillg OS</div>
   </div>
   <div class="nav-right">
-    <div class="badge" id="nav-status">PUBLIC NODE</div>
+    <div class="badge" id="system-mode">PUBLIC NODE</div>
     <div class="badge" id="scroll-stat">0%</div>
+    <div class="badge" id="census-stat">0 citizens</div>
   </div>
 </nav>
 
 <!-- PUBLIC LANDING -->
 <section id="landing">
   <div class="hero-copy">
-    <div class="kicker">01 // PUBLIC FACE • ORIGIN NODE</div>
+    <div class="kicker">01 // public face • origin node</div>
     <h1>HSA-13<br><span class="outline">WAVERIDER</span></h1>
     <p>
-      A sovereign-grade interface for identity, structure, census, logistics, and controlled access.
-      This front layer is designed to feel like a real institution: cinematic on entry, precise in operation,
-      and scalable into a true networked system later.
+      A cinematic operating surface for identity, document access, census, state logic, and private control.
+      The front layer is designed to look and feel like a real institution: polished, controlled, and alive.
     </p>
 
     <div class="hero-actions">
       <button onclick="openAuth()">ENTER SYSTEM</button>
-      <button class="secondary" onclick="document.getElementById('section-state').scrollIntoView({behavior:'smooth'})">VIEW STATE</button>
-      <button class="secondary" onclick="document.getElementById('section-census').scrollIntoView({behavior:'smooth'})">VIEW CENSUS</button>
+      <button class="secondary" onclick="document.getElementById('section-state').scrollIntoView({behavior:'smooth'})">STATE</button>
+      <button class="secondary" onclick="document.getElementById('section-census').scrollIntoView({behavior:'smooth'})">CENSUS</button>
+      <button class="secondary" onclick="document.getElementById('section-docs').scrollIntoView({behavior:'smooth'})">DOCUMENTS</button>
     </div>
 
     <div class="metric-row">
@@ -651,35 +720,45 @@ textarea{
         <div class="value" id="landing-census">0 citizens</div>
       </div>
       <div class="metric">
-        <span class="label">State mode</span>
+        <span class="label">Enrollment</span>
+        <div class="value" id="enroll-state">OPEN</div>
+      </div>
+      <div class="metric">
+        <span class="label">Access mode</span>
         <div class="value">COLD START</div>
       </div>
+    </div>
+
+    <div class="dock">
+      <button onclick="openAuth()">AUTH GATE</button>
+      <button class="secondary" onclick="openDocViewer('constitution')">OPEN CONSTITUTION</button>
+      <button class="secondary" onclick="openDocViewer('codes')">OPEN CODES</button>
+      <button class="secondary" onclick="openDocViewer('briefing')">OPEN BRIEFING</button>
     </div>
   </div>
 </section>
 
-<!-- STATE SECTION -->
+<!-- STATE -->
 <section id="section-state">
-  <div class="kicker">02 // STATE ARCHITECTURE</div>
+  <div class="kicker">02 // state architecture</div>
   <div class="grid-2">
     <div>
-      <h2>THE STATE</h2>
+      <h2>The State</h2>
       <p>
-        Thirty-three buildings. One node. Zero bureaucracy. The architecture is organized as a public narrative
-        surface, a controlled access layer, and a private operational dashboard. That separation is intentional:
-        it gives the system a visible identity, a gate, and a working core.
+        Thirty-three buildings. One node. Zero bureaucracy. The architecture is deliberately layered:
+        public narrative first, document vault next, gated identity issuance after that, and only then the private dashboard.
       </p>
 
       <div class="timeline">
         <div class="timeline-item">
           <div class="card-tag">CORE / DOMAIN 01</div>
           <div style="margin-top:6px;font-size:18px;">H-LOGIC & COMMAND</div>
-          <div class="small">Administrative logic, identity handling, and central decision flow.</div>
+          <div class="small">Administrative logic, identity control, and system orchestration.</div>
         </div>
         <div class="timeline-item">
           <div class="card-tag">CORE / DOMAIN 02</div>
           <div style="margin-top:6px;font-size:18px;">HESA & ENERGY</div>
-          <div class="small">Infrastructure, systems health, and operational continuity.</div>
+          <div class="small">Continuity, resilience, and operational stability.</div>
         </div>
         <div class="timeline-item">
           <div class="card-tag">CORE / DOMAIN 03</div>
@@ -693,7 +772,7 @@ textarea{
       <div class="card-head">
         <div>
           <div class="card-tag">SYSTEM LOG</div>
-          <h3>PUBLIC FEED</h3>
+          <h3>Public feed</h3>
         </div>
         <div class="badge">ACTIVE</div>
       </div>
@@ -702,23 +781,40 @@ textarea{
   </div>
 </section>
 
-<!-- SHIP SECTION -->
+<!-- SHIP -->
 <section id="section-ship">
-  <div class="kicker">03 // VEHICLE / TRANSIT ASSET</div>
+  <div class="kicker">03 // vessel / transit asset</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-tag">HSA-13 // WAVERIDER</div>
-      <h2>Interplanetary Corridor</h2>
+      <div class="card-head">
+        <div>
+          <div class="card-tag">HSA-13 // WAVERIDER</div>
+          <h2>Interplanetary Corridor</h2>
+        </div>
+        <div class="badge">PRIME</div>
+      </div>
       <p>
-        The vessel is presented as a high-authority transit asset, with a controlled technical aesthetic and a strong
-        identity layer. This section is visual, narrative, and operational at once.
+        The vessel is framed as a high-authority transit asset: smooth, severe, engineered, and visually coherent.
+        Its purpose is not just to look technical; it has to feel institutional.
       </p>
 
-      <div class="census-box">
-        <div class="stat-line"><span>Transfer time</span><span>72 hours</span></div>
-        <div class="stat-line"><span>Mode</span><span>Constant-flow transit</span></div>
-        <div class="stat-line"><span>Shielding</span><span>Hafnium matrix</span></div>
-        <div class="stat-line"><span>Crew</span><span>5 specialists</span></div>
+      <div class="metric-row">
+        <div class="metric">
+          <span class="label">Transfer</span>
+          <div class="value">72 hours</div>
+        </div>
+        <div class="metric">
+          <span class="label">Mode</span>
+          <div class="value">Constant-flow</div>
+        </div>
+        <div class="metric">
+          <span class="label">Shielding</span>
+          <div class="value">Hafnium matrix</div>
+        </div>
+        <div class="metric">
+          <span class="label">Crew</span>
+          <div class="value">5 specialists</div>
+        </div>
       </div>
     </div>
 
@@ -726,62 +822,122 @@ textarea{
       <div class="card-head">
         <div>
           <div class="card-tag">MOTION / STATUS</div>
-          <h3>Launch Countdown</h3>
+          <h3>Launch console</h3>
         </div>
         <div class="badge">TRACKED</div>
       </div>
       <div class="terminal" id="ship-terminal"></div>
+      <div class="dock">
+        <button onclick="openDocViewer('briefing')">OPEN BRIEFING</button>
+        <button class="secondary" onclick="copyLaunchStatus()">COPY STATUS</button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CENSUS SECTION -->
+<!-- DOCS -->
+<section id="section-docs">
+  <div class="kicker">04 // document vault</div>
+  <div class="grid-2">
+    <div>
+      <h2>Documents</h2>
+      <p>
+        This is the visible document layer. Users can open documents, save them into their local vault,
+        and download them. The system is intentionally strict: after the first citizen is created, registration closes.
+      </p>
+
+      <div class="docs-grid" id="docs-grid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-tag">SAVED VAULT</div>
+          <h3>Local document cache</h3>
+        </div>
+        <div class="badge" id="saved-count">0 saved</div>
+      </div>
+
+      <div class="small" style="margin-bottom:14px;">
+        Saved files stay in the browser vault so they can be reopened instantly.
+      </div>
+
+      <div id="saved-list" class="saved-list"></div>
+
+      <div class="dock">
+        <button class="secondary" onclick="clearSavedDocs()">CLEAR VAULT</button>
+        <button class="secondary" onclick="openDocViewer('constitution')">OPEN MAIN DOC</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CENSUS -->
 <section id="section-census">
-  <div class="kicker">04 // CENSUS PROTOCOL</div>
+  <div class="kicker">05 // census protocol</div>
   <div class="grid-2">
     <div class="card">
       <div class="card-tag">POPULATION STATE</div>
       <h2>Census</h2>
       <p>
-        The system begins at zero. Every registration increments the census and updates the live progress bar.
-        This is the simplest honest version of a sovereign growth metric: a visible count of active identities.
+        The system begins at zero. One successful registration increments the census. After that, creation closes.
+        This gives the interface a stronger institutional logic: one identity slot, one issuance event, one citizen.
       </p>
 
-      <div class="census-box">
-        <div class="stat-line"><span>Current population</span><span id="census-num">0</span></div>
-        <div class="stat-line"><span>Target</span><span>100,000</span></div>
+      <div class="metric-row">
+        <div class="metric">
+          <span class="label">Current population</span>
+          <div class="value" id="census-num">0</div>
+        </div>
+        <div class="metric">
+          <span class="label">Target</span>
+          <div class="value">100,000</div>
+        </div>
+        <div class="metric">
+          <span class="label">Enrollment</span>
+          <div class="value" id="public-enrollment">OPEN</div>
+        </div>
       </div>
 
       <div style="margin-top:20px;" class="bar">
         <div id="census-bar" class="fill"></div>
+      </div>
+
+      <div class="dock">
+        <button onclick="openAuth()">REQUEST ACCESS</button>
+        <button class="secondary" onclick="jumpToDashboard()">VIEW CONTROL ROOM</button>
       </div>
     </div>
 
     <div class="card">
       <div class="card-head">
         <div>
-          <div class="card-tag">REGISTRATION FEED</div>
-          <h3>What users see</h3>
+          <div class="card-tag">USER FLOW</div>
+          <h3>What they see</h3>
         </div>
-        <div class="badge">LIVE</div>
+        <div class="badge">VISIBLE</div>
       </div>
-      <p class="small">
-        When a user opens the gateway, they see the boot sequence first, then the landing page, then the auth modal.
-        After registration, they see their HID and password once. After login, the private dashboard opens with identity,
-        logs, messages, and state tools.
-      </p>
-      <div class="timeline" style="margin-top:16px;">
+
+      <div class="timeline">
         <div class="timeline-item">
           <div style="font-size:14px;">Boot sequence</div>
-          <div class="small">System ignition and initialization lines.</div>
+          <div class="small">The system wakes up with a proper OS-style ignition.</div>
         </div>
         <div class="timeline-item">
           <div style="font-size:14px;">Public landing</div>
-          <div class="small">Visible first impression and narrative frame.</div>
+          <div class="small">A cinematic face, not a raw tool panel.</div>
+        </div>
+        <div class="timeline-item">
+          <div style="font-size:14px;">Document vault</div>
+          <div class="small">Visible docs with open, save, and download actions.</div>
         </div>
         <div class="timeline-item">
           <div style="font-size:14px;">Auth gate</div>
-          <div class="small">Login/register modal with generated credentials.</div>
+          <div class="small">Login and registration appear as a proper system entry point.</div>
+        </div>
+        <div class="timeline-item">
+          <div style="font-size:14px;">Dashboard</div>
+          <div class="small">Identity, messages, logs, and private system actions.</div>
         </div>
       </div>
     </div>
@@ -803,7 +959,7 @@ textarea{
       <div style="display:grid;gap:12px;">
         <input id="login-hid" placeholder="HID (24 DIGITS)" autocomplete="off" />
         <input id="login-pass" type="password" placeholder="ACCESS KEY" autocomplete="off" />
-        <button class="full" onclick="login()">LOGIN</button>
+        <button class="full" onclick="login()">ACCESS NODE</button>
       </div>
 
       <div class="close-row">
@@ -817,14 +973,18 @@ textarea{
           <div class="modal-strap">IDENTITY ISSUANCE</div>
           <h2>Register</h2>
         </div>
-        <div class="badge">NEW HID</div>
+        <div class="badge" id="reg-lock-badge">OPEN</div>
+      </div>
+
+      <div class="small" style="margin-bottom:12px;">
+        This system allows only one citizen creation in this browser. After the first issuance, registration closes.
       </div>
 
       <div style="display:grid;gap:12px;">
         <input id="reg-name" placeholder="NAME" autocomplete="off" />
         <input id="reg-email" placeholder="EMAIL" autocomplete="off" />
         <input id="reg-role" placeholder="ROLE / SPECIALTY" autocomplete="off" />
-        <button class="full" onclick="register()">GENERATE HID</button>
+        <button class="full" id="register-btn" onclick="register()">GENERATE HID</button>
       </div>
 
       <div id="credentials" class="credentials">HID and password will appear here after registration.</div>
@@ -832,6 +992,28 @@ textarea{
       <div class="close-row">
         <button class="secondary" onclick="closeAuth()">CLOSE</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- DOC VIEWER -->
+<div id="doc-modal" class="modal">
+  <div class="modal-card viewer">
+    <div class="modal-head">
+      <div>
+        <div class="modal-strap">DOCUMENT VIEWER</div>
+        <h2 id="doc-title">Document</h2>
+      </div>
+      <div class="badge" id="doc-saved-badge">NOT SAVED</div>
+    </div>
+
+    <iframe id="doc-frame" class="viewer-frame" src="" title="Document Viewer"></iframe>
+
+    <div class="viewer-actions">
+      <button onclick="openDocExternal()">OPEN NEW TAB</button>
+      <button class="secondary" onclick="toggleSaveCurrentDoc()">SAVE TO VAULT</button>
+      <button class="secondary" onclick="downloadCurrentDoc()">DOWNLOAD</button>
+      <button class="secondary" onclick="closeDocViewer()">CLOSE</button>
     </div>
   </div>
 </div>
@@ -854,7 +1036,7 @@ textarea{
       <div class="side-block">
         <div class="card-tag">SYSTEM HEALTH</div>
         <div style="margin-top:12px;" class="bar">
-          <div id="health-bar" class="fill" style="width:0%"></div>
+          <div id="health-bar" class="fill"></div>
         </div>
         <div class="small" style="margin-top:8px;" id="health-text">0%</div>
       </div>
@@ -862,9 +1044,12 @@ textarea{
       <div class="side-block">
         <div class="card-tag">USER ACTIONS</div>
         <div style="display:grid;gap:10px;margin-top:12px;">
-          <button class="secondary" onclick="showTab('feed')">Feed</button>
+          <button class="secondary" onclick="showTab('overview')">Overview</button>
+          <button class="secondary" onclick="showTab('docs')">Docs</button>
           <button class="secondary" onclick="showTab('messages')">Messages</button>
           <button class="secondary" onclick="showTab('identity')">Identity</button>
+          <button class="secondary" onclick="copyHID()">Copy HID</button>
+          <button class="secondary" onclick="exportProfile()">Export Profile</button>
           <button onclick="logout()">LOGOUT</button>
         </div>
       </div>
@@ -875,18 +1060,19 @@ textarea{
         <div class="card-head">
           <div>
             <div class="card-tag">PRIVATE NODE</div>
-            <h2>Node Control Interface</h2>
+            <h2>Control Interface</h2>
           </div>
           <div class="badge" id="dashboard-state">ONLINE</div>
         </div>
 
         <div class="tabs">
-          <div class="tab active" data-tab="feed" onclick="showTab('feed')">System Feed</div>
+          <div class="tab active" data-tab="overview" onclick="showTab('overview')">Overview</div>
+          <div class="tab" data-tab="docs" onclick="showTab('docs')">Docs</div>
           <div class="tab" data-tab="messages" onclick="showTab('messages')">Messages</div>
           <div class="tab" data-tab="identity" onclick="showTab('identity')">Identity</div>
         </div>
 
-        <div id="tab-feed" class="tab-panel">
+        <div id="panel-overview" class="panel active">
           <div class="grid-dashboard">
             <div>
               <div class="terminal" id="log"></div>
@@ -895,29 +1081,64 @@ textarea{
                 <input id="msg" placeholder="Transmit message to the node..." />
                 <button onclick="sendMessage()">SEND</button>
               </div>
+
+              <div class="dock">
+                <button class="secondary" onclick="saveSessionSnapshot()">SAVE SNAPSHOT</button>
+                <button class="secondary" onclick="lockSession()">LOCK SESSION</button>
+                <button class="secondary" onclick="openDocViewer('constitution')">OPEN DOC VAULT</button>
+              </div>
             </div>
 
             <div class="card">
               <div class="card-tag">STATE SUMMARY</div>
-              <div class="small" style="margin-top:12px;line-height:1.9;">
+              <div class="small" style="margin-top:12px;line-height:2;">
                 <div>Identity layer: active</div>
                 <div>Population state: synced</div>
                 <div>Access mode: private</div>
                 <div>Launch window: monitored</div>
                 <div>Message queue: live</div>
+                <div>Document vault: available</div>
+              </div>
+
+              <div class="side-block">
+                <div class="card-tag">QUICK LINKS</div>
+                <div class="dock">
+                  <button class="secondary" onclick="showTab('docs')">Docs</button>
+                  <button class="secondary" onclick="showTab('messages')">Messages</button>
+                  <button class="secondary" onclick="showTab('identity')">Identity</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div id="tab-messages" class="tab-panel" style="display:none;">
+        <div id="panel-docs" class="panel">
+          <div class="grid-2" style="margin-top:18px;">
+            <div class="card">
+              <div class="card-tag">DOCUMENT VAULT</div>
+              <div id="dashboard-docs" class="docs-grid" style="margin-top:14px;"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-tag">SAVED VAULT</div>
+              <div class="small" style="margin-top:12px;">Saved documents remain available in this browser vault.</div>
+              <div id="dashboard-saved" class="saved-list" style="margin-top:12px;"></div>
+              <div class="dock">
+                <button class="secondary" onclick="clearSavedDocs()">CLEAR VAULT</button>
+                <button class="secondary" onclick="openDocViewer('briefing')">OPEN BRIEFING</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-messages" class="panel">
           <div class="card" style="margin-top:18px;">
             <div class="card-tag">GLOBAL MESSAGE STREAM</div>
             <div id="messages" class="feed" style="margin-top:14px;"></div>
           </div>
         </div>
 
-        <div id="tab-identity" class="tab-panel" style="display:none;">
+        <div id="panel-identity" class="panel">
           <div class="grid-2" style="margin-top:18px;">
             <div class="card">
               <div class="card-tag">CITIZEN FILE</div>
@@ -927,16 +1148,20 @@ textarea{
                 <div><strong>Email:</strong> <span id="identity-email">---</span></div>
                 <div><strong>Role:</strong> <span id="identity-role">---</span></div>
                 <div><strong>Credits:</strong> <span id="identity-credits">0</span></div>
+                <div><strong>Issued:</strong> <span id="identity-issue">---</span></div>
               </div>
             </div>
 
             <div class="card">
               <div class="card-tag">SYSTEM NOTES</div>
               <p class="small" style="margin-top:12px;">
-                This is the place where you can later wire in real backend logic:
-                Supabase tables, auth, message persistence, role permissions, and live census synchronization.
-                The visual layer is already prepared for that transition.
+                The frontend already behaves like an OS surface: boot, public layer, document vault, gated identity,
+                and private workspace. The next step is replacing local storage with Supabase tables and policies.
               </p>
+              <div class="dock">
+                <button class="secondary" onclick="copyHID()">COPY HID</button>
+                <button class="secondary" onclick="exportProfile()">EXPORT PROFILE</button>
+              </div>
             </div>
           </div>
         </div>
@@ -947,50 +1172,51 @@ textarea{
 
 <script>
 /* =========================
-   DATABASE / STATE
+   STATE / STORAGE
 ========================= */
-const STORAGE_KEY = "HB_DB_V4";
+const STORAGE_KEY = "HB_DB_OS_V1";
+
+const DOCS = [
+  {
+    id: "constitution",
+    title: "The Heidenbillg Constitution",
+    file: "The_Heidenbillg_Constitution (6).pdf",
+    desc: "Core principles, structure, and system logic."
+  },
+  {
+    id: "codes",
+    title: "The Heidenbillg Codes",
+    file: "The_Heidenbillg_Codes (1).pdf",
+    desc: "Operational rules and internal protocols."
+  },
+  {
+    id: "briefing",
+    title: "HSA-13 Technical Briefing",
+    file: "HSA_13_and_TDS_Missions (2).pdf",
+    desc: "Ship, mission, and transit specifications."
+  }
+];
 
 let DB = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
   users: [],
   messages: [],
-  census: 0
+  census: 0,
+  savedDocs: [],
+  registrationLocked: false,
+  issuedAt: null
 };
 
 let currentUser = null;
+let currentDocId = null;
 let bootComplete = false;
 
 /* =========================
-   HELPERS
+   ELEMENT HELPERS
 ========================= */
+function el(id){ return document.getElementById(id); }
+
 function saveDB(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
-}
-
-function getEl(id){
-  return document.getElementById(id);
-}
-
-function randChar(set){
-  return set[Math.floor(Math.random() * set.length)];
-}
-
-function generateHID(){
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let id = "";
-  for(let i = 0; i < 24; i++) id += randChar(chars);
-  return id;
-}
-
-function generatePass(){
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-  let pass = "";
-  for(let i = 0; i < 16; i++) pass += randChar(chars);
-  return pass;
-}
-
-function nowTime(){
-  return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
 }
 
 function escapeHtml(str){
@@ -1002,24 +1228,45 @@ function escapeHtml(str){
     .replaceAll("'","&#39;");
 }
 
+function nowTime(){
+  return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
+
+function randChar(set){
+  return set[Math.floor(Math.random() * set.length)];
+}
+
+function generateHID(){
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let id = "";
+  for(let i=0;i<24;i++) id += randChar(chars);
+  return id;
+}
+
+function generatePass(){
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+  let pass = "";
+  for(let i=0;i<16;i++) pass += randChar(chars);
+  return pass;
+}
+
 /* =========================
-   BOOT SEQUENCE
+   BOOT
 ========================= */
 const bootLines = [
   "Initializing core kernel...",
-  "Loading identity layer...",
-  "Mounting system nodes...",
+  "Loading narrative layer...",
+  "Mounting document vault...",
   "Synchronizing census protocol...",
-  "Calibrating launch corridor...",
+  "Calibrating transit systems...",
   "HEIDENBILLG CORE ONLINE"
 ];
 
 let bootIndex = 0;
 function runBoot(){
-  const log = getEl("boot-log");
-  const fill = getEl("boot-fill");
-  const state = getEl("boot-state");
-  const progress = Math.round((bootIndex / bootLines.length) * 100);
+  const log = el("boot-log");
+  const fill = el("boot-fill");
+  const state = el("boot-state");
 
   if(bootIndex < bootLines.length){
     const line = document.createElement("div");
@@ -1027,66 +1274,97 @@ function runBoot(){
     line.textContent = bootLines[bootIndex];
     log.appendChild(line);
 
-    fill.style.width = progress + "%";
+    fill.style.width = Math.round((bootIndex / bootLines.length) * 100) + "%";
     state.textContent = bootLines[bootIndex].toUpperCase();
 
     bootIndex++;
-    setTimeout(runBoot, 850);
+    setTimeout(runBoot, 800);
   }else{
     fill.style.width = "100%";
     state.textContent = "BOOT COMPLETE";
     setTimeout(() => {
-      getEl("boot").classList.add("hidden");
+      el("boot").classList.add("hidden");
       bootComplete = true;
-      updateLandingData();
-      setPublicFeed();
-      startShipTerminal();
+      document.body.style.overflow = "auto";
+      refreshAll();
+      renderDocs();
+      renderPublicFeed();
+      startShipCountdown();
+      renderSavedDocs();
+      updateEnrollmentUI();
     }, 700);
   }
 }
+document.body.style.overflow = "hidden";
 runBoot();
 
 /* =========================
-   PUBLIC FEED
+   PUBLIC FEED / STATE
 ========================= */
-function setPublicFeed(){
-  const feed = getEl("public-feed");
+function renderPublicFeed(){
+  const feed = el("public-feed");
   const items = [
     "Public node active. Narrative layer online.",
-    "Identity and census systems synchronized.",
-    "Auth gate available for controlled access.",
-    "Launch corridor monitoring enabled."
+    "Identity gateway standing by.",
+    "Document vault visible to visitors.",
+    "Census system initialized at zero."
   ];
-  feed.innerHTML = items.map(t => `
+  feed.innerHTML = items.map((t, i) => `
     <div class="feed-item">
-      <div class="card-tag">SYSTEM</div>
+      <div class="card-tag">PUBLIC</div>
       <div style="margin-top:6px;">${escapeHtml(t)}</div>
       <div class="small" style="margin-top:8px;">${nowTime()}</div>
     </div>
   `).join("");
 }
 
-/* =========================
-   LANDING / CENSUS / SHIP
-========================= */
-function updateLandingData(){
-  getEl("landing-census").textContent = `${DB.census} citizens`;
-  getEl("census-num").textContent = DB.census.toLocaleString();
-  getEl("census-bar").style.width = `${Math.min((DB.census / 100000) * 100, 100)}%`;
+function refreshAll(){
+  el("landing-census").textContent = `${DB.census} citizens`;
+  el("census-num").textContent = DB.census.toLocaleString();
+  el("census-stat").textContent = `${DB.census} citizens`;
+  el("census-bar").style.width = `${Math.min((DB.census / 100000) * 100, 100)}%`;
+  el("public-enrollment").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
+  el("enroll-state").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
+  el("reg-lock-badge").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
+  el("register-btn").disabled = DB.registrationLocked;
+  el("register-btn").style.opacity = DB.registrationLocked ? "0.45" : "1";
+  el("register-btn").textContent = DB.registrationLocked ? "REGISTRATION CLOSED" : "GENERATE HID";
   updateScrollStat();
+  renderSavedDocs();
+  if(currentUser) populateDashboard();
 }
 
-function startShipTerminal(){
+function updateEnrollmentUI(){
+  const closed = DB.registrationLocked;
+  el("reg-lock-badge").textContent = closed ? "CLOSED" : "OPEN";
+  el("register-btn").disabled = closed;
+  el("register-btn").style.opacity = closed ? "0.45" : "1";
+  el("register-btn").textContent = closed ? "REGISTRATION CLOSED" : "GENERATE HID";
+}
+
+/* =========================
+   SCROLL
+========================= */
+function updateScrollStat(){
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0;
+  el("scroll-stat").textContent = pct + "%";
+}
+window.addEventListener("scroll", updateScrollStat);
+
+/* =========================
+   SHIP COUNTDOWN
+========================= */
+function startShipCountdown(){
   const target = new Date("2028-04-01T00:00:00").getTime();
-  const terminal = getEl("ship-terminal");
+  const terminal = el("ship-terminal");
 
   function tick(){
-    const now = Date.now();
-    const dist = target - now;
+    const dist = target - Date.now();
 
     if(dist <= 0){
-      terminal.textContent = "LANZAMIENTO INICIADO";
-      getEl("countdown").textContent = "LAUNCHED";
+      terminal.innerHTML = "LANZAMIENTO INICIATED";
+      el("countdown").textContent = "LAUNCHED";
       return;
     }
 
@@ -1096,7 +1374,7 @@ function startShipTerminal(){
     const seconds = Math.floor((dist % (1000 * 60)) / 1000);
 
     const cd = `${String(days).padStart(3,"0")}D : ${String(hours).padStart(2,"0")}H : ${String(minutes).padStart(2,"0")}M : ${String(seconds).padStart(2,"0")}S`;
-    getEl("countdown").textContent = cd;
+    el("countdown").textContent = cd;
 
     terminal.innerHTML = [
       `> Launch window: ${cd}`,
@@ -1111,87 +1389,221 @@ function startShipTerminal(){
 }
 
 /* =========================
-   SCROLL STAT
-========================= */
-function updateScrollStat(){
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0;
-  getEl("scroll-stat").textContent = pct + "%";
-}
-window.addEventListener("scroll", updateScrollStat);
-
-/* =========================
    AUTH MODAL
 ========================= */
 function openAuth(){
   if(!bootComplete) return;
-  getEl("auth-modal").classList.add("open");
+  el("auth-modal").classList.add("open");
   document.body.style.overflow = "hidden";
 }
 
 function closeAuth(){
-  getEl("auth-modal").classList.remove("open");
+  el("auth-modal").classList.remove("open");
   document.body.style.overflow = "auto";
 }
 
-function openGateway(){
-  openAuth();
-}
-
-getEl("auth-modal").addEventListener("click", (e) => {
+el("auth-modal").addEventListener("click", (e) => {
   if(e.target.id === "auth-modal") closeAuth();
 });
 
 /* =========================
-   REGISTER
+   DOCS
 ========================= */
-function register(){
-  const name = getEl("reg-name").value.trim();
-  const email = getEl("reg-email").value.trim();
-  const role = getEl("reg-role").value.trim();
+function renderDocs(){
+  const grid = el("docs-grid");
+  const dash = el("dashboard-docs");
 
-  if(!name || !email || !role){
-    getEl("credentials").textContent = "ERROR: NAME, EMAIL, AND ROLE ARE REQUIRED.";
+  const html = DOCS.map(doc => {
+    const saved = DB.savedDocs.includes(doc.id);
+    return `
+      <div class="doc-card">
+        <div>
+          <div class="card-tag">${saved ? "SAVED" : "DOC"}</div>
+          <h3 style="margin-top:6px;">${escapeHtml(doc.title)}</h3>
+          <div class="small">${escapeHtml(doc.desc)}</div>
+        </div>
+        <div class="doc-actions">
+          <button onclick="openDocViewer('${doc.id}')">OPEN</button>
+          <button class="secondary" onclick="toggleSaveDoc('${doc.id}')">${saved ? "UNSAVE" : "SAVE"}</button>
+          <button class="secondary" onclick="downloadDoc('${doc.id}')">DOWNLOAD</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  grid.innerHTML = html;
+  dash.innerHTML = html;
+}
+
+function getDocById(id){
+  return DOCS.find(d => d.id === id);
+}
+
+function openDocViewer(id){
+  const doc = getDocById(id);
+  if(!doc) return;
+
+  currentDocId = id;
+  el("doc-title").textContent = doc.title;
+  el("doc-frame").src = doc.file;
+  el("doc-saved-badge").textContent = DB.savedDocs.includes(id) ? "SAVED" : "NOT SAVED";
+  el("doc-modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDocViewer(){
+  el("doc-modal").classList.remove("open");
+  document.body.style.overflow = "auto";
+}
+
+el("doc-modal").addEventListener("click", (e) => {
+  if(e.target.id === "doc-modal") closeDocViewer();
+});
+
+function openDocExternal(){
+  const doc = getDocById(currentDocId);
+  if(!doc) return;
+  window.open(doc.file, "_blank");
+}
+
+function downloadDoc(id){
+  const doc = getDocById(id);
+  if(!doc) return;
+  const a = document.createElement("a");
+  a.href = doc.file;
+  a.download = doc.file.split("/").pop();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function downloadCurrentDoc(){
+  if(!currentDocId) return;
+  downloadDoc(currentDocId);
+}
+
+function toggleSaveDoc(id){
+  const idx = DB.savedDocs.indexOf(id);
+  if(idx >= 0){
+    DB.savedDocs.splice(idx, 1);
+  }else{
+    DB.savedDocs.push(id);
+  }
+  saveDB();
+  renderDocs();
+  renderSavedDocs();
+  refreshDocViewerBadge();
+}
+
+function toggleSaveCurrentDoc(){
+  if(!currentDocId) return;
+  toggleSaveDoc(currentDocId);
+  refreshDocViewerBadge();
+}
+
+function refreshDocViewerBadge(){
+  if(!currentDocId) return;
+  el("doc-saved-badge").textContent = DB.savedDocs.includes(currentDocId) ? "SAVED" : "NOT SAVED";
+}
+
+function renderSavedDocs(){
+  const list = el("saved-list");
+  const dash = el("dashboard-saved");
+
+  el("saved-count").textContent = `${DB.savedDocs.length} saved`;
+
+  if(DB.savedDocs.length === 0){
+    const empty = `<div class="saved-item"><span>No saved documents yet.</span><span class="muted">Vault empty</span></div>`;
+    list.innerHTML = empty;
+    dash.innerHTML = empty;
     return;
   }
 
-  const hid = generateHID();
-  const pass = generatePass();
+  const html = DB.savedDocs.map(id => {
+    const doc = getDocById(id);
+    if(!doc) return "";
+    return `
+      <div class="saved-item">
+        <span>${escapeHtml(doc.title)}</span>
+        <span style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="secondary" onclick="openDocViewer('${doc.id}')">OPEN</button>
+          <button class="secondary" onclick="toggleSaveDoc('${doc.id}')">REMOVE</button>
+        </span>
+      </div>
+    `;
+  }).join("");
+
+  list.innerHTML = html;
+  dash.innerHTML = html;
+}
+
+function clearSavedDocs(){
+  DB.savedDocs = [];
+  saveDB();
+  renderDocs();
+  renderSavedDocs();
+  refreshDocViewerBadge();
+}
+
+/* =========================
+   REGISTER / LOGIN
+========================= */
+function register(){
+  if(DB.registrationLocked || DB.users.length >= 1){
+    DB.registrationLocked = true;
+    saveDB();
+    updateEnrollmentUI();
+    alert("REGISTRATION CLOSED: this browser already has a citizen issued.");
+    return;
+  }
+
+  const name = el("reg-name").value.trim();
+  const email = el("reg-email").value.trim();
+  const role = el("reg-role").value.trim();
+
+  if(!name || !email || !role){
+    el("credentials").textContent = "ERROR: NAME, EMAIL, AND ROLE ARE REQUIRED.";
+    return;
+  }
 
   const user = {
-    hid,
-    pass,
+    hid: generateHID(),
+    pass: generatePass(),
     name,
     email,
     role,
-    credits: 100
+    credits: 100,
+    issuedAt: new Date().toISOString()
   };
 
   DB.users.push(user);
   DB.census += 1;
+  DB.registrationLocked = true;
+  DB.issuedAt = user.issuedAt;
   saveDB();
-  updateLandingData();
 
-  getEl("credentials").textContent =
+  el("credentials").textContent =
 `HID:
-${hid}
+${user.hid}
 
 PASSWORD:
-${pass}
+${user.pass}
 
 SAVE THESE CREDENTIALS NOW.
-THE PASSWORD WILL NOT BE SHOWN AGAIN AFTER YOU CLOSE THIS WINDOW.`;
+REGISTRATION CLOSES AFTER THIS ISSUE.`;
 
-  logPublic(`New citizen registered: ${name}`);
-  setPublicFeed();
+  renderPublicFeed();
+  refreshAll();
+  renderDocs();
+  updateEnrollmentUI();
+
+  logPublic(`New citizen issued: ${name}`);
+  alert("CITIZEN CREATED. REGISTRATION IS NOW CLOSED IN THIS BROWSER.");
 }
 
-/* =========================
-   LOGIN
-========================= */
 function login(){
-  const hid = getEl("login-hid").value.trim();
-  const pass = getEl("login-pass").value.trim();
+  const hid = el("login-hid").value.trim();
+  const pass = el("login-pass").value.trim();
 
   const u = DB.users.find(x => x.hid === hid && x.pass === pass);
   if(!u){
@@ -1200,44 +1612,48 @@ function login(){
   }
 
   currentUser = u;
-
-  getEl("dashboard").style.display = "block";
+  el("dashboard").style.display = "block";
   closeAuth();
   document.body.style.overflow = "hidden";
 
   populateDashboard();
+  showTab("overview");
   logPrivate("SYSTEM ACCESS GRANTED");
-  showTab("feed");
+  loadMessages();
+}
+
+function logout(){
+  currentUser = null;
+  el("dashboard").style.display = "none";
+  document.body.style.overflow = "auto";
+  logPublic("User session ended.");
 }
 
 /* =========================
-   DASHBOARD POPULATION
+   DASHBOARD
 ========================= */
 function populateDashboard(){
-  getEl("user-hid").textContent = currentUser.hid;
-  getEl("user-name").textContent = currentUser.name;
-  getEl("user-role").textContent = currentUser.role;
-  getEl("user-credits").textContent = currentUser.credits.toLocaleString();
+  el("user-hid").textContent = currentUser.hid;
+  el("user-name").textContent = currentUser.name;
+  el("user-role").textContent = currentUser.role;
+  el("user-credits").textContent = currentUser.credits.toLocaleString();
 
-  getEl("identity-hid").textContent = currentUser.hid;
-  getEl("identity-name").textContent = currentUser.name;
-  getEl("identity-email").textContent = currentUser.email;
-  getEl("identity-role").textContent = currentUser.role;
-  getEl("identity-credits").textContent = currentUser.credits.toLocaleString();
+  el("identity-hid").textContent = currentUser.hid;
+  el("identity-name").textContent = currentUser.name;
+  el("identity-email").textContent = currentUser.email;
+  el("identity-role").textContent = currentUser.role;
+  el("identity-credits").textContent = currentUser.credits.toLocaleString();
+  el("identity-issue").textContent = currentUser.issuedAt ? new Date(currentUser.issuedAt).toLocaleString() : "—";
 
-  const health = Math.min(20 + DB.census, 100);
-  getEl("health-bar").style.width = health + "%";
-  getEl("health-text").textContent = `${health}%`;
+  const health = Math.min(18 + DB.census, 100);
+  el("health-bar").style.width = health + "%";
+  el("health-text").textContent = `${health}%`;
 }
 
-/* =========================
-   TAB CONTROL
-========================= */
 function showTab(tab){
-  ["feed","messages","identity"].forEach(t => {
-    const panel = getEl("tab-" + t);
+  ["overview","docs","messages","identity"].forEach(t => {
+    el("panel-" + t).classList.toggle("active", t === tab);
     const tabBtn = document.querySelector(`.tab[data-tab="${t}"]`);
-    if(panel) panel.style.display = (t === tab) ? "block" : "none";
     if(tabBtn) tabBtn.classList.toggle("active", t === tab);
   });
 }
@@ -1248,7 +1664,7 @@ function showTab(tab){
 function sendMessage(){
   if(!currentUser) return;
 
-  const text = getEl("msg").value.trim();
+  const text = el("msg").value.trim();
   if(!text) return;
 
   DB.messages.push({
@@ -1259,13 +1675,13 @@ function sendMessage(){
   });
 
   saveDB();
-  getEl("msg").value = "";
+  el("msg").value = "";
   loadMessages();
   logPrivate("Message transmitted.");
 }
 
 function loadMessages(){
-  const box = getEl("messages");
+  const box = el("messages");
 
   if(DB.messages.length === 0){
     box.innerHTML = `<div class="feed-item">No messages yet.</div>`;
@@ -1285,9 +1701,7 @@ function loadMessages(){
    LOGS
 ========================= */
 function logPublic(message){
-  const feed = getEl("public-feed");
-  if(!feed) return;
-
+  const feed = el("public-feed");
   const item = document.createElement("div");
   item.className = "feed-item";
   item.innerHTML = `
@@ -1299,34 +1713,111 @@ function logPublic(message){
 }
 
 function logPrivate(message){
-  const log = getEl("log");
-  if(!log) return;
+  const log = el("log");
   log.innerHTML += `> [${nowTime()}] ${escapeHtml(message)}<br>`;
   log.scrollTop = log.scrollHeight;
 }
 
 /* =========================
-   LOGOUT
+   UTILITIES
 ========================= */
-function logout(){
-  currentUser = null;
-  getEl("dashboard").style.display = "none";
-  document.body.style.overflow = "auto";
-  logPublic("User session ended.");
-  setPublicFeed();
+function openDocViewerFromButton(id){
+  openDocViewer(id);
+}
+
+function saveSessionSnapshot(){
+  const snapshot = {
+    currentUser,
+    census: DB.census,
+    savedDocs: DB.savedDocs,
+    messages: DB.messages.slice(-10),
+    at: new Date().toISOString()
+  };
+
+  const blob = new Blob([JSON.stringify(snapshot, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "heidenbillg-session-snapshot.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+
+  logPrivate("Session snapshot exported.");
+}
+
+function exportProfile(){
+  if(!currentUser) return;
+
+  const profile = {
+    hid: currentUser.hid,
+    name: currentUser.name,
+    email: currentUser.email,
+    role: currentUser.role,
+    credits: currentUser.credits,
+    issuedAt: currentUser.issuedAt,
+    census: DB.census
+  };
+
+  const blob = new Blob([JSON.stringify(profile, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "heidenbillg-profile.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+
+  logPrivate("Profile exported.");
+}
+
+async function copyHID(){
+  if(!currentUser) return;
+  try{
+    await navigator.clipboard.writeText(currentUser.hid);
+    logPrivate("HID copied to clipboard.");
+  }catch{
+    alert("Clipboard access unavailable in this browser context.");
+  }
+}
+
+function copyLaunchStatus(){
+  const text = `HEIDENBILLG OS // HSA-13 WAVERIDER // launch: ${el("countdown").textContent}`;
+  navigator.clipboard?.writeText(text).catch(()=>{});
+  logPublic("Launch status copied.");
+}
+
+function lockSession(){
+  logout();
+  alert("Session locked.");
+}
+
+function jumpToDashboard(){
+  if(currentUser){
+    document.getElementById("dashboard").style.display = "block";
+    document.body.style.overflow = "hidden";
+  }else{
+    openAuth();
+  }
 }
 
 /* =========================
-   INITIAL HYGIENE
+   INITIAL RENDER
 ========================= */
-updateLandingData();
+renderDocs();
+renderSavedDocs();
+refreshAll();
+updateEnrollmentUI();
+showTab("overview");
 loadMessages();
-showTab("feed");
 
-/* Optional: enter key submit in auth */
+/* keyboard escape closes overlays */
 document.addEventListener("keydown", (e) => {
   if(e.key === "Escape"){
     closeAuth();
+    closeDocViewer();
   }
 });
 </script>
