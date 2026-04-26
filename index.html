@@ -1,13 +1,12 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HEIDENBILLG OS // CIVIC PORTAL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEIDENBILLG OS | ESTADO DIGITAL</title>
 <style>
 :root{
   --bg:#030303;
   --panel:#101010;
-  --panel2:#151515;
   --line:#1c1c1c;
   --accent:#ff4a4a;
   --accent2:#ff7b7b;
@@ -17,7 +16,6 @@
   --text:#f4f4f4;
   --muted:#9b9b9b;
   --shadow:0 24px 80px rgba(0,0,0,.36);
-  --r:20px;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -131,11 +129,8 @@ textarea{resize:none;min-height:110px}
 .update-item{padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02)}
 .department-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
 .department{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);display:grid;gap:10px}
-.dashboard-notice{padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);margin-top:14px}
 .challenge-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
 .challenge{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);display:grid;gap:10px}
-.challenge .reward{color:var(--ok);font-size:12px}
-.challenge .done{color:var(--info);font-size:12px}
 .credit-bar-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-top:12px}
 .footer{padding:28px 10% 48px;color:var(--muted);font-family:var(--sans);line-height:1.8}
 @media (max-width:1120px){
@@ -155,270 +150,289 @@ textarea{resize:none;min-height:110px}
 <div class="scanline"></div>
 <div class="noise"></div><div id="boot">
   <div class="boot-panel">
-    <div class="boot-title">HEIDENBILLG OS // CIVIC BOOT</div>
+    <div class="boot-title">HEIDENBILLG OS // ARRANQUE CIVIL</div>
     <div id="boot-log" class="boot-line"></div>
     <div class="boot-progress"><div id="boot-fill" class="boot-fill"></div></div>
     <div class="boot-footer">
-      <div id="boot-state">INITIALIZING</div>
-      <div>NODE 001 • GOVERNMENT SURFACE</div>
+      <div id="boot-state">INICIALIZANDO</div>
+      <div>NODO 001 • INTERFAZ GUBERNAMENTAL</div>
     </div>
   </div>
 </div><nav>
   <div class="nav-left" onclick="openAuth()"><div class="brand-dot"></div><div class="brand">Heidenbillg OS</div></div>
   <div class="nav-right">
-    <div class="badge" id="system-mode">PUBLIC NODE</div>
+    <div class="badge" id="system-mode">NODO PÚBLICO</div>
     <div class="badge" id="scroll-stat">0%</div>
-    <div class="badge" id="census-stat">0 citizens</div>
-    <div class="badge" id="credit-stat">0 credits</div>
+    <div class="badge" id="census-stat">0 ciudadanos</div>
+    <div class="badge" id="credit-stat">0 créditos</div>
   </div>
 </nav><section id="landing">
   <div class="hero-copy">
-    <div class="kicker">01 // public face • citizen front</div>
-    <h1>Welcome<br><span class="outline">Home</span></h1>
-    <p>Public services, documents, updates, missions, and citizen access in one place. Short text. More action.</p>
+    <div class="kicker">01 // frente público • acceso ciudadano</div>
+    <h1>Bienvenido<br><span class="outline">A Casa</span></h1>
+    <p>Portal civil con noticias, documentos, servicios, misiones y acceso ciudadano. Menos texto. Más acción.</p>
     <div class="hero-actions">
-      <button onclick="openAuth()">ENTER SYSTEM</button>
-      <button class="secondary" onclick="scrollToSection('section-updates')">UPDATES</button>
-      <button class="secondary" onclick="scrollToSection('section-docs')">DOCUMENTS</button>
-      <button class="secondary" onclick="scrollToSection('section-services')">SERVICES</button>
-      <button class="secondary" onclick="scrollToSection('section-challenges')">MISSIONS</button>
-      <button class="secondary" onclick="scrollToSection('section-help')">HELP</button>
+      <button onclick="openAuth()">ENTRAR</button>
+      <button class="secondary" onclick="scrollToSection('section-updates')">NOTICIAS</button>
+      <button class="secondary" onclick="scrollToSection('section-docs')">DOCUMENTOS</button>
+      <button class="secondary" onclick="scrollToSection('section-services')">SERVICIOS</button>
+      <button class="secondary" onclick="scrollToSection('section-challenges')">MISIONES</button>
+      <button class="secondary" onclick="scrollToSection('section-help')">AYUDA</button>
     </div>
     <div class="metric-row">
-      <div class="metric"><span class="label">Launch window</span><div class="value" id="countdown">000D : 00H : 00M : 00S</div></div>
-      <div class="metric"><span class="label">Census</span><div class="value" id="landing-census">0 citizens</div></div>
-      <div class="metric"><span class="label">Enrollment</span><div class="value" id="enroll-state">OPEN</div></div>
-      <div class="metric"><span class="label">Daily credits</span><div class="value">+100</div></div>
+      <div class="metric"><span class="label">Cuenta atrás</span><div class="value" id="countdown">000D : 00H : 00M : 00S</div></div>
+      <div class="metric"><span class="label">Censo</span><div class="value" id="landing-census">0 ciudadanos</div></div>
+      <div class="metric"><span class="label">Alta</span><div class="value" id="enroll-state">ABIERTA</div></div>
+      <div class="metric"><span class="label">Créditos diarios</span><div class="value">+100</div></div>
     </div>
     <div class="dock">
-      <button onclick="openAuth()">AUTH GATE</button>
-      <button class="secondary" onclick="openDocViewer('constitution')">CONSTITUTION</button>
-      <button class="secondary" onclick="openDocViewer('codes')">CODES</button>
+      <button onclick="openAuth()">PUERTA</button>
+      <button class="secondary" onclick="openDocViewer('constitution')">CONSTITUCIÓN</button>
+      <button class="secondary" onclick="openDocViewer('codes')">CÓDIGOS</button>
       <button class="secondary" onclick="openDocViewer('briefing')">BRIEFING</button>
-      <button class="secondary" onclick="scrollToSection('section-challenges')">MONEY MISSIONS</button>
+      <button class="secondary" onclick="scrollToSection('section-challenges')">CRÉDITOS</button>
     </div>
   </div>
 </section><section id="section-state">
-  <div class="kicker">02 // state architecture</div>
+  <div class="kicker">02 // arquitectura del estado</div>
   <div class="grid-2">
     <div>
-      <h2>The State</h2>
-      <p>Departments, notices, services, documents, and actions. Keep it visible. Keep it usable.</p>
+      <h2>El Estado</h2>
       <div class="department-grid">
-        <div class="department"><div class="card-tag">DEPARTMENT 01</div><strong>Citizen Affairs</strong><div class="small">Identity and profile.</div><button class="secondary" onclick="scrollToSection('section-help')">OPEN</button></div>
-        <div class="department"><div class="card-tag">DEPARTMENT 02</div><strong>Public Works</strong><div class="small">Updates and notices.</div><button class="secondary" onclick="scrollToSection('section-updates')">OPEN</button></div>
-        <div class="department"><div class="card-tag">DEPARTMENT 03</div><strong>Records</strong><div class="small">Documents and vault.</div><button class="secondary" onclick="scrollToSection('section-docs')">OPEN</button></div>
+        <div class="department"><div class="card-tag">DEPARTAMENTO 01</div><strong>Ciudadanía</strong><div class="small">Identidad y perfil.</div><button class="secondary" onclick="scrollToSection('section-help')">ABRIR</button></div>
+        <div class="department"><div class="card-tag">DEPARTAMENTO 02</div><strong>Obras Públicas</strong><div class="small">Avisos y actualizaciones.</div><button class="secondary" onclick="scrollToSection('section-updates')">ABRIR</button></div>
+        <div class="department"><div class="card-tag">DEPARTAMENTO 03</div><strong>Registro</strong><div class="small">Documentos y archivo.</div><button class="secondary" onclick="scrollToSection('section-docs')">ABRIR</button></div>
       </div>
       <div class="timeline">
-        <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Fast access</div><div class="small">Buttons first. Text second.</div></div>
-        <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Human tone</div><div class="small">Simple, direct, real.</div></div>
+        <div class="timeline-item"><div class="card-tag">CAPA CIVIL</div><div style="margin-top:6px;font-size:18px;">Acceso rápido</div><div class="small">Botones primero. Texto después.</div></div>
+        <div class="timeline-item"><div class="card-tag">CAPA CIVIL</div><div style="margin-top:6px;font-size:18px;">Tono humano</div><div class="small">Simple, directo y real.</div></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">SYSTEM LOG</div><h3>Public feed</h3></div><div class="badge">ACTIVE</div></div>
+      <div class="card-head"><div><div class="card-tag">REGISTRO</div><h3>Actividad pública</h3></div><div class="badge">ACTIVO</div></div>
       <div id="public-feed" class="feed"></div>
     </div>
   </div>
 </section><section id="section-updates">
-  <div class="kicker">03 // updates</div>
+  <div class="kicker">03 // noticias y avisos</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">NOTICEBOARD</div><h2>Official updates</h2></div><div class="badge">LIVE</div></div>
+      <div class="card-head"><div><div class="card-tag">TABLÓN</div><h2>Actualizaciones oficiales</h2></div><div class="badge">EN VIVO</div></div>
+      <div style="display:grid;gap:12px;margin-bottom:14px;">
+        <input id="updates-search" placeholder="Buscar avisos..." autocomplete="off">
+        <div class="dock">
+          <button class="secondary" onclick="filterUpdates()">BUSCAR</button>
+          <button class="secondary" onclick="clearUpdateFilter()">LIMPIAR</button>
+          <button class="secondary" onclick="scrollToSection('section-docs')">IR A DOCS</button>
+        </div>
+      </div>
       <div id="notice-list" class="notice-grid"></div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">EDITOR</div><h3>Post update</h3></div><div class="badge info">ADMIN</div></div>
+      <div class="card-head"><div><div class="card-tag">EDITOR</div><h3>Publicar aviso</h3></div><div class="badge info">ADMIN</div></div>
       <div style="display:grid;gap:12px;">
-        <input id="admin-code" placeholder="ADMIN CODE" autocomplete="off" />
-        <button class="secondary" onclick="unlockAdmin()">UNLOCK</button>
-        <input id="update-title" placeholder="Title" autocomplete="off" />
-        <textarea id="update-body" placeholder="Short update..."></textarea>
-        <select id="update-type"><option value="general">General</option><option value="urgent">Urgent</option><option value="service">Service</option><option value="alert">Alert</option></select>
+        <input id="admin-code" placeholder="CÓDIGO ADMIN" autocomplete="off">
+        <button class="secondary" onclick="unlockAdmin()">DESBLOQUEAR</button>
+        <input id="update-title" placeholder="Título" autocomplete="off">
+        <textarea id="update-body" placeholder="Escribe el aviso..." style="min-height:90px"></textarea>
+        <select id="update-type"><option value="general">General</option><option value="urgent">Urgente</option><option value="service">Servicio</option><option value="alert">Alerta</option></select>
         <div class="dock">
-          <button onclick="postUpdate()">PUBLISH</button>
-          <button class="secondary" onclick="pinLatestUpdate()">PIN</button>
-          <button class="secondary" onclick="toggleEmergency()">EMERGENCY</button>
+          <button onclick="postUpdate()">PUBLICAR</button>
+          <button class="secondary" onclick="pinLatestUpdate()">FIJAR</button>
+          <button class="secondary" onclick="toggleEmergency()">EMERGENCIA</button>
         </div>
       </div>
+      <div class="dashboard-notice small" id="admin-hint">Consejo: usa avisos cortos. El tablero funciona mejor con texto limpio.</div>
     </div>
   </div>
 </section><section id="section-ship">
-  <div class="kicker">04 // vessel</div>
+  <div class="kicker">04 // nave</div>
   <div class="grid-2">
     <div class="card">
       <div class="card-head"><div><div class="card-tag">HSA-13</div><h2>Waverider</h2></div><div class="badge">PRIME</div></div>
       <div class="metric-row">
-        <div class="metric"><span class="label">Transfer</span><div class="value">72 hours</div></div>
-        <div class="metric"><span class="label">Mode</span><div class="value">Constant-flow</div></div>
-        <div class="metric"><span class="label">Shielding</span><div class="value">Hafnium</div></div>
-        <div class="metric"><span class="label">Crew</span><div class="value">5</div></div>
+        <div class="metric"><span class="label">Tránsito</span><div class="value">72 horas</div></div>
+        <div class="metric"><span class="label">Modo</span><div class="value">Flujo constante</div></div>
+        <div class="metric"><span class="label">Blindaje</span><div class="value">Hafnio</div></div>
+        <div class="metric"><span class="label">Tripulación</span><div class="value">5</div></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">STATUS</div><h3>Launch</h3></div><div class="badge">TRACKED</div></div>
+      <div class="card-head"><div><div class="card-tag">ESTADO</div><h3>Lanzamiento</h3></div><div class="badge">SEGUIMIENTO</div></div>
       <div class="terminal" id="ship-terminal"></div>
       <div class="dock">
         <button onclick="openDocViewer('briefing')">BRIEFING</button>
-        <button class="secondary" onclick="copyLaunchStatus()">COPY</button>
+        <button class="secondary" onclick="copyLaunchStatus()">COPIAR</button>
       </div>
     </div>
   </div>
 </section><section id="section-docs">
-  <div class="kicker">05 // documents</div>
+  <div class="kicker">05 // documentos</div>
   <div class="grid-2">
     <div>
-      <h2>Documents</h2>
+      <h2>Documentos</h2>
+      <div style="display:grid;gap:12px;margin-bottom:14px;">
+        <input id="docs-search" placeholder="Buscar documentos..." autocomplete="off">
+        <div class="dock">
+          <button class="secondary" onclick="filterDocs()">BUSCAR</button>
+          <button class="secondary" onclick="clearDocFilter()">LIMPIAR</button>
+        </div>
+      </div>
       <div class="docs-grid" id="docs-grid"></div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">SAVED VAULT</div><h3>Local cache</h3></div><div class="badge" id="saved-count">0 saved</div></div>
+      <div class="card-head"><div><div class="card-tag">VAULT</div><h3>Guardados</h3></div><div class="badge" id="saved-count">0</div></div>
       <div id="saved-list" class="saved-list"></div>
       <div class="dock">
-        <button class="secondary" onclick="clearSavedDocs()">CLEAR</button>
-        <button class="secondary" onclick="openDocViewer('constitution')">OPEN MAIN</button>
+        <button class="secondary" onclick="clearSavedDocs()">BORRAR</button>
+        <button class="secondary" onclick="openDocViewer('constitution')">ABRIR PRINCIPAL</button>
       </div>
     </div>
   </div>
 </section><section id="section-services">
-  <div class="kicker">06 // services</div>
+  <div class="kicker">06 // servicios</div>
   <div class="grid-2">
     <div>
-      <h2>Services</h2>
+      <h2>Servicios</h2>
       <div class="service-grid">
-        <div class="service"><div class="card-tag">SERVICE 01</div><strong>Support</strong><button class="secondary" onclick="serviceToast('Support opened.')">OPEN</button></div>
-        <div class="service"><div class="card-tag">SERVICE 02</div><strong>Notices</strong><button class="secondary" onclick="scrollToSection('section-updates')">VIEW</button></div>
-        <div class="service"><div class="card-tag">SERVICE 03</div><strong>Documents</strong><button class="secondary" onclick="openDocViewer('briefing')">OPEN</button></div>
+        <div class="service"><div class="card-tag">SERVICIO 01</div><strong>Ayuda</strong><button class="secondary" onclick="serviceToast('Ayuda abierta.')">ABRIR</button></div>
+        <div class="service"><div class="card-tag">SERVICIO 02</div><strong>Avisos</strong><button class="secondary" onclick="scrollToSection('section-updates')">VER</button></div>
+        <div class="service"><div class="card-tag">SERVICIO 03</div><strong>Documentos</strong><button class="secondary" onclick="openDocViewer('briefing')">ABRIR</button></div>
+        <div class="service"><div class="card-tag">SERVICIO 04</div><strong>Misiones</strong><button class="secondary" onclick="scrollToSection('section-challenges')">ABRIR</button></div>
+        <div class="service"><div class="card-tag">SERVICIO 05</div><strong>Solicitudes</strong><button class="secondary" onclick="scrollToSection('section-requests')">ABRIR</button></div>
+        <div class="service"><div class="card-tag">SERVICIO 06</div><strong>Créditos</strong><button class="secondary" onclick="scrollToSection('section-challenges')">ABRIR</button></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">SERVICE FEED</div><h3>Today</h3></div><div class="badge">LIVE</div></div>
+      <div class="card-head"><div><div class="card-tag">FEED</div><h3>Hoy</h3></div><div class="badge">EN VIVO</div></div>
       <div id="service-feed" class="feed"></div>
     </div>
   </div>
 </section><section id="section-challenges">
-  <div class="kicker">07 // missions</div>
+  <div class="kicker">07 // misiones</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">CREDITS</div><h2>Earn more</h2></div><div class="badge ok">+100 / DAY</div></div>
-      <p>Start at 0. Get 100 every day. Earn extra through missions.</p>
+      <div class="card-head"><div><div class="card-tag">CRÉDITOS</div><h2>Gana más</h2></div><div class="badge ok">+100 / DÍA</div></div>
+      <p>Empiezas con 0. Recibes 100 al día. Ganas más con misiones.</p>
       <div class="metric-row">
-        <div class="metric"><span class="label">Balance</span><div class="value" id="credit-balance">0</div></div>
-        <div class="metric"><span class="label">Today</span><div class="value" id="daily-status">READY</div></div>
-        <div class="metric"><span class="label">Streak</span><div class="value" id="daily-streak">0</div></div>
+        <div class="metric"><span class="label">Saldo</span><div class="value" id="credit-balance">0</div></div>
+        <div class="metric"><span class="label">Hoy</span><div class="value" id="daily-status">LISTO</div></div>
+        <div class="metric"><span class="label">Racha</span><div class="value" id="daily-streak">0</div></div>
+        <div class="metric"><span class="label">Próximo</span><div class="value" id="next-daily">--:--</div></div>
       </div>
       <div class="credit-bar-row">
         <div class="bar"><div id="credit-bar" class="fill"></div></div>
-        <div class="badge" id="credit-cap">CIVIC WALLET</div>
+        <div class="badge" id="credit-cap">BOLSA CIVIL</div>
       </div>
       <div class="dock">
-        <button onclick="claimDailyCredits()">CLAIM 100</button>
-        <button class="secondary" onclick="grantBonus(25,'reading')">READ +25</button>
-        <button class="secondary" onclick="grantBonus(20,'notice')">NOTICE +20</button>
-        <button class="secondary" onclick="grantBonus(15,'document')">DOC +15</button>
+        <button id="daily-btn" onclick="claimDailyCredits()">RECLAMAR 100</button>
+        <button class="secondary" onclick="grantBonus(25,'lectura')">LEER +25</button>
+        <button class="secondary" onclick="grantBonus(20,'aviso')">AVISO +20</button>
+        <button class="secondary" onclick="grantBonus(15,'documento')">DOC +15</button>
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">MISSIONS</div><h3>Active tasks</h3></div><div class="badge">READY</div></div>
-      <div class="challenge-grid" id="challenge-grid"></div>
+      <div class="card-head"><div><div class="card-tag">MISIONES</div><h3>Activas</h3></div><div class="badge">LISTAS</div></div>
+      <div id="challenge-grid" class="challenge-grid"></div>
     </div>
   </div>
 </section><section id="section-help">
-  <div class="kicker">08 // help desk</div>
+  <div class="kicker">08 // ayuda</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">HELP DESK</div><h2>Quick help</h2></div><div class="badge">READY</div></div>
+      <div class="card-head"><div><div class="card-tag">AYUDA</div><h2>Acciones rápidas</h2></div><div class="badge">LISTA</div></div>
       <div class="help-grid">
-        <div class="help-card"><div class="card-tag">HID</div><h3 style="margin-top:8px;">Get identity</h3><button class="secondary" onclick="openAuth()">OPEN GATE</button></div>
-        <div class="help-card"><div class="card-tag">DOCS</div><h3 style="margin-top:8px;">Read files</h3><button class="secondary" onclick="openDocViewer('constitution')">OPEN VAULT</button></div>
-        <div class="help-card"><div class="card-tag">REQUESTS</div><h3 style="margin-top:8px;">Ask for help</h3><button class="secondary" onclick="scrollToSection('section-requests')">OPEN</button></div>
-        <div class="help-card"><div class="card-tag">CREDITS</div><h3 style="margin-top:8px;">Earn more</h3><button class="secondary" onclick="scrollToSection('section-challenges')">OPEN</button></div>
+        <div class="help-card"><div class="card-tag">HID</div><h3 style="margin-top:8px;">Crear identidad</h3><button class="secondary" onclick="openAuth()">ABRIR PUERTA</button></div>
+        <div class="help-card"><div class="card-tag">DOCS</div><h3 style="margin-top:8px;">Leer archivos</h3><button class="secondary" onclick="openDocViewer('constitution')">ABRIR VAULT</button></div>
+        <div class="help-card"><div class="card-tag">SOLICITUDES</div><h3 style="margin-top:8px;">Pedir ayuda</h3><button class="secondary" onclick="scrollToSection('section-requests')">ABRIR</button></div>
+        <div class="help-card"><div class="card-tag">CRÉDITOS</div><h3 style="margin-top:8px;">Ganar más</h3><button class="secondary" onclick="scrollToSection('section-challenges')">ABRIR</button></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">HELP FEED</div><h3>Guidance</h3></div><div class="badge">UPDATED</div></div>
+      <div class="card-head"><div><div class="card-tag">GUÍA</div><h3>Ayuda automática</h3></div><div class="badge">ACTUALIZADA</div></div>
       <div id="help-feed" class="feed"></div>
     </div>
   </div>
 </section><section id="section-requests">
-  <div class="kicker">09 // requests & appointments</div>
+  <div class="kicker">09 // solicitudes y citas</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">REQUEST CENTER</div><h2>Make a request</h2></div><div class="badge">OPEN</div></div>
+      <div class="card-head"><div><div class="card-tag">CENTRO DE SOLICITUDES</div><h2>Enviar solicitud</h2></div><div class="badge">ABIERTO</div></div>
       <div class="request-grid" style="margin-top:18px;">
-        <div><div class="small" style="margin-bottom:8px;">Type</div><select id="request-type"><option>Support</option><option>Document request</option><option>Appointment</option><option>General message</option></select></div>
-        <div><div class="small" style="margin-bottom:8px;">Day</div><input id="request-day" type="date" /></div>
+        <div><div class="small" style="margin-bottom:8px;">Tipo</div><select id="request-type"><option>Ayuda</option><option>Documento</option><option>Cita</option><option>Mensaje</option></select></div>
+        <div><div class="small" style="margin-bottom:8px;">Día</div><input id="request-day" type="date"></div>
       </div>
-      <div style="margin-top:14px;"><div class="small" style="margin-bottom:8px;">Message</div><textarea id="request-text" placeholder="Briefly explain..."></textarea></div>
+      <div style="margin-top:14px;"><div class="small" style="margin-bottom:8px;">Mensaje</div><textarea id="request-text" placeholder="Explica brevemente..."></textarea></div>
       <div class="dock">
-        <button onclick="submitRequest()">SUBMIT</button>
-        <button class="secondary" onclick="prefillRequest('Support')">SUPPORT</button>
-        <button class="secondary" onclick="prefillRequest('Appointment')">APPOINTMENT</button>
-        <button class="secondary" onclick="prefillRequest('Document request')">DOCUMENT</button>
+        <button onclick="submitRequest()">ENVIAR</button>
+        <button class="secondary" onclick="prefillRequest('Ayuda')">AYUDA</button>
+        <button class="secondary" onclick="prefillRequest('Cita')">CITA</button>
+        <button class="secondary" onclick="prefillRequest('Documento')">DOCUMENTO</button>
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">REQUESTS</div><h3>Your queue</h3></div><div class="badge" id="request-count">0</div></div>
-      <div class="request-list" id="request-list"></div>
+      <div class="card-head"><div><div class="card-tag">SOLICITUDES</div><h3>Tu cola</h3></div><div class="badge" id="request-count">0</div></div>
+      <div id="request-list" class="request-list"></div>
     </div>
   </div>
 </section><section id="section-census">
-  <div class="kicker">10 // census</div>
+  <div class="kicker">10 // censo</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-tag">POPULATION STATE</div>
-      <h2>Census</h2>
+      <div class="card-tag">ESTADO POBLACIONAL</div>
+      <h2>Censo</h2>
       <div class="metric-row">
-        <div class="metric"><span class="label">Current population</span><div class="value" id="census-num">0</div></div>
-        <div class="metric"><span class="label">Target</span><div class="value">100,000</div></div>
-        <div class="metric"><span class="label">Enrollment</span><div class="value" id="public-enrollment">OPEN</div></div>
+        <div class="metric"><span class="label">Población</span><div class="value" id="census-num">0</div></div>
+        <div class="metric"><span class="label">Objetivo</span><div class="value">100,000</div></div>
+        <div class="metric"><span class="label">Alta</span><div class="value" id="public-enrollment">ABIERTA</div></div>
       </div>
       <div style="margin-top:20px;" class="bar"><div id="census-bar" class="fill"></div></div>
-      <div class="dock"><button onclick="openAuth()">REQUEST ACCESS</button><button class="secondary" onclick="jumpToDashboard()">VIEW CONTROL ROOM</button></div>
+      <div class="dock"><button onclick="openAuth()">PEDIR ACCESO</button><button class="secondary" onclick="jumpToDashboard()">VER CONTROL</button></div>
     </div>
     <div class="card">
-      <div class="card-head"><div><div class="card-tag">USER FLOW</div><h3>What people see</h3></div><div class="badge">VISIBLE</div></div>
+      <div class="card-head"><div><div class="card-tag">FLUJO</div><h3>Qué ve la gente</h3></div><div class="badge">VISIBLE</div></div>
       <div class="timeline">
-        <div class="timeline-item"><div style="font-size:14px;">Boot</div><div class="small">Clean opening.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Landing</div><div class="small">Short and human.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Docs</div><div class="small">Open and save.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Missions</div><div class="small">Earn credits by doing useful things.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Citizen room</div><div class="small">Identity, messages, requests, export.</div></div>
+        <div class="timeline-item"><div style="font-size:14px;">Arranque</div><div class="small">Una entrada limpia.</div></div>
+        <div class="timeline-item"><div style="font-size:14px;">Portada</div><div class="small">Rápida y humana.</div></div>
+        <div class="timeline-item"><div style="font-size:14px;">Documentos</div><div class="small">Abrir y guardar.</div></div>
+        <div class="timeline-item"><div style="font-size:14px;">Misiones</div><div class="small">Ganar créditos con acciones útiles.</div></div>
+        <div class="timeline-item"><div style="font-size:14px;">Zona ciudadana</div><div class="small">Identidad, mensajes, solicitudes y exportación.</div></div>
       </div>
     </div>
   </div>
 </section><div id="auth-modal" class="modal">
   <div class="modal-panel">
     <div class="modal-card">
-      <div class="modal-head"><div><div class="modal-strap">ACCESS GATE</div><h2>Login</h2></div><div class="badge">SECURE</div></div>
+      <div class="modal-head"><div><div class="modal-strap">PUERTA DE ACCESO</div><h2>Entrar</h2></div><div class="badge">SEGURO</div></div>
       <div style="display:grid;gap:12px;">
-        <input id="login-hid" placeholder="HID (24 DIGITS)" autocomplete="off" />
-        <input id="login-pass" type="password" placeholder="ACCESS KEY" autocomplete="off" />
-        <button class="full" onclick="login()">ACCESS NODE</button>
+        <input id="login-hid" placeholder="HID (24 CARACTERES)" autocomplete="off">
+        <input id="login-pass" type="password" placeholder="CLAVE" autocomplete="off">
+        <button class="full" onclick="login()">ACCEDER</button>
       </div>
-      <div class="close-row"><button class="secondary" onclick="closeAuth()">CLOSE</button></div>
+      <div class="close-row"><button class="secondary" onclick="closeAuth()">CERRAR</button></div>
     </div>
     <div class="modal-card">
-      <div class="modal-head"><div><div class="modal-strap">IDENTITY ISSUANCE</div><h2>Register</h2></div><div class="badge" id="reg-lock-badge">OPEN</div></div>
-      <div class="small" style="margin-bottom:12px;">One citizen only in this browser. After that, enrollment closes.</div>
+      <div class="modal-head"><div><div class="modal-strap">EMISIÓN DE IDENTIDAD</div><h2>Registro</h2></div><div class="badge" id="reg-lock-badge">ABIERTA</div></div>
+      <div class="small" style="margin-bottom:12px;">Solo una ciudadanía por navegador. Después se cierra.</div>
       <div style="display:grid;gap:12px;">
-        <input id="reg-name" placeholder="NAME" autocomplete="off" />
-        <input id="reg-email" placeholder="EMAIL" autocomplete="off" />
-        <input id="reg-role" placeholder="ROLE / SPECIALTY" autocomplete="off" />
-        <button class="full" id="register-btn" onclick="register()">GENERATE HID</button>
+        <input id="reg-name" placeholder="NOMBRE" autocomplete="off">
+        <input id="reg-email" placeholder="EMAIL" autocomplete="off">
+        <input id="reg-role" placeholder="ROL / ESPECIALIDAD" autocomplete="off">
+        <button class="full" id="register-btn" onclick="register()">GENERAR HID</button>
       </div>
-      <div id="credentials" class="credentials">HID and password will appear here after registration.</div>
-      <div class="close-row"><button class="secondary" onclick="closeAuth()">CLOSE</button></div>
+      <div id="credentials" class="credentials">Aquí aparecerán tu HID y tu contraseña tras registrarte.</div>
+      <div class="close-row"><button class="secondary" onclick="closeAuth()">CERRAR</button></div>
     </div>
   </div>
 </div><div id="doc-modal" class="modal">
   <div class="modal-card viewer">
-    <div class="modal-head"><div><div class="modal-strap">DOCUMENT VIEWER</div><h2 id="doc-title">Document</h2></div><div class="badge" id="doc-saved-badge">NOT SAVED</div></div>
-    <iframe id="doc-frame" class="viewer-frame" src="" title="Document Viewer"></iframe>
+    <div class="modal-head"><div><div class="modal-strap">VISOR DE DOCUMENTOS</div><h2 id="doc-title">Documento</h2></div><div class="badge" id="doc-saved-badge">NO GUARDADO</div></div>
+    <iframe id="doc-frame" class="viewer-frame" src="" title="Visor de documentos"></iframe>
     <div class="viewer-actions">
-      <button onclick="openDocExternal()">OPEN NEW TAB</button>
-      <button class="secondary" onclick="toggleSaveCurrentDoc()">SAVE TO VAULT</button>
-      <button class="secondary" onclick="downloadCurrentDoc()">DOWNLOAD</button>
-      <button class="secondary" onclick="closeDocViewer()">CLOSE</button>
+      <button onclick="openDocExternal()">ABRIR TAB NUEVA</button>
+      <button class="secondary" onclick="toggleSaveCurrentDoc()">GUARDAR</button>
+      <button class="secondary" onclick="downloadCurrentDoc()">DESCARGAR</button>
+      <button class="secondary" onclick="closeDocViewer()">CERRAR</button>
     </div>
   </div>
 </div><div id="dashboard">
@@ -426,36 +440,37 @@ textarea{resize:none;min-height:110px}
     <aside class="sidebar">
       <div class="profile">
         <div class="hid" id="user-hid">---</div>
-        <div class="name" id="user-name">No user</div>
+        <div class="name" id="user-name">Sin usuario</div>
         <div class="role" id="user-role">---</div>
       </div>
-      <div class="side-block"><div class="card-tag">CREDITS</div><h3 id="user-credits">0</h3></div>
-      <div class="side-block"><div class="card-tag">SYSTEM HEALTH</div><div style="margin-top:12px;" class="bar"><div id="health-bar" class="fill"></div></div><div class="small" style="margin-top:8px;" id="health-text">0%</div></div>
+      <div class="side-block"><div class="card-tag">CRÉDITOS</div><h3 id="user-credits">0</h3></div>
+      <div class="side-block"><div class="card-tag">SALUD DEL SISTEMA</div><div style="margin-top:12px;" class="bar"><div id="health-bar" class="fill"></div></div><div class="small" style="margin-top:8px;" id="health-text">0%</div></div>
       <div class="side-block">
-        <div class="card-tag">ACTIONS</div>
+        <div class="card-tag">ACCIONES</div>
         <div style="display:grid;gap:10px;margin-top:12px;">
-          <button class="secondary" onclick="showTab('overview')">Overview</button>
+          <button class="secondary" onclick="showTab('overview')">Resumen</button>
           <button class="secondary" onclick="showTab('docs')">Docs</button>
-          <button class="secondary" onclick="showTab('messages')">Messages</button>
-          <button class="secondary" onclick="showTab('identity')">Identity</button>
-          <button class="secondary" onclick="showTab('requests')">Requests</button>
-          <button class="secondary" onclick="showTab('updates')">Updates</button>
-          <button class="secondary" onclick="copyHID()">Copy HID</button>
-          <button class="secondary" onclick="exportProfile()">Export Profile</button>
-          <button onclick="logout()">LOGOUT</button>
+          <button class="secondary" onclick="showTab('messages')">Mensajes</button>
+          <button class="secondary" onclick="showTab('identity')">Identidad</button>
+          <button class="secondary" onclick="showTab('requests')">Solicitudes</button>
+          <button class="secondary" onclick="showTab('updates')">Noticias</button>
+          <button class="secondary" onclick="showTab('credits')">Créditos</button>
+          <button class="secondary" onclick="copyHID()">Copiar HID</button>
+          <button class="secondary" onclick="exportProfile()">Exportar perfil</button>
+          <button onclick="logout()">SALIR</button>
         </div>
       </div>
     </aside><main class="main">
   <div class="card">
-    <div class="card-head"><div><div class="card-tag">PRIVATE NODE</div><h2>Citizen control room</h2></div><div class="badge" id="dashboard-state">ONLINE</div></div>
+    <div class="card-head"><div><div class="card-tag">NODO PRIVADO</div><h2>Control ciudadano</h2></div><div class="badge" id="dashboard-state">EN LÍNEA</div></div>
     <div class="tabs">
-      <div class="tab active" data-tab="overview" onclick="showTab('overview')">Overview</div>
+      <div class="tab active" data-tab="overview" onclick="showTab('overview')">Resumen</div>
       <div class="tab" data-tab="docs" onclick="showTab('docs')">Docs</div>
-      <div class="tab" data-tab="messages" onclick="showTab('messages')">Messages</div>
-      <div class="tab" data-tab="identity" onclick="showTab('identity')">Identity</div>
-      <div class="tab" data-tab="requests" onclick="showTab('requests')">Requests</div>
-      <div class="tab" data-tab="updates" onclick="showTab('updates')">Updates</div>
-      <div class="tab" data-tab="credits" onclick="showTab('credits')">Credits</div>
+      <div class="tab" data-tab="messages" onclick="showTab('messages')">Mensajes</div>
+      <div class="tab" data-tab="identity" onclick="showTab('identity')">Identidad</div>
+      <div class="tab" data-tab="requests" onclick="showTab('requests')">Solicitudes</div>
+      <div class="tab" data-tab="updates" onclick="showTab('updates')">Noticias</div>
+      <div class="tab" data-tab="credits" onclick="showTab('credits')">Créditos</div>
     </div>
 
     <div id="panel-overview" class="panel active">
@@ -463,34 +478,34 @@ textarea{resize:none;min-height:110px}
         <div>
           <div class="terminal" id="log"></div>
           <div style="display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:14px;">
-            <input id="msg" placeholder="Write a message to your civic record..." />
-            <button onclick="sendMessage()">SEND</button>
+            <input id="msg" placeholder="Escribe un mensaje para tu registro...">
+            <button onclick="sendMessage()">ENVIAR</button>
           </div>
           <div class="dock">
-            <button class="secondary" onclick="saveSessionSnapshot()">SAVE SNAPSHOT</button>
-            <button class="secondary" onclick="lockSession()">LOCK SESSION</button>
-            <button class="secondary" onclick="openDocViewer('constitution')">OPEN DOC VAULT</button>
-            <button class="secondary" onclick="scrollToSection('section-challenges')">MISSIONS</button>
+            <button class="secondary" onclick="saveSessionSnapshot()">GUARDAR SNAPSHOT</button>
+            <button class="secondary" onclick="lockSession()">BLOQUEAR SESIÓN</button>
+            <button class="secondary" onclick="openDocViewer('constitution')">ABRIR VAULT</button>
+            <button class="secondary" onclick="scrollToSection('section-challenges')">MISIONES</button>
           </div>
         </div>
         <div class="card">
-          <div class="card-tag">STATE SUMMARY</div>
+          <div class="card-tag">RESUMEN</div>
           <div class="small" style="margin-top:12px;line-height:2;">
-            <div>Identity layer: active</div>
-            <div>Population state: synced</div>
-            <div>Access mode: private</div>
-            <div>Launch window: monitored</div>
-            <div>Message queue: live</div>
-            <div>Document vault: available</div>
-            <div>Requests: available</div>
-            <div>Credits: daily + missions</div>
+            <div>Identidad: activa</div>
+            <div>Censo: sincronizado</div>
+            <div>Acceso: privado</div>
+            <div>Cuenta atrás: activa</div>
+            <div>Mensajes: vivos</div>
+            <div>Documentos: disponibles</div>
+            <div>Solicitudes: activas</div>
+            <div>Créditos: diarios + misiones</div>
           </div>
           <div class="side-block">
-            <div class="card-tag">SHORTCUTS</div>
+            <div class="card-tag">ATAJOS</div>
             <div class="dock">
               <button class="secondary" onclick="showTab('docs')">Docs</button>
-              <button class="secondary" onclick="showTab('requests')">Requests</button>
-              <button class="secondary" onclick="showTab('credits')">Credits</button>
+              <button class="secondary" onclick="showTab('requests')">Solicitudes</button>
+              <button class="secondary" onclick="showTab('credits')">Créditos</button>
             </div>
           </div>
         </div>
@@ -500,40 +515,40 @@ textarea{resize:none;min-height:110px}
     <div id="panel-docs" class="panel">
       <div class="grid-2" style="margin-top:18px;">
         <div class="card">
-          <div class="card-tag">DOCUMENT VAULT</div>
+          <div class="card-tag">VAULT DE DOCUMENTOS</div>
           <div id="dashboard-docs" class="docs-grid" style="margin-top:14px;"></div>
         </div>
         <div class="card">
-          <div class="card-head"><div><div class="card-tag">SAVED VAULT</div><h3>Local cache</h3></div><div class="badge" id="saved-count-dash">0 saved</div></div>
+          <div class="card-head"><div><div class="card-tag">GUARDADOS</div><h3>Cache local</h3></div><div class="badge" id="saved-count-dash">0</div></div>
           <div id="dashboard-saved" class="saved-list" style="margin-top:12px;"></div>
           <div class="dock">
-            <button class="secondary" onclick="clearSavedDocs()">CLEAR</button>
-            <button class="secondary" onclick="openDocViewer('briefing')">OPEN BRIEFING</button>
+            <button class="secondary" onclick="clearSavedDocs()">BORRAR</button>
+            <button class="secondary" onclick="openDocViewer('briefing')">ABRIR BRIEFING</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="panel-messages" class="panel"><div class="card" style="margin-top:18px;"><div class="card-tag">GLOBAL MESSAGE STREAM</div><div id="messages" class="feed" style="margin-top:14px;"></div></div></div>
+    <div id="panel-messages" class="panel"><div class="card" style="margin-top:18px;"><div class="card-tag">FLUJO DE MENSAJES</div><div id="messages" class="feed" style="margin-top:14px;"></div></div></div>
 
     <div id="panel-identity" class="panel">
       <div class="grid-2" style="margin-top:18px;">
         <div class="card">
-          <div class="card-tag">CITIZEN FILE</div>
+          <div class="card-tag">FICHA CIUDADANA</div>
           <div class="small" style="margin-top:12px;line-height:2;">
             <div><strong>HID:</strong> <span id="identity-hid">---</span></div>
-            <div><strong>Name:</strong> <span id="identity-name">---</span></div>
+            <div><strong>Nombre:</strong> <span id="identity-name">---</span></div>
             <div><strong>Email:</strong> <span id="identity-email">---</span></div>
-            <div><strong>Role:</strong> <span id="identity-role">---</span></div>
-            <div><strong>Credits:</strong> <span id="identity-credits">0</span></div>
-            <div><strong>Issued:</strong> <span id="identity-issue">---</span></div>
+            <div><strong>Rol:</strong> <span id="identity-role">---</span></div>
+            <div><strong>Créditos:</strong> <span id="identity-credits">0</span></div>
+            <div><strong>Emitido:</strong> <span id="identity-issue">---</span></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-tag">PERSONAL STATE</div>
+          <div class="card-tag">ESTADO PERSONAL</div>
           <div class="dock">
-            <button class="secondary" onclick="copyHID()">COPY HID</button>
-            <button class="secondary" onclick="exportProfile()">EXPORT PROFILE</button>
+            <button class="secondary" onclick="copyHID()">COPIAR HID</button>
+            <button class="secondary" onclick="exportProfile()">EXPORTAR PERFIL</button>
           </div>
         </div>
       </div>
@@ -542,16 +557,16 @@ textarea{resize:none;min-height:110px}
     <div id="panel-requests" class="panel">
       <div class="grid-2" style="margin-top:18px;">
         <div class="card">
-          <div class="card-tag">REQUEST CENTER</div>
+          <div class="card-tag">CENTRO DE SOLICITUDES</div>
           <div class="request-grid" style="margin-top:18px;">
-            <div><div class="small" style="margin-bottom:8px;">Type</div><select id="dash-request-type"><option>Support</option><option>Document request</option><option>Appointment</option><option>General message</option></select></div>
-            <div><div class="small" style="margin-bottom:8px;">Day</div><input id="dash-request-day" type="date" /></div>
+            <div><div class="small" style="margin-bottom:8px;">Tipo</div><select id="dash-request-type"><option>Ayuda</option><option>Documento</option><option>Cita</option><option>Mensaje</option></select></div>
+            <div><div class="small" style="margin-bottom:8px;">Día</div><input id="dash-request-day" type="date"></div>
           </div>
-          <div style="margin-top:14px;"><div class="small" style="margin-bottom:8px;">Message</div><textarea id="dash-request-text" placeholder="Briefly explain..."></textarea></div>
-          <div class="dock"><button onclick="submitDashboardRequest()">SUBMIT</button><button class="secondary" onclick="showTab('overview')">BACK</button></div>
+          <div style="margin-top:14px;"><div class="small" style="margin-bottom:8px;">Mensaje</div><textarea id="dash-request-text" placeholder="Explica brevemente..."></textarea></div>
+          <div class="dock"><button onclick="submitDashboardRequest()">ENVIAR</button><button class="secondary" onclick="showTab('overview')">VOLVER</button></div>
         </div>
         <div class="card">
-          <div class="card-head"><div><div class="card-tag">REQUESTS</div><h3>Your queue</h3></div><div class="badge" id="request-count-dash">0</div></div>
+          <div class="card-head"><div><div class="card-tag">SOLICITUDES</div><h3>Tu cola</h3></div><div class="badge" id="request-count-dash">0</div></div>
           <div id="dashboard-request-list" class="request-list"></div>
         </div>
       </div>
@@ -559,36 +574,30 @@ textarea{resize:none;min-height:110px}
 
     <div id="panel-updates" class="panel">
       <div class="grid-2" style="margin-top:18px;">
-        <div class="card"><div class="card-tag">LATEST UPDATES</div><div id="dashboard-updates" class="update-grid" style="margin-top:14px;"></div></div>
-        <div class="card">
-          <div class="card-head"><div><div class="card-tag">ADMIN QUICK EDIT</div><h3>Public board</h3></div><div class="badge info">ADMIN</div></div>
-          <div class="dock">
-            <button class="secondary" onclick="scrollToSection('section-updates')">OPEN EDITOR</button>
-            <button class="secondary" onclick="toggleEmergency()">EMERGENCY</button>
-          </div>
-        </div>
+        <div class="card"><div class="card-tag">ÚLTIMAS NOTICIAS</div><div id="dashboard-updates" class="update-grid" style="margin-top:14px;"></div></div>
+        <div class="card"><div class="card-head"><div><div class="card-tag">ADMIN RÁPIDO</div><h3>Tablón público</h3></div><div class="badge info">ADMIN</div></div><div class="dock"><button class="secondary" onclick="scrollToSection('section-updates')">ABRIR EDITOR</button><button class="secondary" onclick="toggleEmergency()">EMERGENCIA</button></div></div>
       </div>
     </div>
 
     <div id="panel-credits" class="panel">
       <div class="grid-2" style="margin-top:18px;">
         <div class="card">
-          <div class="card-tag">CIVIC WALLET</div>
+          <div class="card-tag">BOLSA CIVIL</div>
           <h2 id="credit-balance-large">0</h2>
-          <div class="small">Daily: +100. Missions: extra. Start: 0.</div>
+          <div class="small">Diario: +100. Misiones: extra. Inicio: 0.</div>
           <div class="credit-bar-row">
             <div class="bar"><div id="credit-bar" class="fill"></div></div>
-            <div class="badge" id="daily-status-dash">READY</div>
+            <div class="badge" id="daily-status-dash">LISTO</div>
           </div>
           <div class="dock">
-            <button onclick="claimDailyCredits()">CLAIM 100</button>
-            <button class="secondary" onclick="grantBonus(25,'reading')">READ +25</button>
-            <button class="secondary" onclick="grantBonus(20,'notice')">NOTICE +20</button>
-            <button class="secondary" onclick="grantBonus(15,'document')">DOC +15</button>
+            <button id="daily-btn" onclick="claimDailyCredits()">RECLAMAR 100</button>
+            <button class="secondary" onclick="grantBonus(25,'lectura')">LEER +25</button>
+            <button class="secondary" onclick="grantBonus(20,'aviso')">AVISO +20</button>
+            <button class="secondary" onclick="grantBonus(15,'documento')">DOC +15</button>
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div><div class="card-tag">MISSION BOARD</div><h3>Progress</h3></div><div class="badge ok">EARN</div></div>
+          <div class="card-head"><div><div class="card-tag">MISIÓN</div><h3>Progreso</h3></div><div class="badge ok">GANA</div></div>
           <div id="challenge-grid-dash" class="challenge-grid"></div>
         </div>
       </div>
@@ -597,21 +606,21 @@ textarea{resize:none;min-height:110px}
 </main>
 
   </div>
-</div><div class="footer">Heidenbillg OS is a civic portal: public updates, documents, services, requests, missions, and a private citizen room. Less text. More action.</div><script>
-const STORAGE_KEY = "HB_DB_GOV_OS_V4";
+</div><div class="footer">Heidenbillg OS es un portal civil: noticias, documentos, servicios, misiones y una zona privada del ciudadano. Menos texto. Más acción.</div><script>
+const STORAGE_KEY = "HB_DB_GOV_OS_V6_ES";
 const ADMIN_CODE = "HEIDEN-ADMIN-001";
 const DOCS = [
-  { id: "constitution", title: "Constitution", file: "The_Heidenbillg_Constitution (6).pdf", desc: "Rules and rights." },
-  { id: "codes", title: "Codes", file: "The_Heidenbillg_Codes (1).pdf", desc: "Protocols." },
-  { id: "briefing", title: "Briefing", file: "HSA_13_and_TDS_Missions (2).pdf", desc: "Ship notes." }
+  { id: "constitution", title: "Constitución", file: "The_Heidenbillg_Constitution (6).pdf", desc: "Normas y derechos." },
+  { id: "codes", title: "Códigos", file: "The_Heidenbillg_Codes (1).pdf", desc: "Protocolos." },
+  { id: "briefing", title: "Briefing", file: "HSA_13_and_TDS_Missions (2).pdf", desc: "Nave." }
 ];
 const CHALLENGES = [
-  { id: "read-doc", title: "Read a document", reward: 25, done: false, text: "Open any doc and mark it read." },
-  { id: "read-notice", title: "Read an update", reward: 20, done: false, text: "Check the noticeboard or updates." },
-  { id: "send-msg", title: "Write a message", reward: 15, done: false, text: "Send a short civic message." },
-  { id: "submit-req", title: "Submit a request", reward: 30, done: false, text: "Use the request center." },
-  { id: "export-profile", title: "Export profile", reward: 20, done: false, text: "Download your citizen file." },
-  { id: "open-help", title: "Open help desk", reward: 10, done: false, text: "Visit the help section." }
+  { id: "read-doc", title: "Leer documento", reward: 25, text: "Abre cualquier documento." },
+  { id: "read-notice", title: "Leer aviso", reward: 20, text: "Mira el tablón o las noticias." },
+  { id: "send-msg", title: "Escribir mensaje", reward: 15, text: "Envía un mensaje corto." },
+  { id: "submit-req", title: "Enviar solicitud", reward: 30, text: "Usa el centro de solicitudes." },
+  { id: "export-profile", title: "Exportar perfil", reward: 20, text: "Descarga tu ficha." },
+  { id: "open-help", title: "Abrir ayuda", reward: 10, text: "Visita la ayuda." }
 ];
 
 let DB = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
@@ -619,14 +628,14 @@ let DB = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
   messages: [],
   requests: [],
   updates: [
-    { type: "general", title: "Welcome", body: "Public portal online.", pinned: true, time: new Date().toISOString() },
-    { type: "service", title: "Docs open", body: "Vault available.", pinned: false, time: new Date().toISOString() },
-    { type: "alert", title: "Support ready", body: "Requests active.", pinned: false, time: new Date().toISOString() }
+    { type: "general", title: "Bienvenido", body: "Portal público en línea.", pinned: true, time: new Date().toISOString() },
+    { type: "service", title: "Docs abiertos", body: "Vault disponible.", pinned: false, time: new Date().toISOString() },
+    { type: "alert", title: "Ayuda lista", body: "Solicitudes activas.", pinned: false, time: new Date().toISOString() }
   ],
   notices: [
-    { title: "Identity issuance", body: "One citizen per browser.", time: new Date().toISOString() },
-    { title: "Documents", body: "Open, save, download.", time: new Date().toISOString() },
-    { title: "Requests", body: "Support, document, appointment.", time: new Date().toISOString() }
+    { title: "Alta ciudadana", body: "Solo un ciudadano por navegador.", time: new Date().toISOString() },
+    { title: "Documentos", body: "Abrir, guardar, descargar.", time: new Date().toISOString() },
+    { title: "Solicitudes", body: "Ayuda, documento o cita.", time: new Date().toISOString() }
   ],
   census: 0,
   savedDocs: [],
@@ -634,13 +643,10 @@ let DB = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
   issuedAt: null,
   emergency: false,
   adminUnlocked: false,
-  daily: {
-    lastGrant: null,
-    streak: 0,
-    claimedToday: false
-  },
+  daily: { lastGrant: null, streak: 0, claimedToday: false },
   credits: 0,
-  missionProgress: {}
+  missionProgress: {},
+  ui: { docFilter: "", updateFilter: "" }
 };
 
 let currentUser = null;
@@ -655,6 +661,24 @@ function randChar(set){ return set[Math.floor(Math.random() * set.length)]; }
 function generateHID(){ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; let id = ""; for(let i=0;i<24;i++) id += randChar(chars); return id; }
 function generatePass(){ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let pass = ""; for(let i=0;i<16;i++) pass += randChar(chars); return pass; }
 function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+function tomorrowKey(){ const t = new Date(); t.setDate(t.getDate()+1); return t.toISOString().slice(0,10); }
+function formatNextDaily(){ return "Mañana"; }
+function getTotalCredits(){ return currentUser ? currentUser.credits : (DB.credits || 0); }
+
+function refreshCreditUI(){
+  const credits = currentUser ? currentUser.credits : (DB.credits || 0);
+  el("credit-stat").textContent = `${credits} créditos`;
+  el("credit-balance").textContent = credits;
+  el("credit-balance-large").textContent = credits;
+  el("daily-status").textContent = DB.daily.claimedToday ? 'RECLAMADO' : 'LISTO';
+  el("daily-status-dash").textContent = DB.daily.claimedToday ? 'RECLAMADO' : 'LISTO';
+  el("daily-streak").textContent = DB.daily.streak || 0;
+  el("credit-bar").style.width = `${Math.min((credits / 1000) * 100, 100)}%`;
+  const btn = el("daily-btn");
+  if(btn) btn.disabled = DB.daily.claimedToday;
+  el("next-daily").textContent = DB.daily.claimedToday ? "Mañana" : "Hoy";
+}
 function addCredits(amount, reason){
   if(!currentUser) return;
   currentUser.credits += amount;
@@ -662,18 +686,18 @@ function addCredits(amount, reason){
   saveDB();
   populateDashboard();
   refreshCreditUI();
-  logPrivate(`+${amount} credits: ${reason}`);
-  serviceToast(`+${amount} credits`);
+  logPrivate(`+${amount} créditos: ${reason}`);
+  serviceToast(`+${amount} créditos`);
 }
 
 const bootLines = [
-  "Initializing civic kernel...",
-  "Loading human-facing interface...",
-  "Preparing noticeboard and help desk...",
-  "Mounting document vault...",
-  "Synchronizing civic memory...",
-  "Opening citizen services...",
-  "HEIDENBILLG OS ONLINE"
+  "Inicializando núcleo civil...",
+  "Cargando interfaz humana...",
+  "Preparando tablón y ayuda...",
+  "Montando documentos...",
+  "Sincronizando memoria ciudadana...",
+  "Abriendo servicios...",
+  "HEIDENBILLG OS EN LÍNEA"
 ];
 let bootIndex = 0;
 function runBoot(){
@@ -691,7 +715,7 @@ function runBoot(){
     setTimeout(runBoot, 680);
   } else {
     fill.style.width = "100%";
-    state.textContent = "BOOT COMPLETE";
+    state.textContent = "ARRANQUE COMPLETO";
     setTimeout(() => {
       el("boot").classList.add("hidden");
       bootComplete = true;
@@ -721,73 +745,80 @@ runBoot();
 function renderPublicFeed(){
   const feed = el("public-feed");
   const entries = [
-    "Public node active.",
-    "Docs, updates, services, and missions are open.",
-    "Fast buttons. Short text.",
-    `Population: ${DB.census} citizen${DB.census === 1 ? "" : "s"}.`
+    "Portal público activo.",
+    "Docs, noticias, servicios y misiones abiertos.",
+    "Botones primero. Texto después.",
+    `Censo actual: ${DB.census} ciudadano${DB.census === 1 ? "" : "s"}.`
   ];
-  feed.innerHTML = entries.map(t => `<div class="feed-item"><div class="card-tag">PUBLIC</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
+  feed.innerHTML = entries.map(t => `<div class="feed-item"><div class="card-tag">PÚBLICO</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
 }
 function renderServiceFeed(){
   const feed = el("service-feed");
-  const items = ["Support ready.","Notices live.","Docs open.","Requests available.","Missions active."];
-  feed.innerHTML = items.map(t => `<div class="feed-item"><div class="card-tag">SERVICE</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
+  const items = ["Ayuda lista.","Noticias activas.","Documentos abiertos.","Solicitudes listas.","Misiones activas."];
+  feed.innerHTML = items.map(t => `<div class="feed-item"><div class="card-tag">SERVICIO</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
 }
 function renderNotices(){
-  const notices = DB.notices.slice();
-  if(DB.emergency){ notices.unshift({ title: "Emergency active", body: "Follow the latest update.", time: new Date().toISOString() }); }
-  el("notice-list").innerHTML = notices.map(n => `<div class="notice"><div class="card-tag">NOTICE</div><strong style="font-size:15px;">${escapeHtml(n.title)}</strong><div class="small">${escapeHtml(n.body)}</div></div>`).join("");
+  let notices = DB.notices.slice();
+  if(DB.emergency){ notices.unshift({ title: "Emergencia activa", body: "Sigue el último aviso oficial.", time: new Date().toISOString() }); }
+  const q = (DB.ui.updateFilter || el("updates-search")?.value || "").trim().toLowerCase();
+  if(q){ notices = notices.filter(n => (n.title + " " + n.body).toLowerCase().includes(q)); }
+  el("notice-list").innerHTML = notices.map(n => `<div class="notice"><div class="card-tag">AVISO</div><strong style="font-size:15px;">${escapeHtml(n.title)}</strong><div class="small">${escapeHtml(n.body)}</div><div class="dock" style="margin-top:10px;"><button class="secondary" onclick="claimMissionIfNeeded('read-notice');">LEÍDO</button></div></div>`).join("");
 }
 function renderUpdates(){
-  const list = [...DB.updates].sort((a,b) => (b.pinned - a.pinned) || (new Date(b.time) - new Date(a.time)));
-  el("dashboard-updates").innerHTML = list.map(u => `<div class="update-item"><div class="card-tag">${u.pinned ? "PINNED" : u.type.toUpperCase()} • ${new Date(u.time).toLocaleDateString()}</div><strong style="display:block;margin-top:6px;font-size:16px;">${escapeHtml(u.title)}</strong><div class="small" style="margin-top:8px;">${escapeHtml(u.body)}</div><div class="dock" style="margin-top:12px;"><button class="secondary" onclick="pinUpdate('${encodeURIComponent(u.time)}')">${u.pinned ? 'UNPIN' : 'PIN'}</button><button class="secondary" onclick="copyUpdate('${encodeURIComponent(u.time)}')">COPY</button></div></div>`).join("");
+  let list = [...DB.updates].sort((a,b) => (b.pinned - a.pinned) || (new Date(b.time) - new Date(a.time)));
+  const q = (DB.ui.updateFilter || el("updates-search")?.value || "").trim().toLowerCase();
+  if(q){ list = list.filter(u => (u.title + " " + u.body + " " + u.type).toLowerCase().includes(q)); }
+  el("dashboard-updates").innerHTML = list.map(u => `<div class="update-item"><div class="card-tag">${u.pinned ? "FIJADO" : u.type.toUpperCase()} • ${new Date(u.time).toLocaleDateString()}</div><strong style="display:block;margin-top:6px;font-size:16px;">${escapeHtml(u.title)}</strong><div class="small" style="margin-top:8px;">${escapeHtml(u.body)}</div><div class="dock" style="margin-top:12px;"><button class="secondary" onclick="pinUpdate('${encodeURIComponent(u.time)}')">${u.pinned ? 'QUITAR' : 'FIJAR'}</button><button class="secondary" onclick="copyUpdate('${encodeURIComponent(u.time)}')">COPIAR</button></div></div>`).join("");
 }
 function renderHelpFeed(){
-  const items = ["Use the auth gate to create a citizen.","Open documents and save them.","Submit requests or appointments.","Claim daily credits.","Finish missions to earn more."];
-  el("help-feed").innerHTML = items.map(t => `<div class="feed-item"><div class="card-tag">HELP</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
+  const items = ["Usa la puerta para crear una identidad.","Abre documentos y guárdalos.","Envía solicitudes o citas.","Reclama créditos diarios.","Haz misiones para ganar más."];
+  el("help-feed").innerHTML = items.map(t => `<div class="feed-item"><div class="card-tag">AYUDA</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
 }
 function renderRequests(){
   el("request-count").textContent = DB.requests.length;
   el("request-count-dash").textContent = DB.requests.length;
-  const list = DB.requests.length === 0 ? `<div class="request-item">No requests yet.</div>` : DB.requests.map(r => `<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join("");
+  const list = DB.requests.length === 0 ? `<div class="request-item">No hay solicitudes.</div>` : DB.requests.map(r => `<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join("");
   el("request-list").innerHTML = list;
   el("dashboard-request-list").innerHTML = list;
 }
 function renderChallenges(){
   const html = CHALLENGES.map(ch => {
-    const done = DB.missionProgress[ch.id];
-    return `<div class="challenge"><div class="card-tag">MISSION</div><strong>${escapeHtml(ch.title)}</strong><div class="small">${escapeHtml(ch.text)}</div><div class="reward">+${ch.reward} credits</div><button class="secondary" onclick="claimMission('${ch.id}', ${ch.reward}, '${escapeHtml(ch.title)}')">${done ? 'DONE' : 'CLAIM'}</button></div>`;
+    const done = !!DB.missionProgress[ch.id];
+    return `<div class="challenge"><div class="card-tag">MISIÓN</div><strong>${escapeHtml(ch.title)}</strong><div class="small">${escapeHtml(ch.text)}</div><div class="reward">+${ch.reward} créditos</div><button class="secondary" onclick="claimMission('${ch.id}', ${ch.reward}, '${encodeURIComponent(ch.title)}')">${done ? 'HECHA' : 'RECLAMAR'}</button></div>`;
   }).join("");
   el("challenge-grid").innerHTML = html;
   el("challenge-grid-dash").innerHTML = html;
 }
 function renderDocs(){
-  const html = DOCS.map(doc => {
+  let docs = DOCS.slice();
+  const q = (DB.ui.docFilter || el("docs-search")?.value || "").trim().toLowerCase();
+  if(q){ docs = docs.filter(d => (d.title + " " + d.desc).toLowerCase().includes(q)); }
+  const html = docs.map(doc => {
     const saved = DB.savedDocs.includes(doc.id);
-    return `<div class="doc-card"><div><div class="card-tag">${saved ? "SAVED" : "DOC"}</div><h3 style="margin-top:6px;">${escapeHtml(doc.title)}</h3><div class="small">${escapeHtml(doc.desc)}</div></div><div class="doc-actions"><button onclick="openDocViewer('${doc.id}')">OPEN</button><button class="secondary" onclick="toggleSaveDoc('${doc.id}')">${saved ? 'UNSAVE' : 'SAVE'}</button><button class="secondary" onclick="downloadDoc('${doc.id}')">DOWNLOAD</button></div></div>`;
+    return `<div class="doc-card"><div><div class="card-tag">${saved ? "GUARDADO" : "DOC"}</div><h3 style="margin-top:6px;">${escapeHtml(doc.title)}</h3><div class="small">${escapeHtml(doc.desc)}</div></div><div class="doc-actions"><button onclick="openDocViewer('${doc.id}')">ABRIR</button><button class="secondary" onclick="toggleSaveDoc('${doc.id}')">${saved ? 'QUITAR' : 'GUARDAR'}</button><button class="secondary" onclick="downloadDoc('${doc.id}')">DESCARGAR</button></div></div>`;
   }).join("");
-  el("docs-grid").innerHTML = html;
-  el("dashboard-docs").innerHTML = html;
+  el("docs-grid").innerHTML = html || `<div class="card"><div class="small">Sin resultados.</div></div>`;
+  el("dashboard-docs").innerHTML = html || `<div class="card"><div class="small">Sin resultados.</div></div>`;
 }
 function renderSavedDocs(){
-  el("saved-count").textContent = `${DB.savedDocs.length} saved`;
-  el("saved-count-dash").textContent = `${DB.savedDocs.length} saved`;
-  const html = DB.savedDocs.length === 0 ? `<div class="saved-item"><span>No saved documents yet.</span><span class="muted">Vault empty</span></div>` : DB.savedDocs.map(id => { const doc = getDocById(id); if(!doc) return ""; return `<div class="saved-item"><span>${escapeHtml(doc.title)}</span><span style="display:flex;gap:8px;flex-wrap:wrap;"><button class="secondary" onclick="openDocViewer('${doc.id}')">OPEN</button><button class="secondary" onclick="toggleSaveDoc('${doc.id}')">REMOVE</button></span></div>`; }).join("");
+  el("saved-count").textContent = `${DB.savedDocs.length}`;
+  el("saved-count-dash").textContent = `${DB.savedDocs.length}`;
+  const html = DB.savedDocs.length === 0 ? `<div class="saved-item"><span>No hay documentos guardados.</span><span class="muted">Vacío</span></div>` : DB.savedDocs.map(id => { const doc = getDocById(id); if(!doc) return ""; return `<div class="saved-item"><span>${escapeHtml(doc.title)}</span><span style="display:flex;gap:8px;flex-wrap:wrap;"><button class="secondary" onclick="openDocViewer('${doc.id}')">ABRIR</button><button class="secondary" onclick="toggleSaveDoc('${doc.id}')">BORRAR</button></span></div>`; }).join("");
   el("saved-list").innerHTML = html;
   el("dashboard-saved").innerHTML = html;
 }
 function renderEverything(){
-  el("landing-census").textContent = `${DB.census} citizen${DB.census === 1 ? "" : "s"}`;
+  el("landing-census").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
   el("census-num").textContent = DB.census.toLocaleString();
-  el("census-stat").textContent = `${DB.census} citizen${DB.census === 1 ? "" : "s"}`;
-  el("credit-stat").textContent = `${getTotalCredits()} credits`;
+  el("census-stat").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
+  el("credit-stat").textContent = `${getTotalCredits()} créditos`;
   el("census-bar").style.width = `${Math.min((DB.census / 100000) * 100, 100)}%`;
-  el("public-enrollment").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
-  el("enroll-state").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
-  el("reg-lock-badge").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
+  el("public-enrollment").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
+  el("enroll-state").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
+  el("reg-lock-badge").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
   el("register-btn").disabled = DB.registrationLocked;
   el("register-btn").style.opacity = DB.registrationLocked ? "0.45" : "1";
-  el("register-btn").textContent = DB.registrationLocked ? "REGISTRATION CLOSED" : "GENERATE HID";
+  el("register-btn").textContent = DB.registrationLocked ? "ALTA CERRADA" : "GENERAR HID";
   updateScrollStat();
   renderCreditUI();
 }
@@ -795,87 +826,75 @@ function updateEnrollmentUI(){
   const locked = DB.registrationLocked || DB.users.length >= 1;
   DB.registrationLocked = locked;
   saveDB();
-  el("reg-lock-badge").textContent = locked ? "CLOSED" : "OPEN";
+  el("reg-lock-badge").textContent = locked ? "CERRADA" : "ABIERTA";
   el("register-btn").disabled = locked;
   el("register-btn").style.opacity = locked ? "0.45" : "1";
-  el("register-btn").textContent = locked ? "REGISTRATION CLOSED" : "GENERATE HID";
-  el("public-enrollment").textContent = locked ? "CLOSED" : "OPEN";
-  el("enroll-state").textContent = locked ? "CLOSED" : "OPEN";
+  el("register-btn").textContent = locked ? "ALTA CERRADA" : "GENERAR HID";
+  el("public-enrollment").textContent = locked ? "CERRADA" : "ABIERTA";
+  el("enroll-state").textContent = locked ? "CERRADA" : "ABIERTA";
 }
 function updateScrollStat(){ const max = document.documentElement.scrollHeight - window.innerHeight; const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0; el("scroll-stat").textContent = pct + "%"; }
 window.addEventListener("scroll", updateScrollStat);
-function startShipCountdown(){ const target = new Date("2028-04-01T00:00:00").getTime(); const terminal = el("ship-terminal"); function tick(){ const dist = target - Date.now(); if(dist <= 0){ terminal.innerHTML = "Launch window reached."; el("countdown").textContent = "LAUNCHED"; return; } const days = Math.floor(dist/(1000*60*60*24)); const hours = Math.floor((dist%(1000*60*60*24))/(1000*60*60)); const minutes = Math.floor((dist%(1000*60*60))/(1000*60)); const seconds = Math.floor((dist%(1000*60))/1000); const cd = `${String(days).padStart(3,"0")}D : ${String(hours).padStart(2,"0")}H : ${String(minutes).padStart(2,"0")}M : ${String(seconds).padStart(2,"0")}S`; el("countdown").textContent = cd; terminal.innerHTML = [`> Launch window: ${cd}`,`> Orbit corridor: stable`,`> Engine core: monitored`,`> Vessel status: primed`].join("<br>"); } tick(); setInterval(tick,1000); }
+function startShipCountdown(){ const target = new Date("2028-04-01T00:00:00").getTime(); const terminal = el("ship-terminal"); function tick(){ const dist = target - Date.now(); if(dist <= 0){ terminal.innerHTML = "Lanzamiento alcanzado."; el("countdown").textContent = "DESPEGUE"; return; } const days = Math.floor(dist/(1000*60*60*24)); const hours = Math.floor((dist%(1000*60*60*24))/(1000*60*60)); const minutes = Math.floor((dist%(1000*60*60))/(1000*60)); const seconds = Math.floor((dist%(1000*60))/1000); const cd = `${String(days).padStart(3,"0")}D : ${String(hours).padStart(2,"0")}H : ${String(minutes).padStart(2,"0")}M : ${String(seconds).padStart(2,"0")}S`; el("countdown").textContent = cd; terminal.innerHTML = [`> Cuenta atrás: ${cd}`,`> Corriente orbital: estable`,`> Núcleo: monitorizado`,`> Nave: preparada`].join("<br>"); } tick(); setInterval(tick,1000); }
 function openAuth(){ if(!bootComplete) return; el("auth-modal").classList.add("open"); document.body.style.overflow="hidden"; }
 function closeAuth(){ el("auth-modal").classList.remove("open"); document.body.style.overflow=currentUser?"hidden":"auto"; }
 el("auth-modal").addEventListener("click",e=>{ if(e.target.id==="auth-modal") closeAuth(); });
 function getDocById(id){ return DOCS.find(d=>d.id===id); }
-function openDocViewer(id){ const doc=getDocById(id); if(!doc) return; currentDocId=id; el("doc-title").textContent=doc.title; el("doc-frame").src=doc.file; el("doc-saved-badge").textContent=DB.savedDocs.includes(id)?"SAVED":"NOT SAVED"; el("doc-modal").classList.add("open"); document.body.style.overflow="hidden"; if(currentUser) missionTouch("read-doc"); }
+function openDocViewer(id){ const doc=getDocById(id); if(!doc) return; currentDocId=id; el("doc-title").textContent=doc.title; el("doc-frame").src=doc.file; el("doc-saved-badge").textContent=DB.savedDocs.includes(id)?"GUARDADO":"NO GUARDADO"; el("doc-modal").classList.add("open"); document.body.style.overflow="hidden"; if(currentUser) claimMissionIfNeeded('read-doc'); }
 function closeDocViewer(){ el("doc-modal").classList.remove("open"); document.body.style.overflow=currentUser?"hidden":"auto"; }
 el("doc-modal").addEventListener("click",e=>{ if(e.target.id==="doc-modal") closeDocViewer(); });
 function openDocExternal(){ const doc=getDocById(currentDocId); if(!doc) return; window.open(doc.file,"_blank"); }
 function downloadDoc(id){ const doc=getDocById(id); if(!doc) return; const a=document.createElement("a"); a.href=doc.file; a.download=doc.file.split("/").pop(); document.body.appendChild(a); a.click(); a.remove(); }
 function downloadCurrentDoc(){ if(currentDocId) downloadDoc(currentDocId); }
-function toggleSaveDoc(id){ const idx=DB.savedDocs.indexOf(id); if(idx>=0) DB.savedDocs.splice(idx,1); else DB.savedDocs.push(id); saveDB(); renderDocs(); renderSavedDocs(); refreshDocViewerBadge(); serviceToast(DB.savedDocs.includes(id)?"Saved." : "Removed."); }
+function toggleSaveDoc(id){ const idx=DB.savedDocs.indexOf(id); if(idx>=0) DB.savedDocs.splice(idx,1); else DB.savedDocs.push(id); saveDB(); renderDocs(); renderSavedDocs(); refreshDocViewerBadge(); serviceToast(DB.savedDocs.includes(id)?"Guardado." : "Eliminado."); }
 function toggleSaveCurrentDoc(){ if(currentDocId) toggleSaveDoc(currentDocId); }
-function refreshDocViewerBadge(){ if(!currentDocId) return; el("doc-saved-badge").textContent = DB.savedDocs.includes(currentDocId)?"SAVED":"NOT SAVED"; }
-function clearSavedDocs(){ DB.savedDocs=[]; saveDB(); renderDocs(); renderSavedDocs(); refreshDocViewerBadge(); serviceToast("Vault cleared."); }
+function refreshDocViewerBadge(){ if(!currentDocId) return; el("doc-saved-badge").textContent = DB.savedDocs.includes(currentDocId)?"GUARDADO":"NO GUARDADO"; }
+function clearSavedDocs(){ DB.savedDocs=[]; saveDB(); renderDocs(); renderSavedDocs(); refreshDocViewerBadge(); serviceToast("Vault borrado."); }
 
-function unlockAdmin(){ const code=el("admin-code").value.trim(); if(code===ADMIN_CODE){ DB.adminUnlocked=true; saveDB(); serviceToast("Editor unlocked."); } else { serviceToast("Invalid admin code."); } }
-function postUpdate(){ if(!DB.adminUnlocked){ serviceToast("Unlock editor first."); return; } const title=el("update-title").value.trim(); const body=el("update-body").value.trim(); const type=el("update-type").value; if(!title||!body){ serviceToast("Title and body needed."); return; } DB.updates.unshift({ title, body, type, pinned:false, time:new Date().toISOString() }); saveDB(); renderUpdates(); renderNotices(); renderHelpFeed(); logPublic(`Update posted: ${title}`); el("update-title").value=""; el("update-body").value=""; }
-function pinLatestUpdate(){ if(!DB.adminUnlocked){ serviceToast("Unlock editor first."); return; } if(DB.updates.length===0) return; DB.updates[0].pinned=!DB.updates[0].pinned; saveDB(); renderUpdates(); }
-function pinUpdate(timeEncoded){ if(!DB.adminUnlocked){ serviceToast("Unlock editor first."); return; } const time=decodeURIComponent(timeEncoded); const item=DB.updates.find(u=>u.time===time); if(!item) return; item.pinned=!item.pinned; saveDB(); renderUpdates(); }
-function copyUpdate(timeEncoded){ const time=decodeURIComponent(timeEncoded); const item=DB.updates.find(u=>u.time===time); if(!item) return; navigator.clipboard?.writeText(`${item.title}\n\n${item.body}`).catch(()=>{}); serviceToast("Copied."); }
-function toggleEmergency(){ if(!DB.adminUnlocked){ serviceToast("Unlock editor first."); return; } DB.emergency=!DB.emergency; saveDB(); renderNotices(); renderPublicFeed(); serviceToast(DB.emergency?"Emergency active." : "Emergency cleared."); }
+function unlockAdmin(){ const code=el("admin-code").value.trim(); if(code===ADMIN_CODE){ DB.adminUnlocked=true; saveDB(); serviceToast("Editor desbloqueado."); el("admin-hint").textContent = "Editor activado. Ya puedes publicar, fijar y buscar con normalidad."; } else { serviceToast("Código inválido."); } }
+function postUpdate(){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } const title=el("update-title").value.trim(); const body=el("update-body").value.trim(); const type=el("update-type").value; if(!title||!body){ serviceToast("Falta título o texto."); return; } DB.updates.unshift({ title, body, type, pinned:false, time:new Date().toISOString() }); saveDB(); renderUpdates(); renderNotices(); renderHelpFeed(); logPublic(`Aviso publicado: ${title}`); el("update-title").value=""; el("update-body").value=""; }
+function pinLatestUpdate(){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } if(DB.updates.length===0) return; DB.updates[0].pinned=!DB.updates[0].pinned; saveDB(); renderUpdates(); }
+function pinUpdate(timeEncoded){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } const time=decodeURIComponent(timeEncoded); const item=DB.updates.find(u=>u.time===time); if(!item) return; item.pinned=!item.pinned; saveDB(); renderUpdates(); }
+function copyUpdate(timeEncoded){ const time=decodeURIComponent(timeEncoded); const item=DB.updates.find(u=>u.time===time); if(!item) return; navigator.clipboard?.writeText(`${item.title}\n\n${item.body}`).catch(()=>{}); serviceToast("Copiado."); }
+function toggleEmergency(){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } DB.emergency=!DB.emergency; saveDB(); renderNotices(); renderPublicFeed(); serviceToast(DB.emergency?"Emergencia activa." : "Emergencia desactivada."); }
 
 function register(){
-  if(DB.registrationLocked || DB.users.length >= 1){ DB.registrationLocked=true; saveDB(); updateEnrollmentUI(); el("credentials").textContent = "REGISTRATION CLOSED. One citizen has already been issued in this browser."; alert("REGISTRATION CLOSED: this browser already has a citizen issued."); return; }
+  if(DB.registrationLocked || DB.users.length >= 1){ DB.registrationLocked=true; saveDB(); updateEnrollmentUI(); el("credentials").textContent = "ALTA CERRADA. Ya hay un ciudadano emitido en este navegador."; alert("ALTA CERRADA: ya hay un ciudadano emitido."); return; }
   const name=el("reg-name").value.trim(); const email=el("reg-email").value.trim(); const role=el("reg-role").value.trim();
-  if(!name || !email || !role){ el("credentials").textContent = "NAME, EMAIL, ROLE required."; return; }
+  if(!name || !email || !role){ el("credentials").textContent = "NOMBRE, EMAIL Y ROL obligatorios."; return; }
   const user={ hid:generateHID(), pass:generatePass(), name, email, role, credits:0, issuedAt:new Date().toISOString() };
   DB.users.push(user); DB.census += 1; DB.registrationLocked=true; DB.issuedAt=user.issuedAt; DB.credits=0; saveDB();
-  el("credentials").textContent = `HID:\n${user.hid}\n\nPASSWORD:\n${user.pass}\n\nSAVE NOW.`;
-  renderPublicFeed(); renderEverything(); renderDocs(); renderNotices(); updateEnrollmentUI(); logPublic(`Citizen issued: ${name}`); serviceToast("Citizen created.");
+  el("credentials").textContent = `HID:\n${user.hid}\n\nCLAVE:\n${user.pass}\n\nGUÁRDALO AHORA.`;
+  renderPublicFeed(); renderEverything(); renderDocs(); renderNotices(); updateEnrollmentUI(); logPublic(`Ciudadano emitido: ${name}`); serviceToast("Ciudadano creado.");
 }
 function login(){
   const hid=el("login-hid").value.trim(); const pass=el("login-pass").value.trim(); const u=DB.users.find(x=>x.hid===hid && x.pass===pass);
-  if(!u){ alert("ACCESS DENIED"); return; }
-  currentUser=u; if(typeof currentUser.credits !== 'number') currentUser.credits = 0; DB.credits = currentUser.credits; saveDB();
-  el("dashboard").style.display="block"; closeAuth(); document.body.style.overflow="hidden"; populateDashboard(); showTab("overview"); logPrivate("SYSTEM ACCESS GRANTED"); loadMessages(); renderRequests(); renderUpdates(); renderChallenges(); refreshCreditUI(); maybeGrantDailyOnOpen(); serviceToast(`Welcome back, ${u.name}.`);
+  if(!u){ alert("ACCESO DENEGADO"); return; }
+  currentUser=u; if(typeof currentUser.credits !== 'number') currentUser.credits = 0; DB.credits=currentUser.credits; saveDB();
+  el("dashboard").style.display="block"; closeAuth(); document.body.style.overflow="hidden"; populateDashboard(); showTab("overview"); logPrivate("ACCESO CONCEDIDO"); loadMessages(); renderRequests(); renderUpdates(); renderChallenges(); refreshCreditUI(); maybeGrantDailyOnOpen(); serviceToast(`Bienvenido, ${u.name}.`);
 }
-function logout(){ currentUser=null; el("dashboard").style.display="none"; document.body.style.overflow="auto"; logPublic("User session ended."); serviceToast("Session closed."); }
+function logout(){ currentUser=null; el("dashboard").style.display="none"; document.body.style.overflow="auto"; logPublic("Sesión cerrada."); serviceToast("Sesión cerrada."); }
 function populateDashboard(){
   el("user-hid").textContent = currentUser.hid; el("user-name").textContent = currentUser.name; el("user-role").textContent = currentUser.role; el("user-credits").textContent = currentUser.credits.toLocaleString();
   el("identity-hid").textContent = currentUser.hid; el("identity-name").textContent = currentUser.name; el("identity-email").textContent = currentUser.email; el("identity-role").textContent = currentUser.role; el("identity-credits").textContent = currentUser.credits.toLocaleString(); el("identity-issue").textContent = currentUser.issuedAt ? new Date(currentUser.issuedAt).toLocaleString() : "—";
-  const health = Math.min(18 + DB.census, 100); el("health-bar").style.width = health + "%"; el("health-text").textContent = `${health}%`; el("system-mode").textContent = "PRIVATE NODE"; refreshCreditUI();
+  const health = Math.min(18 + DB.census, 100); el("health-bar").style.width = health + "%"; el("health-text").textContent = `${health}%`; el("system-mode").textContent = "NODO PRIVADO"; refreshCreditUI();
 }
 function showTab(tab){ ["overview","docs","messages","identity","requests","updates","credits"].forEach(t=>{ el("panel-"+t).classList.toggle("active", t===tab); const btn=document.querySelector(`.tab[data-tab="${t}"]`); if(btn) btn.classList.toggle("active", t===tab); }); if(tab==='credits') renderChallenges(); }
-function sendMessage(){ if(!currentUser) return; const text=el("msg").value.trim(); if(!text) return; DB.messages.push({ from:currentUser.hid, name:currentUser.name, text, time:nowTime() }); saveDB(); el("msg").value=""; loadMessages(); logPrivate("Message transmitted."); missionTouch("send-msg"); }
-function loadMessages(){ const box=el("messages"); if(DB.messages.length===0){ box.innerHTML = `<div class="feed-item">No messages yet.</div>`; return; } box.innerHTML = DB.messages.map(m => `<div class="feed-item"><div class="card-tag">${escapeHtml(m.time)} • ${escapeHtml(m.name || m.from)}</div><div style="margin-top:8px;">${escapeHtml(m.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(m.from)}</div></div>`).join(""); }
-function logPublic(message){ const feed=el("public-feed"); const item=document.createElement("div"); item.className="feed-item"; item.innerHTML=`<div class="card-tag">PUBLIC</div><div style="margin-top:6px;">${escapeHtml(message)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div>`; feed.prepend(item); }
+function sendMessage(){ if(!currentUser) return; const text=el("msg").value.trim(); if(!text) return; DB.messages.push({ from:currentUser.hid, name:currentUser.name, text, time:nowTime() }); saveDB(); el("msg").value=""; loadMessages(); logPrivate("Mensaje enviado."); claimMissionIfNeeded('send-msg'); }
+function loadMessages(){ const box=el("messages"); if(DB.messages.length===0){ box.innerHTML = `<div class="feed-item">No hay mensajes.</div>`; return; } box.innerHTML = DB.messages.map(m => `<div class="feed-item"><div class="card-tag">${escapeHtml(m.time)} • ${escapeHtml(m.name || m.from)}</div><div style="margin-top:8px;">${escapeHtml(m.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(m.from)}</div></div>`).join(""); }
+function logPublic(message){ const feed=el("public-feed"); const item=document.createElement("div"); item.className="feed-item"; item.innerHTML=`<div class="card-tag">PÚBLICO</div><div style="margin-top:6px;">${escapeHtml(message)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div>`; feed.prepend(item); }
 function logPrivate(message){ const log=el("log"); log.innerHTML += `> [${nowTime()}] ${escapeHtml(message)}<br>`; log.scrollTop = log.scrollHeight; }
-function serviceToast(message){ const feed=el("service-feed"); const item=document.createElement("div"); item.className="feed-item"; item.innerHTML=`<div class="card-tag">NOTIFICATION</div><div style="margin-top:6px;">${escapeHtml(message)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div>`; feed.prepend(item); }
-function submitRequest(){ const type=el("request-type").value; const day=el("request-day").value || "No preferred day"; const text=el("request-text").value.trim(); if(!text){ serviceToast("Write something first."); return; } DB.requests.unshift({ type, day, text, time:nowTime(), from:currentUser?currentUser.name:"Public user" }); saveDB(); renderRequests(); el("request-text").value=""; serviceToast("Request submitted."); missionTouch("submit-req"); }
-function submitDashboardRequest(){ const type=el("dash-request-type").value; const day=el("dash-request-day").value || "No preferred day"; const text=el("dash-request-text").value.trim(); if(!text){ logPrivate("Request rejected: missing description."); return; } DB.requests.unshift({ type, day, text, time:nowTime(), from:currentUser?currentUser.name:"Citizen" }); saveDB(); renderRequests(); el("dash-request-text").value=""; logPrivate("Request submitted."); serviceToast("Request sent."); missionTouch("submit-req"); }
+function serviceToast(message){ const feed=el("service-feed"); const item=document.createElement("div"); item.className="feed-item"; item.innerHTML=`<div class="card-tag">NOTIFICACIÓN</div><div style="margin-top:6px;">${escapeHtml(message)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div>`; feed.prepend(item); }
+function submitRequest(){ const type=el("request-type").value; const day=el("request-day").value || "Sin día preferido"; const text=el("request-text").value.trim(); if(!text){ serviceToast("Escribe algo primero."); return; } DB.requests.unshift({ type, day, text, time:nowTime(), from:currentUser?currentUser.name:"Usuario público" }); saveDB(); renderRequests(); el("request-text").value=""; serviceToast("Solicitud enviada."); claimMissionIfNeeded('submit-req'); }
+function submitDashboardRequest(){ const type=el("dash-request-type").value; const day=el("dash-request-day").value || "Sin día preferido"; const text=el("dash-request-text").value.trim(); if(!text){ logPrivate("Solicitud rechazada: falta descripción."); return; } DB.requests.unshift({ type, day, text, time:nowTime(), from:currentUser?currentUser.name:"Ciudadano" }); saveDB(); renderRequests(); el("dash-request-text").value=""; logPrivate("Solicitud enviada."); serviceToast("Solicitud enviada."); claimMissionIfNeeded('submit-req'); }
 function prefillRequest(type){ el("request-type").value=type; scrollToSection('section-requests'); }
-function renderRequests(){ el("request-count").textContent = DB.requests.length; el("request-count-dash").textContent = DB.requests.length; const list = DB.requests.length===0 ? `<div class="request-item">No requests yet.</div>` : DB.requests.map(r=>`<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join(""); el("request-list").innerHTML = list; el("dashboard-request-list").innerHTML = list; }
-function saveSessionSnapshot(){ const snapshot={ currentUser, census:DB.census, credits:currentUser?currentUser.credits:0, savedDocs:DB.savedDocs, messages:DB.messages.slice(-25), requests:DB.requests.slice(-25), updates:DB.updates.slice(0,10), at:new Date().toISOString() }; const blob=new Blob([JSON.stringify(snapshot,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="heidenbillg-session-snapshot.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); logPrivate("Snapshot exported."); }
-function exportProfile(){ if(!currentUser) return; const profile={ hid:currentUser.hid, name:currentUser.name, email:currentUser.email, role:currentUser.role, credits:currentUser.credits, issuedAt:currentUser.issuedAt, census:DB.census, savedDocs:DB.savedDocs, requests:DB.requests.length }; const blob=new Blob([JSON.stringify(profile,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="heidenbillg-profile.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); logPrivate("Profile exported."); missionTouch("export-profile"); }
-async function copyHID(){ if(!currentUser) return; try{ await navigator.clipboard.writeText(currentUser.hid); logPrivate("HID copied."); }catch{ alert("Clipboard unavailable."); } }
-function copyLaunchStatus(){ const text = `HEIDENBILLG OS // HSA-13 WAVERIDER // launch: ${el("countdown").textContent}`; navigator.clipboard?.writeText(text).catch(()=>{}); logPublic("Launch status copied."); }
-function lockSession(){ logout(); alert("Session locked."); }
+function renderRequests(){ el("request-count").textContent = DB.requests.length; el("request-count-dash").textContent = DB.requests.length; const list = DB.requests.length===0 ? `<div class="request-item">No hay solicitudes.</div>` : DB.requests.map(r=>`<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join(""); el("request-list").innerHTML = list; el("dashboard-request-list").innerHTML = list; }
+function saveSessionSnapshot(){ const snapshot={ currentUser, census:DB.census, credits:currentUser?currentUser.credits:0, savedDocs:DB.savedDocs, messages:DB.messages.slice(-25), requests:DB.requests.slice(-25), updates:DB.updates.slice(0,10), at:new Date().toISOString() }; const blob=new Blob([JSON.stringify(snapshot,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="heidenbillg-session-snapshot.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); logPrivate("Snapshot exportado."); }
+function exportProfile(){ if(!currentUser) return; const profile={ hid:currentUser.hid, name:currentUser.name, email:currentUser.email, role:currentUser.role, credits:currentUser.credits, issuedAt:currentUser.issuedAt, census:DB.census, savedDocs:DB.savedDocs, requests:DB.requests.length }; const blob=new Blob([JSON.stringify(profile,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="heidenbillg-perfil.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); logPrivate("Perfil exportado."); claimMissionIfNeeded('export-profile'); }
+async function copyHID(){ if(!currentUser) return; try{ await navigator.clipboard.writeText(currentUser.hid); logPrivate("HID copiado."); }catch{ alert("Portapapeles no disponible."); } }
+function copyLaunchStatus(){ const text = `HEIDENBILLG OS // HSA-13 WAVERIDER // lanzamiento: ${el("countdown").textContent}`; navigator.clipboard?.writeText(text).catch(()=>{}); logPublic("Estado de lanzamiento copiado."); }
+function lockSession(){ logout(); alert("Sesión bloqueada."); }
 function jumpToDashboard(){ if(currentUser){ el("dashboard").style.display="block"; document.body.style.overflow="hidden"; } else { openAuth(); } }
-function getTotalCredits(){ return currentUser ? currentUser.credits : (DB.credits || 0); }
-function refreshCreditUI(){
-  const credits = currentUser ? currentUser.credits : (DB.credits || 0);
-  el("credit-stat").textContent = `${credits} credits`;
-  el("credit-balance").textContent = credits;
-  el("credit-balance-large").textContent = credits;
-  el("daily-status").textContent = DB.daily.claimedToday ? 'CLAIMED' : 'READY';
-  el("daily-status-dash").textContent = DB.daily.claimedToday ? 'CLAIMED' : 'READY';
-  el("daily-streak").textContent = DB.daily.streak || 0;
-  el("credit-bar").style.width = `${Math.min((credits / 1000) * 100, 100)}%`;
-}
-function todayKey(){ return new Date().toISOString().slice(0,10); }
 function maybeGrantDailyOnOpen(){
   const today = todayKey();
   if(DB.daily.lastGrant !== today){
@@ -884,67 +903,67 @@ function maybeGrantDailyOnOpen(){
     DB.daily.streak = (DB.daily.streak || 0) + 1;
     if(currentUser){ currentUser.credits += 100; DB.credits = currentUser.credits; }
     saveDB();
-    refreshCreditUI();
-    if(currentUser){ logPrivate("Daily credits granted: +100"); }
+    if(currentUser){ logPrivate("Crédito diario automático: +100"); }
   }
+  refreshCreditUI();
 }
 function claimDailyCredits(){
   if(!currentUser) return;
   const today = todayKey();
-  if(DB.daily.lastGrant === today && DB.daily.claimedToday){ serviceToast("Already claimed today."); return; }
-  if(DB.daily.lastGrant === today && !DB.daily.claimedToday){
-    DB.daily.claimedToday = true;
-    currentUser.credits += 100;
-    DB.credits = currentUser.credits;
-    saveDB();
-    refreshCreditUI();
-    populateDashboard();
-    serviceToast("+100 credits");
-    logPrivate("Daily claim collected.");
-  } else {
-    DB.daily.lastGrant = today;
-    DB.daily.claimedToday = true;
-    DB.daily.streak = (DB.daily.streak || 0) + 1;
-    currentUser.credits += 100;
-    DB.credits = currentUser.credits;
-    saveDB();
-    refreshCreditUI();
-    populateDashboard();
-    serviceToast("+100 credits");
-    logPrivate("Daily claim collected.");
-  }
+  if(DB.daily.lastGrant === today && DB.daily.claimedToday){ serviceToast("Ya reclamado hoy."); return; }
+  DB.daily.lastGrant = today;
+  DB.daily.claimedToday = true;
+  DB.daily.streak = (DB.daily.streak || 0) + 1;
+  currentUser.credits += 100;
+  DB.credits = currentUser.credits;
+  saveDB();
+  refreshCreditUI();
+  populateDashboard();
+  serviceToast("+100 créditos");
+  logPrivate("Crédito diario reclamado.");
 }
-function grantBonus(amount, reason){ if(!currentUser) return; currentUser.credits += amount; DB.credits = currentUser.credits; saveDB(); refreshCreditUI(); populateDashboard(); logPrivate(`+${amount} credits: ${reason}`); serviceToast(`+${amount} credits`); }
-function missionTouch(id){ if(!currentUser) return; if(DB.missionProgress[id]) return; }
-function claimMission(id, reward, label){ if(!currentUser) return; if(DB.missionProgress[id]){ serviceToast('Mission already done.'); return; } DB.missionProgress[id] = true; currentUser.credits += reward; DB.credits = currentUser.credits; saveDB(); renderChallenges(); refreshCreditUI(); populateDashboard(); logPrivate(`Mission completed: ${label} (+${reward})`); serviceToast(`+${reward} credits`); }
-function unlockMissionByAction(id){ if(!currentUser) return; if(DB.missionProgress[id]) return; DB.missionProgress[id] = true; saveDB(); renderChallenges(); }
-
-function maybeUnlockActionMission(){ }
-
-function claimMissionFromButton(id,reward,label){ claimMission(id,reward,label); }
-
+function grantBonus(amount, reason){ if(!currentUser) return; currentUser.credits += amount; DB.credits = currentUser.credits; saveDB(); refreshCreditUI(); populateDashboard(); logPrivate(`+${amount} créditos: ${reason}`); serviceToast(`+${amount} créditos`); }
+function claimMissionIfNeeded(id){ if(!currentUser) return; if(DB.missionProgress[id]) return; }
+function claimMission(id, reward, labelEncoded){ if(!currentUser) return; if(DB.missionProgress[id]){ serviceToast('Misión ya hecha.'); return; } DB.missionProgress[id] = true; currentUser.credits += reward; DB.credits = currentUser.credits; saveDB(); renderChallenges(); refreshCreditUI(); populateDashboard(); const label = decodeURIComponent(labelEncoded); logPrivate(`Misión completada: ${label} (+${reward})`); serviceToast(`+${reward} créditos`); }
 function renderAllBase(){
-  el("landing-census").textContent = `${DB.census} citizen${DB.census===1?"":"s"}`;
+  el("landing-census").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
   el("census-num").textContent = DB.census.toLocaleString();
-  el("census-stat").textContent = `${DB.census} citizen${DB.census===1?"":"s"}`;
+  el("census-stat").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
+  el("credit-stat").textContent = `${getTotalCredits()} créditos`;
   el("census-bar").style.width = `${Math.min((DB.census / 100000) * 100, 100)}%`;
-  el("public-enrollment").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
-  el("enroll-state").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
-  el("reg-lock-badge").textContent = DB.registrationLocked ? "CLOSED" : "OPEN";
+  el("public-enrollment").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
+  el("enroll-state").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
+  el("reg-lock-badge").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
   el("register-btn").disabled = DB.registrationLocked;
   el("register-btn").style.opacity = DB.registrationLocked ? "0.45" : "1";
-  el("register-btn").textContent = DB.registrationLocked ? "REGISTRATION CLOSED" : "GENERATE HID";
+  el("register-btn").textContent = DB.registrationLocked ? "ALTA CERRADA" : "GENERAR HID";
   updateScrollStat();
 }
-function maybeGrantDaily(){ maybeGrantDailyOnOpen(); refreshCreditUI(); }
-function renderChallenges(){
-  const html = CHALLENGES.map(ch => {
-    const done = !!DB.missionProgress[ch.id];
-    return `<div class="challenge"><div class="card-tag">MISSION</div><strong>${escapeHtml(ch.title)}</strong><div class="small">${escapeHtml(ch.text)}</div><div class="reward">+${ch.reward} credits</div><button class="secondary" onclick="claimMissionFromButton('${ch.id}', ${ch.reward}, '${encodeURIComponent(ch.title)}')">${done ? 'DONE' : 'CLAIM'}</button></div>`;
-  }).join("");
-  el("challenge-grid").innerHTML = html;
-  el("challenge-grid-dash").innerHTML = html;
+function renderCreditUI(){
+  refreshCreditUI();
+  el("daily-btn").disabled = DB.daily.claimedToday;
 }
+function filterDocs(){
+  DB.ui.docFilter = el("docs-search").value;
+  renderDocs();
+}
+function clearDocFilter(){
+  DB.ui.docFilter = "";
+  el("docs-search").value = "";
+  renderDocs();
+}
+function filterUpdates(){
+  DB.ui.updateFilter = el("updates-search").value;
+  renderNotices();
+  renderUpdates();
+}
+function clearUpdateFilter(){
+  DB.ui.updateFilter = "";
+  el("updates-search").value = "";
+  renderNotices();
+  renderUpdates();
+}
+function claimMissionIfNeededAuto(){ }
 
 renderDocs();
 renderSavedDocs();
@@ -959,9 +978,54 @@ loadMessages();
 updateEnrollmentUI();
 showTab("overview");
 
-// Extra hooks to make text lighter and buttons more functional
-function lockMoreText(){}
+// Mejoras automáticas y misiones
+const originalOpenDocViewer = openDocViewer;
+openDocViewer = function(id){
+  const doc = getDocById(id);
+  if(!doc) return;
+  currentDocId = id;
+  el("doc-title").textContent = doc.title;
+  el("doc-frame").src = doc.file;
+  el("doc-saved-badge").textContent = DB.savedDocs.includes(id)?"GUARDADO":"NO GUARDADO";
+  el("doc-modal").classList.add("open");
+  document.body.style.overflow="hidden";
+  if(currentUser) claimMissionIfNeeded('read-doc');
+};
 
-document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ closeAuth(); closeDocViewer(); } });
+// Auto-claim seguro: una vez al día, una sola vez; sin repetición manual.
+setInterval(() => {
+  if(!bootComplete) return;
+  const today = todayKey();
+  if(DB.daily.lastGrant !== today && currentUser){
+    DB.daily.lastGrant = today;
+    DB.daily.claimedToday = false;
+    DB.daily.streak = (DB.daily.streak || 0) + 1;
+    currentUser.credits += 100;
+    DB.credits = currentUser.credits;
+    saveDB();
+    refreshCreditUI();
+    populateDashboard();
+    logPrivate("Crédito diario automático aplicado.");
+  }
+  const secsToMidnight = (() => { const now = new Date(); const end = new Date(); end.setHours(24,0,0,0); return Math.max(0, Math.floor((end - now)/1000)); })();
+  const hh = String(Math.floor(secsToMidnight/3600)).padStart(2,'0');
+  const mm = String(Math.floor((secsToMidnight%3600)/60)).padStart(2,'0');
+  el("next-daily").textContent = `${hh}:${mm}`;
+  refreshCreditUI();
+  renderNotices();
+  renderUpdates();
+}, 15000);
+
+// Misiones automáticas por acciones
+window.addEventListener('click', () => { if(currentUser) claimMissionIfNeeded('open-help'); });
+
+// Búsqueda en vivo
+el("docs-search").addEventListener("input", filterDocs);
+el("updates-search").addEventListener("input", filterUpdates);
+
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape"){ closeAuth(); closeDocViewer(); }
+  if((e.key || '').toLowerCase() === 'd' && currentUser && !DB.daily.claimedToday){ claimDailyCredits(); }
+});
 </script></body>
 </html>
