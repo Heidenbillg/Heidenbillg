@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEIDENBILLG | PORTAL DE SOBERANÍA</title>
+    <title>HEIDENBILLG | SISTEMA OPERATIVO DE SOBERANÍA v2.1</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
@@ -12,712 +12,327 @@
             --mars: #ff4500;
             --text: #ffffff;
             --dim: #555;
+            --glass: rgba(255, 255, 255, 0.02);
             --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* EFECTOS GLOBALES */
+        /* --- EFECTOS DE PANTALLA (POST-PROCESSING) --- */
         .scanline {
-            width: 100%; height: 2px; background: rgba(255,255,255,0.03);
-            position: fixed; z-index: 1000; pointer-events: none;
-            animation: scan 8s linear infinite;
-        }
-        @keyframes scan { from { top: 0%; } to { top: 100%; } }
-
-        /* SECCIONES INFINITE SCROLL */
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 100px 10%;
-            border-bottom: 1px solid #111;
-            position: relative;
+            width: 100%; height: 100vh;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3) 51%);
+            background-size: 100% 4px;
+            position: fixed; z-index: 9999; pointer-events: none; opacity: 0.15;
         }
 
+        .vignette {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle, transparent 20%, black 150%);
+            z-index: 9998; pointer-events: none;
+        }
+
+        /* --- NAVEGACIÓN --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 30px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 5000; backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass);
+        }
+
+        .logo { font-family: var(--font-mono); font-weight: 900; letter-spacing: -1px; font-size: 1.4rem; }
+        .nav-links a { 
+            color: var(--dim); text-decoration: none; font-family: var(--font-mono); 
+            font-size: 0.7rem; margin-left: 30px; transition: var(--transition);
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- COMPONENTES GLOBALES --- */
+        section { min-height: 100vh; padding: 180px 10%; position: relative; border-bottom: 1px solid #111; }
         .mono { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 2px; }
-        .label { color: var(--dim); font-size: 0.8rem; margin-bottom: 10px; display: block; }
-        h1 { font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; line-height: 0.9; margin: 20px 0; }
+        .label { color: var(--accent); font-size: 0.7rem; margin-bottom: 20px; display: block; }
+        h1 { font-size: clamp(3.5rem, 12vw, 9rem); font-weight: 900; line-height: 0.8; margin-bottom: 40px; }
         .outline { -webkit-text-stroke: 1px var(--text); color: transparent; }
 
-        /* --- 01. LA NAVE --- */
+        /* --- BLOQUE 01: MARS PROJECT --- */
         #mars-project { background: radial-gradient(circle at top right, #1a0a05, transparent); }
-        .mars-accent { color: var(--mars); }
-        .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 40px; }
-        .spec-card { border: 1px solid #222; padding: 20px; }
-
-        /* --- 02. EL ESTADO (INFRAESTRUCTURA) --- */
-        #state-hq { background: #080808; }
-        .hq-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; 
-            margin-top: 50px;
+        .specs-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 30px; margin-top: 60px; 
         }
-        .hq-card { background: #0d0d0d; padding: 30px; border-left: 2px solid var(--accent); }
-        .hq-card h3 { font-size: 1rem; margin-bottom: 10px; }
+        .spec-card { border: 1px solid #1a1a1a; padding: 30px; background: var(--glass); }
+        .spec-card h4 { font-size: 0.6rem; color: var(--dim); margin-bottom: 10px; }
 
-        /* --- 03. CIUDADANÍA (HID) --- */
-        #citizenship { background: var(--bg); text-align: center; }
-        .request-box {
-            max-width: 600px; margin: 60px auto;
-            border: 1px solid var(--accent);
-            padding: 50px;
-            background: rgba(255, 62, 62, 0.02);
+        /* --- BLOQUE 02: EL ESTADO --- */
+        .hq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 50px; }
+        .hq-card { 
+            background: #080808; padding: 40px; border-left: 2px solid #1a1a1a; 
+            transition: var(--transition); 
         }
-        input {
-            width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--dim);
-            color: white; padding: 15px; margin-bottom: 30px; font-family: var(--font-mono); outline: none;
+        .hq-card:hover { border-left-color: var(--accent); background: #0d0d0d; transform: translateX(10px); }
+
+        /* --- BLOQUE 03: CENSO --- */
+        .census-wrap { text-align: center; max-width: 900px; margin: 0 auto; }
+        .census-bar-container { 
+            width: 100%; height: 4px; background: #111; margin: 50px 0; position: relative; 
+            overflow: hidden;
+        }
+        .census-fill { 
+            height: 100%; background: var(--accent); width: 0.85%; 
+            box-shadow: 0 0 20px var(--accent); transition: width 2s ease;
+        }
+
+        /* --- FORMULARIO TERMINAL --- */
+        .terminal-form {
+            background: #030303; border: 1px solid #1a1a1a; padding: 50px;
+            max-width: 700px; margin: 60px auto; position: relative;
+        }
+        input, textarea {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid #222;
+            color: white; padding: 15px 0; margin-bottom: 30px; font-family: var(--font-mono);
+            outline: none; font-size: 0.9rem;
         }
         input:focus { border-color: var(--accent); }
         .btn-sync {
-            background: var(--text); color: var(--bg); border: none;
-            padding: 20px 50px; font-weight: 900; cursor: pointer;
-            transition: 0.4s; width: 100%;
+            background: white; color: black; border: none; padding: 25px; width: 100%;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+            transition: var(--transition);
         }
         .btn-sync:hover { background: var(--accent); color: white; transform: scale(1.02); }
 
-        /* NAVEGACIÓN FIJA */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 40px 10%;
-            display: flex; justify-content: space-between; z-index: 500;
-            background: linear-gradient(to bottom, var(--bg), transparent);
-            <div class="mono" onclick="openLogin()" style="cursor:pointer;">Heidenbillg</div>
+        /* --- DASHBOARD PRIVADO (HIDDEN BY DEFAULT) --- */
+        #dashboard-overlay {
+            display: none; position: fixed; inset: 0; background: var(--bg);
+            z-index: 7000; grid-template-columns: 300px 1fr;
         }
-        /* --- NUEVOS ESTILOS PARA DASHBOARD Y LOGIN --- */
-            #dashboard {
-                display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-                grid-template-columns: 300px 1fr; background: var(--bg); z-index: 3000;
-            }
-            .sidebar { padding: 20px; border-right: 1px solid var(--dim); background: #050505; overflow-y: auto; }
-            .main-view { padding: 40px; overflow-y: auto; background: radial-gradient(circle at center, #0a0a0a, #000); }
-            .stat-box { margin-bottom: 20px; }
-            .stat-label { font-size: 0.6rem; color: var(--dim); text-transform: uppercase; }
-            .stat-value { font-size: 1rem; color: var(--text); margin-top: 5px; }
-            .op-card { background: rgba(255,255,255,0.02); border: 1px solid #111; padding: 20px; margin-bottom: 20px; 
+        .sidebar { border-right: 1px solid #111; padding: 40px; display: flex; flex-direction: column; gap: 30px; }
+        .main-view { padding: 60px; overflow-y: auto; }
+        .stat-box { background: var(--glass); padding: 20px; border: 1px solid #111; }
+
+        /* --- ANIMACIONES --- */
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .live { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
     </style>
 </head>
 <body>
+
     <div class="scanline"></div>
+    <div class="vignette"></div>
 
     <nav>
-        <div class="mono" style="font-weight: 700;">Heidenbillg</div>
-        <div class="mono" id="scroll-stat" style="font-size: 0.6rem; color: var(--dim);">Protocolo: Activo</div>
+        <div class="logo mono">HEIDENBILLG <span style="color:var(--accent)">OS_2.1</span></div>
+        <div class="nav-links">
+            <a href="#mars-project">// MARTE</a>
+            <a href="#state">// JURISDICCIÓN</a>
+            <a href="#citizenship">// CIUDADANÍA</a>
+            <a href="javascript:void(0)" onclick="toggleLogin()" style="color:white">[ LOGIN ]</a>
+        </div>
     </nav>
 
-    <!-- BLOQUE 1: LA NAVE -->
-<section id="mars-project">
-    <div class="mars-content">
-        <span class="mono label" style="color: var(--mars);">01 // ACTIVO EXTRA-PLANETARIO</span>
-        <h1 class="mars-accent">HSA-13 <br><span class="outline">WAVERIDER</span></h1>
+    <!-- SECCIÓN 01: MARTE WAVERIDER -->
+    <section id="mars-project">
+        <span class="label mono">// Activo Extra-Planetario 01</span>
+        <h1>HSA-13 <br> <span class="outline">WAVERIDER</span></h1>
         
-        <!-- CONTADOR DE LANZAMIENTO -->
-        <div class="launch-counter">
-            <span class="mono label">CUENTA REGRESIVA // VENTANA DE LANZAMIENTO: 01.04.2028</span>
-            <div id="countdown" class="mono" style="font-size: clamp(1.5rem, 5vw, 3rem); font-weight: 700; color: var(--text);">
-                00D : 00H : 00M : 00S
-            </div>
-        </div>
-
-        <p style="max-width: 700px; color: #888; margin: 30px 0; line-height: 1.8;">
-            El **Waverider** no es un cohete, es un sistema de transbordo de flujo constante. Utiliza una matriz de **Carburo de Hafnio** para resistir temperaturas de hasta 4.200°C durante la inserción en el Nodo 001.
+        <p style="max-width: 700px; color: #888; font-size: 1.1rem;">
+            El sistema de transbordo **Waverider** utiliza propulsión AV-E (Active Vacuum Entrainment) para mantener una aceleración constante de 1g, eliminando los efectos de la microgravedad en el personal Nivel VII.
         </p>
 
-        <div class="specs">
+        <div class="specs-grid">
             <div class="spec-card">
-                <span class="mono label">Propulsión</span>
-                <p>Active Vacuum Entrainment (AV-E)</p>
-                <small style="color: var(--dim); font-size: 0.6rem;">Aceleración sostenida 1g</small>
-            </div>
-            <div class="spec-card">
-                <span class="mono label">Tránsito</span>
-                <p>72 Horas (Tierra-Marte)</p>
-                <small style="color: var(--dim); font-size: 0.6rem;">Ruta: Arco de Transferencia Heidenbillg</small>
+                <h4 class="mono">Tránsito</h4>
+                <p class="mono">72 HORAS</p>
             </div>
             <div class="spec-card">
-                <span class="mono label">Blindaje</span>
-                <p>Matriz de Hafnio</p>
-                <small style="color: var(--dim); font-size: 0.6rem;">Resistencia Térmica: 4200°C</small>
+                <h4 class="mono">Blindaje</h4>
+                <p class="mono">HAFNIO V.2</p>
             </div>
             <div class="spec-card">
-                <span class="mono label">Tripulación</span>
-                <p>5 Especialistas Nivel VII</p>
-                <small style="color: var(--dim); font-size: 0.6rem;">Soporte Vital: Unidad HESA</small>
+                <h4 class="mono">Destino</h4>
+                <p class="mono">NODO MARTE-01</p>
             </div>
         </div>
 
-        <div class="engine-visual">
-            <div class="engine-status">
-                <span class="pulse"></span>
-                <span class="mono" style="font-size: 0.7rem;">AV-E ENGINE: CORE ACTIVE // FLUJO CONSTANTE</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-    /* Estilos adicionales para la expansión */
-    .launch-counter {
-        background: rgba(255, 69, 0, 0.05);
-        padding: 20px;
-        border-left: 2px solid var(--mars);
-        margin: 20px 0;
-    }
-    .engine-visual {
-        margin-top: 40px;
-        padding: 20px;
-        border: 1px dashed #333;
-        display: inline-block;
-    }
-    .spec-card p {
-        font-weight: 700;
-        font-size: 0.9rem;
-        margin: 5px 0;
-    }
-</style>
-        <!-- ACCESO A DOCUMENTACIÓN TÉCNICA -->
-        <div class="technical-access">
-            <a href="HSA_13_and_TDS_Missions (2).pdf" target="_blank" class="btn-doc mono">
-                <span class="pulse-small"></span>
-                DESCARGAR BRIEFING TÉCNICO [2 PÁGS]
-                <div class="btn-sub">ESPECIFICACIONES COMPLETAS HSA-13 / NODO 001</div>
-            </a>
-        </div>
-
-<style>
-    .technical-access {
-        margin-top: 50px;
-        border-top: 1px solid #222;
-        padding-top: 30px;
-    }
-    .btn-doc {
-        display: inline-block;
-        padding: 20px 40px;
-        border: 1px solid var(--mars);
-        color: var(--mars);
-        text-decoration: none;
-        transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        position: relative;
-        background: rgba(255, 69, 0, 0.02);
-    }
-    .btn-doc:hover {
-        background: var(--mars);
-        color: white;
-        box-shadow: 0 0 30px rgba(255, 69, 0, 0.2);
-    }
-    .btn-sub {
-        font-size: 0.6rem;
-        margin-top: 5px;
-        opacity: 0.6;
-        letter-spacing: 1px;
-    }
-    .pulse-small {
-        display: inline-block;
-        width: 6px; height: 6px;
-        background: var(--mars);
-        border-radius: 50%;
-        margin-right: 15px;
-        vertical-align: middle;
-        animation: blink 2s infinite;
-    }
-</style>
-
-
-    <!-- BLOQUE 2: EL ESTADO -->
-<section id="state-hq">
-    <span class="mono label" style="color: var(--accent);">02 // JURISDICCIÓN OPERATIVA</span>
-    <h1>33 EDIFICIOS <br><span class="outline">UN SOLO NODO</span></h1>
-    
-    <p style="max-width: 750px; color: #888; margin: 20px 0;">
-        De acuerdo con el **Artículo II, Sec. 1**, el Complejo Central se organiza en divisiones con autonomía técnica y financiera. Aquí, la **Acción Directa** elimina la burocracia: si una división tiene el recurso, resuelve el problema.
-    </p>
-
-    <div class="hq-grid">
-        <!-- DIVISION: FISICA Y MATEMATICAS -->
-        <div class="hq-card">
-            <span class="mono label">BL-01/05 // THE CORE</span>
-            <h3>H-LOGIC & C.S.G.</h3>
-            <p style="font-size: 0.8rem; color: #666;">
-                Sede del **Heidenbillg Institute**. Cúpulas de procesamiento cuántico donde reside la **H-Logic**. Aquí los datos tienen prioridad sobre la jerarquía política (Art. VIII).
-            </p>
-            <div class="tag-status mono">NIVEL VII SECURITY</div>
-        </div>
-
-        <!-- DIVISION: GESTIÓN Y ENERGÍA -->
-        <div class="hq-card">
-            <span class="mono label">BL-06/15 // H-LABS</span>
-            <h3>HESA & ENERGÍA</h3>
-            <p style="font-size: 0.8rem; color: #666;">
-                Gestión de la red de energía inalámbrica global. Según la **Enmienda IV**, el suministro vital es un derecho ininterrumpido gestionado desde este nodo.
-            </p>
-            <div class="tag-status mono">FUENTES: FUSIÓN ACTIVA</div>
-        </div>
-
-        <!-- DIVISION: SISTEMAS CIVILES -->
-        <div class="hq-card">
-            <span class="mono label">BL-16/25 // RESIDENCIAS</span>
-            <h3>MÓDULOS ÉLITE</h3>
-            <p style="font-size: 0.8rem; color: #666;">
-                Soberanía del tiempo y confort. Espacios diseñados bajo el estándar del **HASC** (Art. II, Sec. 5). Autosuficiencia total y soporte vital de vanguardia.
-            </p>
-            <div class="tag-status mono">ESTADO: 100% EFICIENCIA</div>
-        </div>
-
-        <!-- DIVISION: AEROESPACIAL -->
-        <div class="hq-card highlight-card">
-            <span class="mono label">BL-26/33 // THE DOCK</span>
-            <h3>HOTA & PUERTO</h3>
-            <p style="font-size: 0.8rem; color: #666;">
-                Punto de origen de la **HSA-13**. Jurisdicción de la Autoridad de Tránsito Orbital. El nexo entre la soberanía terrestre y la extra-planetaria.
-            </p>
-            <div class="tag-status mono" style="color: var(--accent);">ORIGEN: EL ARENOSILLO</div>
-        </div>
-    </div>
-
-    <footer class="hq-footer-note mono">
-        [ JURISDICCIÓN: HEIDENBILLG LAW ] [ PROTOCOLO DE COLABORACIÓN ACTIVO (ART. IV) ]
-    </footer>
-</section>
-
-<style>
-    .hq-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-        margin-top: 40px;
-    }
-    .hq-card {
-        background: #0d0d0d;
-        padding: 40px;
-        border: 1px solid #1a1a1a;
-        transition: 0.3s;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .hq-card:hover {
-        border-color: var(--accent);
-        transform: translateY(-5px);
-    }
-    .tag-status {
-        font-size: 0.6rem;
-        margin-top: 20px;
-        color: #444;
-        border-top: 1px solid #222;
-        padding-top: 10px;
-    }
-    .hq-footer-note {
-        margin-top: 50px;
-        font-size: 0.7rem;
-        color: #333;
-        text-align: center;
-        letter-spacing: 4px;
-    }
-    .highlight-card {
-        border-right: 4px solid var(--accent);
-    }
-</style>
-    <!-- ACCESO AL CORPUS JURIS -->
-    <div class="legal-repository">
-        <span class="mono label" style="display: block; margin-bottom: 20px;">// ACCESO A BASE DE DATOS LEGAL</span>
-        <div class="legal-grid">
-            <!-- BOTÓN CONSTITUCIÓN -->
-            <a href="The_Heidenbillg_Constitution (6).pdf" target="_blank" class="btn-legal mono">
-                <div class="legal-tag">DOC-01</div>
-                LA CONSTITUCIÓN
-                <div class="btn-sub">ESTRUCTURA DE LA PIRÁMIDE Y PRINCIPIOS</div>
-            </a>
-
-            <!-- BOTÓN CÓDIGOS -->
-            <a href="The_Heidenbillg_Codes (1).pdf" target="_blank" class="btn-legal mono code-btn">
-                <div class="legal-tag">DOC-02</div>
-                LOS CÓDIGOS
-                <div class="btn-sub">REGLAMENTO OPERATIVO Y PROTOCOLOS VII</div>
-            </a>
-        </div>
-    </div>
-
-<style>
-    .legal-repository {
-        margin-top: 60px;
-        padding: 40px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid #1a1a1a;
-    }
-    .legal-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-    .btn-legal {
-        display: block;
-        padding: 25px;
-        border: 1px solid var(--accent);
-        color: var(--text);
-        text-decoration: none;
-        transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-        position: relative;
-    }
-    .code-btn {
-        border-color: var(--dim);
-        color: var(--dim);
-    }
-    .btn-legal:hover {
-        background: var(--accent);
-        color: white;
-        border-color: var(--accent);
-        transform: scale(1.02);
-    }
-    .code-btn:hover {
-        background: var(--text);
-        color: var(--bg);
-        border-color: var(--text);
-    }
-    .legal-tag {
-        font-size: 0.6rem;
-        background: rgba(255, 255, 255, 0.1);
-        display: inline-block;
-        padding: 2px 8px;
-        margin-bottom: 10px;
-    }
-    .btn-sub {
-        font-size: 0.6rem;
-        margin-top: 8px;
-        opacity: 0.7;
-        letter-spacing: 1px;
-    }
-    @media (max-width: 600px) {
-        .legal-grid { grid-template-columns: 1fr; }
-    }
-</style>
-<!-- BLOQUE DE CENSO CRÍTICO -->
-<section id="census-mission" style="background: linear-gradient(180deg, #080808, #000); padding: 60px 10%; border-top: 1px solid var(--accent);">
-    <div class="mono label" style="color: var(--accent);">OBJETIVO DE SOBERANÍA: 100.000 CIUDADANOS</div>
-    <h2 style="font-size: 2.5rem; margin: 20px 0;">HACIA EL <span class="outline">ESTADO REAL</span></h2>
-    
-    <div class="census-container">
-        <div class="census-bar-bg">
-            <div id="census-progress" class="census-bar-fill" style="width: 0.85%;"></div> <!-- Ajusta el % según los que ya tengas -->
-        </div>
-        <div class="census-stats mono">
-            <span id="current-census">850</span> / 100.000 <br>
-            <small style="color: #444;">PARA RECONOCIMIENTO SEGÚN CONVENCIÓN DE MONTEVIDEO</small>
-        </div>
-    </div>
-
-    <p style="color: #666; margin-top: 30px; font-size: 0.9rem;">
-        Heidenbillg opera actualmente como una jurisdicción digital. Al alcanzar los 100.000 HID activos, el **Estatuto** se activará como entidad soberana física. Tu registro no es solo un alias, es un voto por la independencia técnica.
-    </p>
-</section>
-
-<style>
-    .census-container { margin-top: 30px; }
-    .census-bar-bg {
-        width: 100%; height: 10px; background: #111;
-        border: 1px solid #222; position: relative; overflow: hidden;
-    }
-    .census-bar-fill {
-        height: 100%; background: var(--accent);
-        box-shadow: 0 0 15px var(--accent);
-        transition: width 2s ease-in-out;
-    }
-    .census-stats { margin-top: 15px; font-size: 1.2rem; letter-spacing: 2px; }
-</style>
-
-
-        <!-- BLOQUE 3: EL HID -->
-    <section id="citizenship">
-        <span class="mono label">03 // Admisión de Ciudadanía</span>
-        <h1>SOLICITAR <br><span class="outline">HID EXTERIOR</span></h1>
-        
-        <div class="request-box" style="text-align: left;">
-            <p class="mono" style="font-size: 0.7rem; color: var(--accent); margin-bottom: 30px;">
-                > ADVERTENCIA: LOS DATOS SERÁN INDEXADOS POR LA H-LOGIC
-            </p>
-            
-            <form id="hid-form">
-                <div class="input-group">
-                    <span class="mono label">Identidad / Nombre</span>
-                    <input type="text" id="nombre" placeholder="EJ: KALEB VOLKOV" required>
-                </div>
-                <div class="input-group">
-                    <span class="mono label">Email de Enlace</span>
-                    <input type="email" id="user-email" placeholder="SU-EMAIL@SERVER.COM" required>
-                </div>
-                <div class="input-group">
-                    <span class="mono label">Nacionalidad de Origen</span>
-                    <input type="text" id="nacionalidad" placeholder="EJ: UNIÓN EUROPEA / DISTRITO 4" required>
-                </div>
-
-                <div class="input-group">
-                    <span class="mono label">Especialidad / Trabajo</span>
-                    <input type="text" id="trabajo" placeholder="EJ: INGENIERO DE FUSIÓN" required>
-                </div>
-
-                <div class="input-group">
-                    <span class="mono label">Resumen de Méritos</span>
-                    <textarea id="resumen" placeholder="DESCRIBA SU UTILIDAD PARA EL ECOSISTEMA..." 
-                        style="width: 100%; background: transparent; border: 1px solid var(--dim); color: white; padding: 15px; font-family: var(--font-mono); outline: none; margin-bottom: 30px; height: 100px; resize: none;"></textarea>
-                </div>
-
-                <button type="button" class="btn-sync mono" onclick="sendToHeidenbillg()">
-                    ENVIAR AL CORPUS JURIS
-                </button>
-            </form>
-            
-            <div id="status-log" class="mono" style="margin-top: 20px; font-size: 0.7rem; color: var(--accent); text-align: center;"></div>
+        <div style="margin-top: 80px;">
+            <span class="label mono" style="color:var(--dim)">Ventana de lanzamiento T-Minus:</span>
+            <div id="countdown" class="mono" style="font-size: 3rem; font-weight: 700;">00D : 00H : 00M : 00S</div>
         </div>
     </section>
-    <!-- MODAL DE LOGIN -->
-            <div id="login-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:4000; align-items:center; justify-content:center;">
-                <div class="request-box" style="width:350px; background:#000; border:1px solid var(--accent); padding:30px;">
-                    <span class="mono label">// IDENT_REQUIRED</span>
-                    <input type="text" id="hid-input" placeholder="HID ID" style="width:100%; margin-bottom:10px; background:transparent; border:1px solid var(--dim); color:white; padding:10px;">
-                    <input type="password" id="key-input" placeholder="LLAVE_ENCRIPTACIÓN" style="width:100%; margin-bottom:10px; background:transparent; border:1px solid var(--dim); color:white; padding:10px;">
-                    <button class="btn-sync" onclick="authenticate()">SINCRONIZAR</button>
-                    <button onclick="document.getElementById('login-modal').style.display='none'" style="background:none; border:none; color:var(--dim); cursor:pointer; margin-top:10px; width:100%; font-size:0.6rem; font-family:var(--font-mono);">CANCELAR</button>
+
+    <!-- SECCIÓN 02: EL ESTADO -->
+    <section id="state" style="background: #030303;">
+        <span class="label mono">// Infraestructura Soberana</span>
+        <h2>33 EDIFICIOS <br> <span class="outline">UN SOLO NODO</span></h2>
+        <p style="max-width: 650px; color: #666; margin-top: 20px;">
+            Según el **Artículo II**, la soberanía no reside en el territorio, sino en la capacidad técnica de ejecución autónoma.
+        </p>
+
+        <div class="hq-grid">
+            <div class="hq-card">
+                <span class="mono" style="font-size: 0.6rem; color: var(--accent);">BL-01/05</span>
+                <h3 class="mono" style="margin: 15px 0;">H-Logic Core</h3>
+                <p style="font-size: 0.85rem; color: #555;">Cúpulas de procesamiento cuántico donde los datos tienen prioridad sobre la jerarquía política.</p>
+            </div>
+            <div class="hq-card">
+                <span class="mono" style="font-size: 0.6rem; color: var(--accent);">BL-06/15</span>
+                <h3 class="mono" style="margin: 15px 0;">HESA Energy</h3>
+                <p style="font-size: 0.85rem; color: #555;">Gestión de la red de energía inalámbrica global. Fusión activa ininterrumpida.</p>
+            </div>
+            <div class="hq-card">
+                <span class="mono" style="font-size: 0.6rem; color: var(--accent);">BL-16/25</span>
+                <h3 class="mono" style="margin: 15px 0;">Módulos Élite</h3>
+                <p style="font-size: 0.85rem; color: #555;">Espacios de residencia autosuficientes diseñados bajo el estándar HASC.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 03: CIUDADANÍA -->
+    <section id="citizenship">
+        <div class="census-wrap">
+            <span class="label mono">Misión de Soberanía Real</span>
+            <h2 class="mono" style="font-size: 3rem;">Censo: <span id="current-census">850</span> / 100.000</h2>
+            <div class="census-bar-container">
+                <div id="census-fill" class="census-fill"></div>
+            </div>
+            <p style="color: #555; font-size: 0.8rem;" class="mono">Reconocimiento según Convención de Montevideo en progreso</p>
+        </div>
+
+        <div class="terminal-form">
+            <div style="margin-bottom: 40px; border-bottom: 1px solid #111; padding-bottom: 20px;">
+                <span class="mono" style="font-size: 0.7rem;"><span class="live"></span> TERMINAL_IDENT_04 // ACCESO ABIERTO</span>
+            </div>
+            
+            <form id="hid-form">
+                <input type="text" id="user-name" placeholder="NOMBRE COMPLETO" required>
+                <input type="email" id="user-email" placeholder="EMAIL DE ENLACE" required>
+                <input type="text" id="user-job" placeholder="ESPECIALIDAD TÉCNICA" required>
+                <textarea id="user-merit" placeholder="DESCRIBA SU APORTACIÓN AL ECOSISTEMA..." rows="3"></textarea>
+                
+                <button type="button" class="btn-sync mono" onclick="startHeidenbillgSync()">Sincronizar Identidad</button>
+            </form>
+            <div id="status-log" class="mono" style="margin-top: 25px; font-size: 0.6rem; color: var(--accent); height: 20px;"></div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD OVERLAY -->
+    <div id="dashboard-overlay">
+        <aside class="sidebar">
+            <div class="stat-box" style="text-align: center; border-color: var(--accent);">
+                <span class="mono" style="font-size: 0.5rem; color: var(--accent);">ID_STATUS: ACTIVO</span>
+                <div id="dash-hid" class="mono" style="font-size: 1.2rem; margin-top: 10px;">HID-XXXXXX</div>
+            </div>
+            <div class="stat-box">
+                <span class="mono" style="font-size: 0.5rem; color: var(--dim);">H-CREDITS</span>
+                <div class="mono" style="color: #00ff00;">1,250.00</div>
+            </div>
+            <button class="btn-sync mono" style="font-size: 0.7rem; padding: 15px;" onclick="toggleLogin()">Cerrar Sesión</button>
+        </aside>
+        <main class="main-view">
+            <h1 class="mono" style="font-size: 2rem;">BIENVENIDO, <span id="dash-name" class="outline">CIUDADANO</span></h1>
+            <div class="hq-grid" style="margin-top: 40px;">
+                <div class="hq-card">
+                    <h4 class="mono">Mensajes H-Logic</h4>
+                    <p style="font-size: 0.8rem; margin-top: 10px;">Lanzamiento HSA-13 confirmado para ventana 2028. Prepare protocolos de inserción.</p>
+                </div>
+                <div class="hq-card">
+                    <h4 class="mono">Sincronización Vital</h4>
+                    <div style="width: 100%; height: 2px; background: #111; margin-top: 15px;">
+                        <div style="width: 98%; height: 100%; background: #00ff00;"></div>
+                    </div>
                 </div>
             </div>
-
-    <!-- INTERFAZ DASHBOARD -->
-            <div id="dashboard">
-                <aside class="sidebar">
-                    <div class="stat-box" style="border: 1px solid var(--accent); padding: 15px; text-align: center; margin-bottom: 30px;">
-                        <div class="mono" style="font-size: 0.5rem; color: var(--accent); margin-bottom: 10px;">BIO_SCAN_ACTIVE</div>
-                        <div id="user-hid-display" class="mono" style="font-size: 0.8rem;">---</div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">Identidad</span>
-                        <div id="user-name" class="stat-value">---</div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">Rango</span>
-                        <div id="user-role" class="stat-value" style="color: var(--accent);">---</div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">H-Credit</span>
-                        <div id="user-credits" class="stat-value" style="color: #00ff00;">0.00</div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">Sincronización Vital</span>
-                        <div style="width:100%; height:4px; background:#111; margin-top:10px;">
-                            <div id="user-health" style="height:100%; background:#00ff00; width:0%; transition: 1.5s;"></div>
-                        </div>
-                        <div id="health-percentage" class="mono" style="font-size:0.6rem; margin-top:5px; text-align:right;">0%</div>
-                        </div>
-                </aside>
-
-                <main class="main-view">
-                    <div class="mono" style="color:var(--accent); font-size:0.7rem;">> SESIÓN INICIADA // NODO_CENTRAL</div>
-                    <h1 id="welcome-msg" style="font-size: 2.5rem; margin: 20px 0;">HOLA, CIUDADANO</h1>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div class="op-card">
-                            <div class="mono label">MENSAJES LOGIC</div>
-                            <p style="font-size: 0.8rem;">Lanzamiento HSA-13 en ventana 2028.</p>
-                        </div>
-                        <div class="op-card">
-                            <div class="mono label">MISIÓN ACTIVA</div>
-                            <p style="font-size: 0.8rem;">Censo: Faltan 99.150 para Soberanía.</p>
-                        </div>
-                    </div>
-                    <button class="btn-sync" onclick="location.reload()" style="margin-top:20px; width:auto;">LOGOUT</button>
-                </main>
-            </div>
+        </main>
+    </div>
 
     <script>
-        function startSync() {
-    const log = document.getElementById('status-log');
-    
-    // Captura de datos actualizada
-    const data = {
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('user-email').value, // NUEVO CAMPO
-        nacionalidad: document.getElementById('nacionalidad').value,
-        trabajo: document.getElementById('trabajo').value,
-        resumen: document.getElementById('resumen').value
-    };
-
-    // Validación: El email es crítico
-    if(data.nombre === "" || data.email === "" || data.trabajo === "") {
-        log.innerHTML = "ERROR: IDENTIDAD, EMAIL Y ESPECIALIDAD REQUERIDOS";
-        log.style.color = "#ff3e3e";
-        return;
-    }
-
-    log.style.color = "var(--accent)";
-    log.innerHTML = "> Iniciando escaneo de mérito...";
-
-    setTimeout(() => {
-        log.innerHTML = "> Buscando registro en HCSG...";
+        // --- LÓGICA DE CUENTA REGRESIVA ---
+        const targetDate = new Date("April 1, 2028 00:00:00").getTime();
         
-        setTimeout(() => {
-            log.innerHTML = "> HID EXTERIOR GENERADO: [VALIDADO]";
+        function updateTimer() {
+            const now = new Date().getTime();
+            const dist = targetDate - now;
             
-            // Cuerpo del correo mejorado
-            const subject = encodeURIComponent(`SOLICITUD HID EXTERIOR - ${data.nombre}`);
-            const body = encodeURIComponent(
-                `SOLICITUD DE CIUDADANÍA HEIDENBILLG\n` +
-                `----------------------------------\n` +
-                `CIUDADANO: ${data.nombre}\n` +
-                `EMAIL DE ENLACE: ${data.email}\n` + // Aquí aparece el email
-                `ORIGEN: ${data.nacionalidad}\n` +
-                `ÁREA TÉCNICA: ${data.trabajo}\n\n` +
-                `RESUMEN DE MÉRITO:\n${data.resumen}\n\n` +
-                `----------------------------------\n` +
-                `ESTADO: VALIDACIÓN AUTOMÁTICA H-LOGIC COMPLETA`
-            );
-
-            // Esto abre el correo con todo listo
-            window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
+            const d = Math.floor(dist / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            const s = Math.floor((dist % (1000 * 60)) / 1000).toString().padStart(2, '0');
             
-            alert("Sincronización completa. Revise su cliente de correo para finalizar el envío.");
-            // ... dentro del último setTimeout de startSync() ...
-            log.innerHTML = "> HID EXTERIOR GENERADO: [VALIDADO]";
-    
-            // Abrir correo
-            window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
-    
-            // Efecto de Censo +1
-            let censusElement = document.getElementById("current-census");
-            let current = parseInt(censusElement.innerText.replace('.', ''));
-            censusElement.innerText = (current + 1).toLocaleString();
-            document.getElementById("census-progress").style.width = ((current + 1) / 100000 * 100) + "%";
+            document.getElementById('countdown').innerHTML = `${d}D : ${h}H : ${m}M : ${s}S`;
+        }
+        setInterval(updateTimer, 1000);
 
-            alert("CIUDADANO REGISTRADO. Tu identidad se ha sumado al censo para la soberanía real.");
+        // --- SIMULACIÓN DE SINCRONIZACIÓN (AUTOMATIZADO) ---
+        function startHeidenbillgSync() {
+            const log = document.getElementById('status-log');
+            const name = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
 
-        }, 2000);
-    }, 1500);
-}
+            if(!name || !email) {
+                log.innerHTML = "ERROR: SE REQUIERE IDENTIDAD Y ENLACE PARA INDEXACIÓN.";
+                return;
+            }
 
+            const steps = [
+                "> Estableciendo conexión con Nodo Central...",
+                "> Cifrando datos en Nivel VII...",
+                "> Validando méritos con H-Logic...",
+                "> IDENTIDAD GENERADA. ABRIENDO CORPUS JURIS..."
+            ];
 
-            log.innerHTML = "CIFRANDO DATOS PARA EL NIVEL VII...";
-
-            // Generar el cuerpo del correo
-            const subject = encodeURIComponent(`SOLICITUD HID EXTERIOR - ${data.nombre}`);
-            const body = encodeURIComponent(
-                `SOLICITUD DE CIUDADANÍA HEIDENBILLG\n` +
-                `----------------------------------\n` +
-                `NOMBRE: ${data.nombre}\n` +
-                `ORIGEN: ${data.nacionalidad}\n` +
-                `ÁREA TÉCNICA: ${data.trabajo}\n\n` +
-                `RESUMEN DE MÉRITO:\n${data.resumen}\n\n` +
-                `----------------------------------\n` +
-                `ESTADO: PENDIENTE DE VALIDACIÓN POR H-LOGIC`
-            );
-
-            // Simulación de envío y apertura de cliente de correo
-            setTimeout(() => {
-                window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
-                log.innerHTML = "SOLICITUD ENVIADA AL NODO CENTRAL.";
-            }, 1500);
+            let i = 0;
+            const interval = setInterval(() => {
+                log.innerHTML = steps[i];
+                i++;
+                if(i >= steps.length) {
+                    clearInterval(interval);
+                    completeSync(name, email);
+                }
+            }, 1200);
         }
 
-        // Indicador de Scroll
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("scroll-stat").innerHTML = "Profundidad de acceso: " + Math.round(scrolled) + "%";
+        function completeSync(name, email) {
+            // Incrementar censo visualmente
+            let count = document.getElementById('current-census');
+            let val = parseInt(count.innerText) + 1;
+            count.innerText = val;
+            document.getElementById('census-fill').style.width = (val / 100000 * 100) + "%";
+
+            // Preparar correo
+            const subject = encodeURIComponent(`SOLICITUD HID - ${name}`);
+            const body = encodeURIComponent(`SOLICITUD DE CIUDADANÍA\n---\nNOMBRE: ${name}\nEMAIL: ${email}\nESTADO: PENDIENTE DE FIRMA.`);
+            window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
+
+            // Actualizar Dashboard
+            document.getElementById('dash-name').innerText = name.split(' ')[0];
+            document.getElementById('dash-hid').innerText = "HID-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+        }
+
+        // --- CONTROL DEL DASHBOARD ---
+        function toggleLogin() {
+            const dash = document.getElementById('dashboard-overlay');
+            const isVisible = dash.style.display === 'grid';
+            dash.style.display = isVisible ? 'none' : 'grid';
+            document.body.style.overflow = isVisible ? 'auto' : 'hidden';
+        }
+
+        // --- EFECTO DE SCROLL ---
+        window.onscroll = () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            // Podríamos añadir una barra de progreso aquí
         };
     </script>
-
-
-    <script>
-    // 1. LÓGICA DE CUENTA REGRESIVA (PROYECTO MARTE)
-    const launchDate = new Date("April 1, 2028 00:00:00").getTime();
-
-    const countdownFunction = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        const d = days.toString().padStart(2, '0');
-        const h = hours.toString().padStart(2, '0');
-        const m = minutes.toString().padStart(2, '0');
-        const s = seconds.toString().padStart(2, '0');
-
-        const countdownElement = document.getElementById("countdown");
-        if (countdownElement) {
-            countdownElement.innerHTML = `${d}D : ${h}H : ${m}M : ${s}S`;
-        }
-
-        if (distance < 0) {
-            clearInterval(countdownFunction);
-            if (countdownElement) countdownElement.innerHTML = "LANZAMIENTO INICIADO";
-        }
-    }, 1000);
-
-    // 2. INDICADOR DE SCROLL (PROFUNDIDAD DE ACCESO)
-    window.onscroll = function() {
-        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        let scrolled = (winScroll / height) * 100;
-        const scrollStat = document.getElementById("scroll-stat");
-        if (scrollStat) {
-            scrollStat.innerHTML = "Profundidad de acceso: " + Math.round(scrolled) + "%";
-        }
-    };
-
-    // 3. SINCRONIZACIÓN HID Y ENVÍO DE DATOS (CORREO)
-    function startSync() {
-        const log = document.getElementById('status-log');
-        
-        // Captura de datos del formulario
-        const data = {
-            nombre: document.getElementById('nombre')?.value || "No definido",
-            nacionalidad: document.getElementById('nacionalidad')?.value || "No definido",
-            trabajo: document.getElementById('trabajo')?.value || "No definido",
-            resumen: document.getElementById('resumen')?.value || "Sin resumen"
-        };
-
-        // Validación rápida
-        if(data.nombre === "" || data.trabajo === "") {
-            log.innerHTML = "ERROR: IDENTIDAD Y ESPECIALIDAD REQUERIDAS";
-            log.style.color = "#ff3e3e";
-            return;
-        }
-
-        log.style.color = "var(--accent)";
-        log.innerHTML = "> Iniciando escaneo de mérito...";
-
-        setTimeout(() => {
-            log.innerHTML = "> Buscando registro en HCSG...";
-            
-            setTimeout(() => {
-                log.innerHTML = "> HID EXTERIOR GENERADO: [VALIDADO]";
-                
-                // Preparar el correo para Heidenbillg
-                const subject = encodeURIComponent(`SOLICITUD HID EXTERIOR - ${data.nombre}`);
-                const body = encodeURIComponent(
-                    `SOLICITUD DE CIUDADANÍA HEIDENBILLG\n` +
-                    `----------------------------------\n` +
-                    `NOMBRE: ${data.nombre}\n` +
-                    `NACIONALIDAD: ${data.nacionalidad}\n` +
-                    `TRABAJO: ${data.trabajo}\n` +
-                    `MÉRITOS: ${data.resumen}\n` +
-                    `----------------------------------\n` +
-                    `ESTADO: VALIDACIÓN AUTOMÁTICA H-LOGIC COMPLETA`
-                );
-
-                // Abrir cliente de correo
-                window.location.href = `mailto:heidenbillg@://gmail.com{subject}&body=${body}`;
-                
-                alert("Ciudadanía concedida. Se ha generado su registro para el Nodo Central.");
-            }, 2000);
-        }, 1500);
-    }
-</script>
 
 </body>
 </html>
