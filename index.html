@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Heidenbillg</title>
+<title>Heidenbillg OS</title>
 <style>
 :root{
 --bg:#ffffff;
@@ -10,33 +10,63 @@
 --accent:#0071e3;
 --soft:#f5f5f7;
 }
-body{margin:0;font-family:-apple-system,system-ui;background:var(--bg);color:var(--text);overflow-x:hidden;}
-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;text-align:center;}
-h1{font-size:clamp(2.5rem,6vw,5rem);margin:10px 0;}
-p{max-width:500px;color:#666;}
-button{margin:10px;padding:12px 24px;border-radius:20px;border:none;background:var(--accent);color:white;cursor:pointer;font-weight:600;}
-button.secondary{background:#eaeaea;color:#000;}
-nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;padding:20px;background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);}
-#modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.3);display:none;justify-content:center;align-items:center;}
-.box{background:white;padding:30px;border-radius:20px;width:300px;}
+body{margin:0;font-family:-apple-system,system-ui;background:var(--bg);color:var(--text);}
+nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;padding:15px;background:#fff;border-bottom:1px solid #eee;z-index:1000;}
+button{padding:10px 18px;border-radius:12px;border:none;background:var(--accent);color:white;cursor:pointer;margin:5px;}
+button.secondary{background:#eee;color:#000;}
+section{display:none;padding:80px 20px;text-align:center;}
+.active{display:block;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;max-width:600px;margin:auto;}
+.card{background:var(--soft);padding:20px;border-radius:15px;}
+#modal{position:fixed;top:0;left:0;width:100%;height:100%;display:none;background:rgba(0,0,0,0.3);justify-content:center;align-items:center;}
+.box{background:white;padding:25px;border-radius:15px;width:300px;}
 input{width:100%;padding:10px;margin:5px 0;border:1px solid #ddd;border-radius:10px;}
 </style>
 </head>
 <body><nav>
-<div>HEIDENBILLG</div>
-<div onclick="openLogin()" style="cursor:pointer">Acceder</div>
-</nav><!-- HERO --><section>
-<h1>HSA-13 Waverider</h1>
-<p>Sistema de transporte interplanetario. Transferencia Tierra–Marte en 72h.</p>
-<button onclick="showInfo('nave')">Más info</button>
-<button class="secondary" onclick="openLogin()">Solicitar HID</button>
-</section><!-- DOCS --><section style="background:var(--soft)">
-<h1>Documentación</h1>
-<p>Acceso a Constitución y Códigos operativos.</p>
-<button onclick="showInfo('docs')">Ver documentos</button>
-</section><!-- CENSO --><section>
-<h1 id="census">0</h1>
-<p>Ciudadanos registrados</p>
+<div><b>HEIDENBILLG</b></div>
+<div>
+<button onclick="showTab('home')">Inicio</button>
+<button onclick="showTab('nave')">Nave</button>
+<button onclick="showTab('docs')">Docs</button>
+<button onclick="showTab('panel')">Panel</button>
+<button onclick="openLogin()">Acceso</button>
+</div>
+</nav><!-- HOME --><section id="home" class="active">
+<h1>Heidenbillg</h1>
+<p>Sistema soberano digital.</p>
+<div class="grid">
+<button onclick="showTab('nave')">Ver Nave</button>
+<button onclick="showTab('docs')">Ver Docs</button>
+<button onclick="openLogin()">Crear HID</button>
+<button onclick="alert('Sistema activo')">Estado</button>
+</div>
+</section><!-- NAVE --><section id="nave">
+<h1>HSA-13</h1>
+<p>72h Tierra–Marte</p>
+<div class="grid">
+<button onclick="alert('Propulsión AV-E')">Propulsión</button>
+<button onclick="alert('Blindaje Hafnio')">Blindaje</button>
+<button onclick="alert('Tripulación 5')">Tripulación</button>
+<button onclick="alert('1g constante')">Aceleración</button>
+</div>
+</section><!-- DOCS --><section id="docs">
+<h1>Documentos</h1>
+<div class="grid">
+<button onclick="alert('Constitución cargada')">Constitución</button>
+<button onclick="alert('Códigos cargados')">Códigos</button>
+<button onclick="alert('Protocolos VII')">Protocolos</button>
+<button onclick="alert('Sistema legal')">Legal</button>
+</div>
+</section><!-- PANEL --><section id="panel">
+<h1>Panel</h1>
+<p id="user-info">No conectado</p>
+<div class="grid">
+<button onclick="alert('Créditos diarios +100')">Créditos</button>
+<button onclick="alert('Misiones activas')">Misiones</button>
+<button onclick="alert('Historial')">Historial</button>
+<button onclick="logout()">Logout</button>
+</div>
 </section><!-- LOGIN --><div id="modal">
 <div class="box">
 <h3>Acceso</h3>
@@ -44,42 +74,44 @@ input{width:100%;padding:10px;margin:5px 0;border:1px solid #ddd;border-radius:1
 <input id="pass" type="password" placeholder="Clave">
 <button onclick="login()">Entrar</button>
 <hr>
-<h4>Crear</h4>
+<h4>Crear HID</h4>
 <input id="name" placeholder="Nombre">
 <input id="email" placeholder="Email">
-<button onclick="register()">Generar HID</button>
+<button onclick="register()">Generar</button>
 <div id="out"></div>
 <button class="secondary" onclick="closeLogin()">Cerrar</button>
 </div>
 </div><script>
-let DB = JSON.parse(localStorage.getItem("HB")) || {users:[],census:0};
+let DB = JSON.parse(localStorage.getItem("HB")) || {users:[]};
 function save(){localStorage.setItem("HB",JSON.stringify(DB));}
 
 function generate(len,chars){let s="";for(let i=0;i<len;i++)s+=chars[Math.floor(Math.random()*chars.length)];return s;}
 
+let current=null;
+
 function register(){
 let u={hid:generate(24,"ABCDEF0123456789"),pass:generate(12,"abcABC123"),name:name.value,email:email.value};
-DB.users.push(u);DB.census++;save();
+DB.users.push(u);save();
 out.innerHTML="HID:<br>"+u.hid+"<br>Clave:<br>"+u.pass;
-update();
 }
 
 function login(){
 let u=DB.users.find(x=>x.hid===hid.value && x.pass===pass.value);
 if(!u)return alert("Error");
-alert("Bienvenido "+u.name);
+current=u;
+user-info.innerText="Conectado: "+u.name;
 closeLogin();
+showTab('panel');
 }
 
-function update(){document.getElementById("census").innerText=DB.census;}
-update();
+function logout(){current=null;user-info.innerText="No conectado";showTab('home');}
 
 function openLogin(){modal.style.display="flex";}
 function closeLogin(){modal.style.display="none";}
 
-function showInfo(type){
-if(type==='nave') alert('HSA-13: Propulsión AV-E, 1g continuo, escudo de hafnio.');
-if(type==='docs') alert('Constitución y Códigos disponibles.');
+function showTab(id){
+document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
 }
 </script></body>
 </html>
