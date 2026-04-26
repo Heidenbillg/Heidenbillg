@@ -2,53 +2,192 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HEIDENBILLG OS // CITIZEN PORTAL</title>
+<title>HEIDENBILLG OS // CIVIC GOVERNMENT PORTAL</title>
 <style>
 :root{
-  --bg:#040404;
-  --bg2:#0b0b0b;
-  --panel:#111111;
+  --bg:#030303;
+  --bg2:#0a0a0a;
+  --panel:#101010;
   --panel2:#151515;
-  --line:#1a1a1a;
+  --line:#1c1c1c;
   --accent:#ff4a4a;
   --accent2:#ff7b7b;
   --ok:#35d07f;
   --warn:#f5b14c;
-  --text:#f5f5f5;
-  --muted:#9a9a9a;
-  --soft:#d1d1d1;
+  --info:#6db7ff;
+  --text:#f4f4f4;
+  --muted:#9b9b9b;
+  --soft:#d2d2d2;
   --shadow:0 24px 80px rgba(0,0,0,.36);
   --r:20px;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}*{box-sizing:border-box} html{scroll-behavior:smooth} body{ margin:0; background: radial-gradient(circle at top, rgba(255,74,74,.08), transparent 34%), linear-gradient(180deg, #020202, #060606); color:var(--text); font-family:var(--mono); overflow-x:hidden; }
-
-.scanline{ position:fixed; top:0; left:0; width:100%; height:2px; background:rgba(255,255,255,.03); pointer-events:none; z-index:9998; animation:scan 7s linear infinite; } @keyframes scan{ from{transform:translateY(0)} to{transform:translateY(100vh)} } .noise{ position:fixed; inset:0; pointer-events:none; z-index:9997; opacity:.045; mix-blend-mode:screen; background-image: linear-gradient(transparent 50%, rgba(255,255,255,.12) 50%), linear-gradient(90deg, transparent 50%, rgba(255,255,255,.08) 50%); background-size:3px 3px, 3px 3px; }
-
-nav{ position:fixed; top:0; left:0; width:100%; z-index:1000; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 24px; backdrop-filter:blur(12px); background:linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,0)); border-bottom:1px solid rgba(255,255,255,.04); } .nav-left{display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none} .brand-dot{width:11px; height:11px; border-radius:50%; background:var(--accent); box-shadow:0 0 18px rgba(255,74,74,.9)} .brand{font-size:13px; letter-spacing:3px; text-transform:uppercase} .nav-right{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end} .badge{ padding:6px 10px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); border-radius:999px; font-size:11px; letter-spacing:1px; color:#ddd; }
-
-section{ min-height:100vh; padding:118px 10% 84px; border-bottom:1px solid rgba(255,255,255,.06); position:relative; } .kicker{display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:16px} h1{margin:0 0 18px; font-size:clamp(2.8rem, 9vw, 6.8rem); line-height:.92; letter-spacing:-1px} h2{margin:0 0 14px; font-size:clamp(1.9rem, 4vw, 3.2rem); line-height:1} h3{margin:0 0 10px; font-size:20px} p{margin:0; max-width:860px; color:#c2c2c2; line-height:1.8; font-family:var(--sans)} .outline{ color:transparent; -webkit-text-stroke:1px var(--text); } .small{font-size:12px; line-height:1.8; color:var(--muted); font-family:var(--sans)} .accent{color:var(--accent)} .muted{color:var(--muted)}
-
-.grid-2{display:grid; grid-template-columns:1.08fr .92fr; gap:24px; align-items:start} .grid-3{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px} .card{ background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.014)); border:1px solid rgba(255,255,255,.06); border-radius:22px; padding:22px; box-shadow:var(--shadow); } .card:hover{ transform:translateY(-2px); transition:.22s ease; border-color:rgba(255,74,74,.27) } .card-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px} .card-tag{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent2)} .timeline{display:grid; gap:14px; margin-top:20px} .timeline-item{ padding:18px 18px 18px 20px; border-left:2px solid var(--accent); border-radius:0 14px 14px 0; background:rgba(255,255,255,.02); } .metric-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:28px} .metric{ min-width:168px; padding:16px 18px; border:1px solid rgba(255,255,255,.08); border-radius:16px; background:rgba(255,255,255,.02); } .metric .label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:8px} .metric .value{font-size:18px; color:var(--text)}
-
-button, .button{ appearance:none; border:none; outline:none; cursor:pointer; font-family:var(--mono); color:var(--text); background:transparent; border:1px solid var(--accent); border-radius:14px; padding:12px 16px; transition:.25s ease; display:inline-flex; align-items:center; justify-content:center; gap:10px; text-decoration:none; } button:hover, .button:hover{ background:var(--accent); box-shadow:0 0 22px rgba(255,74,74,.22); transform:translateY(-1px) } button.secondary, .button.secondary{ border-color:rgba(255,255,255,.14) } button.secondary:hover, .button.secondary:hover{ background:rgba(255,255,255,.07); box-shadow:none } button.ok, .button.ok{ border-color:rgba(53,208,127,.45) } button.warn, .button.warn{ border-color:rgba(245,177,76,.55) } button.full, .button.full{ width:100% }
-
-input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--text); border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:13px 14px; font-family:var(--mono); outline:none; transition:.25s ease; } input:focus, textarea:focus, select:focus{ border-color:rgba(255,74,74,.75); box-shadow:0 0 0 3px rgba(255,74,74,.12) } textarea{resize:none; min-height:120px}
-
-.bar{width:100%; height:10px; background:#101010; border:1px solid rgba(255,255,255,.08); border-radius:999px; overflow:hidden} .fill{height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow:0 0 20px rgba(255,74,74,.35); transition:width .8s ease} .stat-line{display:flex; justify-content:space-between; gap:12px; color:#d8d8d8; font-size:13px} .stat-line span:last-child{ color:#fff }
-
-#boot{ position:fixed; inset:0; z-index:10000; display:flex; justify-content:center; align-items:center; flex-direction:column; background:radial-gradient(circle at center, rgba(255,74,74,.1), transparent 34%), #000; transition:opacity .6s ease, transform .6s ease; } #boot.hidden{ opacity:0; pointer-events:none; transform:scale(1.01) } .boot-panel{width:min(840px, 90vw); border:1px solid rgba(255,255,255,.1); border-radius:24px; background:rgba(255,255,255,.02); padding:28px; box-shadow:0 30px 90px rgba(0,0,0,.45)} .boot-title{font-size:14px; letter-spacing:4px; text-transform:uppercase; color:var(--accent); margin-bottom:18px} .boot-line{font-size:12px; line-height:1.9; color:#bfbfbf} .boot-progress{margin-top:22px; height:8px; width:100%; border-radius:999px; background:#101010; overflow:hidden; border:1px solid rgba(255,255,255,.05)} .boot-fill{width:0%; height:100%; background:linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow:0 0 20px rgba(255,74,74,.55); transition:width .35s ease} .boot-footer{display:flex; justify-content:space-between; gap:20px; margin-top:16px; font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase}
-
-#landing{display:flex; align-items:center} .hero-copy{max-width:940px} .hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:28px} .docs-grid{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px; margin-top:18px} .doc-card{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); display:grid; gap:10px} .doc-actions{display:flex; gap:10px; flex-wrap:wrap} .saved-list{display:grid; gap:10px; margin-top:12px} .saved-item{padding:12px 14px; border:1px solid rgba(255,255,255,.08); border-radius:14px; background:rgba(255,255,255,.02); font-size:12px; color:#d8d8d8; display:flex; justify-content:space-between; gap:10px; align-items:center}
-
-.modal{display:none; position:fixed; inset:0; z-index:5000; background:rgba(0,0,0,.84); backdrop-filter:blur(10px); justify-content:center; align-items:center; padding:24px} .modal.open{display:flex} .modal-panel{width:min(1060px, 100%); display:grid; grid-template-columns:1fr 1fr; gap:20px} .modal-card{background:rgba(10,10,10,.97); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:24px; box-shadow:0 30px 100px rgba(0,0,0,.5)} .modal-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:18px} .modal-strap{font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--muted)} .credentials{margin-top:14px; padding:14px; border:1px dashed rgba(255,255,255,.12); border-radius:14px; color:#eaeaea; font-size:12px; line-height:1.8; white-space:pre-wrap; background:rgba(255,255,255,.02)} .close-row{margin-top:14px; display:flex; justify-content:flex-end}
-
-.viewer{width:min(1120px, 100%); display:grid; grid-template-rows:auto 1fr auto; height:min(92vh, 920px)} .viewer-frame{width:100%; height:100%; border:1px solid rgba(255,255,255,.1); border-radius:16px; background:#000} .viewer-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
-
-#dashboard{display:none; position:fixed; inset:0; z-index:4000; background:radial-gradient(circle at top left, rgba(255,74,74,.08), transparent 28%), linear-gradient(180deg, #070707, #030303)} .dashboard-grid{display:grid; grid-template-columns:300px 1fr; height:100%} .sidebar{border-right:1px solid rgba(255,255,255,.07); padding:22px; overflow:auto; background:rgba(255,255,255,.015)} .main{padding:22px; overflow:auto} .profile{padding:18px; border:1px solid rgba(255,74,74,.25); border-radius:18px; background:rgba(255,74,74,.03); margin-bottom:18px} .profile .hid{font-size:13px; color:var(--accent2); margin-bottom:10px; word-break:break-all} .profile .name{font-size:20px; color:#fff; margin-bottom:8px} .profile .role{color:var(--muted); font-size:13px} .side-block{margin-top:18px; padding-top:18px; border-top:1px solid rgba(255,255,255,.08)} .tabs{display:flex; gap:10px; flex-wrap:wrap; margin:16px 0 18px} .tab{padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); cursor:pointer; font-size:12px} .tab.active{border-color:rgba(255,74,74,.45); background:rgba(255,74,74,.08); color:#fff} .panel{display:none} .panel.active{display:block} .grid-dashboard{display:grid; grid-template-columns:1.1fr .9fr; gap:20px; margin-top:18px} .terminal{min-height:220px; max-height:300px; overflow:auto; padding:16px; border:1px solid rgba(255,255,255,.08); border-radius:16px; background:#020202; color:#a7a7a7; font-size:12px; line-height:1.8; white-space:pre-wrap} .feed{display:grid; gap:12px} .feed-item{padding:14px 16px; border:1px solid rgba(255,255,255,.07); border-radius:14px; background:rgba(255,255,255,.02); font-size:12px; line-height:1.8} .dock{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px} .service-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; margin-top:18px} .service{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); display:grid; gap:10px} .service strong{font-size:16px} .notice-grid{display:grid; gap:12px; margin-top:18px} .notice{padding:16px 18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); display:grid; gap:8px} .request-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px} .request-list{display:grid; gap:10px; margin-top:14px} .request-item{padding:14px 16px; border:1px solid rgba(255,255,255,.08); border-radius:14px; background:rgba(255,255,255,.02)} .help-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:18px} .help-card{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02)}
-
-@media (max-width: 1100px){ .grid-2,.grid-3,.modal-panel,.dashboard-grid,.grid-dashboard,.docs-grid,.service-grid,.request-grid,.help-grid{grid-template-columns:1fr} section{padding:100px 6% 70px} nav{padding:14px 18px} .sidebar{border-right:none; border-bottom:1px solid rgba(255,255,255,.07)} } @media (max-width: 560px){ h1{font-size:clamp(2.2rem, 14vw, 4rem)} .hero-actions,.dock,.viewer-actions{flex-direction:column} .hero-actions > *, .dock > *, .viewer-actions > *{width:100%} } </style>
-
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top, rgba(255,74,74,.09), transparent 34%),
+    linear-gradient(180deg, #020202, #060606);
+  color:var(--text);
+  font-family:var(--mono);
+  overflow-x:hidden;
+}
+.scanline{
+  position:fixed; top:0; left:0; width:100%; height:2px;
+  background:rgba(255,255,255,.03); pointer-events:none; z-index:9998;
+  animation:scan 7s linear infinite;
+}
+@keyframes scan{ from{transform:translateY(0)} to{transform:translateY(100vh)} }
+.noise{
+  position:fixed; inset:0; pointer-events:none; z-index:9997; opacity:.045; mix-blend-mode:screen;
+  background-image:
+    linear-gradient(transparent 50%, rgba(255,255,255,.12) 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.08) 50%);
+  background-size:3px 3px, 3px 3px;
+}
+nav{
+  position:fixed; top:0; left:0; width:100%; z-index:1000;
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  padding:16px 24px; backdrop-filter:blur(12px);
+  background:linear-gradient(to bottom, rgba(0,0,0,.96), rgba(0,0,0,0));
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.nav-left{display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none}
+.brand-dot{width:11px; height:11px; border-radius:50%; background:var(--accent); box-shadow:0 0 18px rgba(255,74,74,.9)}
+.brand{font-size:13px; letter-spacing:3px; text-transform:uppercase}
+.nav-right{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+.badge{
+  padding:6px 10px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02);
+  border-radius:999px; font-size:11px; letter-spacing:1px; color:#ddd;
+}
+section{
+  min-height:100vh; padding:118px 10% 84px; border-bottom:1px solid rgba(255,255,255,.06); position:relative;
+}
+.kicker{display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:16px}
+h1{margin:0 0 18px; font-size:clamp(2.8rem, 9vw, 6.8rem); line-height:.92; letter-spacing:-1px}
+h2{margin:0 0 14px; font-size:clamp(1.9rem, 4vw, 3.2rem); line-height:1}
+h3{margin:0 0 10px; font-size:20px}
+p{margin:0; max-width:900px; color:#c2c2c2; line-height:1.8; font-family:var(--sans)}
+.outline{ color:transparent; -webkit-text-stroke:1px var(--text); }
+.small{font-size:12px; line-height:1.8; color:var(--muted); font-family:var(--sans)}
+.muted{color:var(--muted)}
+.accent{color:var(--accent)}
+.ok{color:var(--ok)}
+.warn{color:var(--warn)}
+.info{color:var(--info)}
+.grid-2{display:grid; grid-template-columns:1.08fr .92fr; gap:24px; align-items:start}
+.grid-3{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.014));
+  border:1px solid rgba(255,255,255,.06); border-radius:22px; padding:22px; box-shadow:var(--shadow);
+}
+.card:hover{ transform:translateY(-2px); transition:.22s ease; border-color:rgba(255,74,74,.27) }
+.card-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px}
+.card-tag{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent2)}
+.timeline{display:grid; gap:14px; margin-top:20px}
+.timeline-item{padding:18px 18px 18px 20px; border-left:2px solid var(--accent); border-radius:0 14px 14px 0; background:rgba(255,255,255,.02)}
+.metric-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:28px}
+.metric{min-width:168px; padding:16px 18px; border:1px solid rgba(255,255,255,.08); border-radius:16px; background:rgba(255,255,255,.02)}
+.metric .label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:8px}
+.metric .value{font-size:18px; color:var(--text)}
+button, .button{
+  appearance:none; border:none; outline:none; cursor:pointer; font-family:var(--mono); color:var(--text); background:transparent;
+  border:1px solid var(--accent); border-radius:14px; padding:12px 16px; transition:.25s ease;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px; text-decoration:none;
+}
+button:hover, .button:hover{ background:var(--accent); box-shadow:0 0 22px rgba(255,74,74,.22); transform:translateY(-1px) }
+button.secondary, .button.secondary{ border-color:rgba(255,255,255,.14) }
+button.secondary:hover, .button.secondary:hover{ background:rgba(255,255,255,.07); box-shadow:none }
+button.ok, .button.ok{ border-color:rgba(53,208,127,.45) }
+button.warn, .button.warn{ border-color:rgba(245,177,76,.55) }
+button.info, .button.info{ border-color:rgba(109,183,255,.55) }
+button.full, .button.full{ width:100% }
+input, textarea, select{
+  width:100%; background:rgba(0,0,0,.42); color:var(--text); border:1px solid rgba(255,255,255,.12);
+  border-radius:14px; padding:13px 14px; font-family:var(--mono); outline:none; transition:.25s ease;
+}
+input:focus, textarea:focus, select:focus{ border-color:rgba(255,74,74,.75); box-shadow:0 0 0 3px rgba(255,74,74,.12) }
+textarea{resize:none; min-height:120px}
+.bar{width:100%; height:10px; background:#101010; border:1px solid rgba(255,255,255,.08); border-radius:999px; overflow:hidden}
+.fill{height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow:0 0 20px rgba(255,74,74,.35); transition:width .8s ease}
+.stat-line{display:flex; justify-content:space-between; gap:12px; color:#d8d8d8; font-size:13px}
+.stat-line span:last-child{ color:#fff }
+#boot{position:fixed; inset:0; z-index:10000; display:flex; justify-content:center; align-items:center; flex-direction:column; background:radial-gradient(circle at center, rgba(255,74,74,.1), transparent 34%), #000; transition:opacity .6s ease, transform .6s ease}
+#boot.hidden{ opacity:0; pointer-events:none; transform:scale(1.01) }
+.boot-panel{width:min(900px, 90vw); border:1px solid rgba(255,255,255,.1); border-radius:24px; background:rgba(255,255,255,.02); padding:28px; box-shadow:0 30px 90px rgba(0,0,0,.45)}
+.boot-title{font-size:14px; letter-spacing:4px; text-transform:uppercase; color:var(--accent); margin-bottom:18px}
+.boot-line{font-size:12px; line-height:1.9; color:#bfbfbf}
+.boot-progress{margin-top:22px; height:8px; width:100%; border-radius:999px; background:#101010; overflow:hidden; border:1px solid rgba(255,255,255,.05)}
+.boot-fill{width:0%; height:100%; background:linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow:0 0 20px rgba(255,74,74,.55); transition:width .35s ease}
+.boot-footer{display:flex; justify-content:space-between; gap:20px; margin-top:16px; font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase}
+#landing{display:flex; align-items:center}
+.hero-copy{max-width:960px}
+.hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:28px}
+.docs-grid{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px; margin-top:18px}
+.doc-card{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); display:grid; gap:10px}
+.doc-actions{display:flex; gap:10px; flex-wrap:wrap}
+.saved-list{display:grid; gap:10px; margin-top:12px}
+.saved-item{padding:12px 14px; border:1px solid rgba(255,255,255,.08); border-radius:14px; background:rgba(255,255,255,.02); font-size:12px; color:#d8d8d8; display:flex; justify-content:space-between; gap:10px; align-items:center}
+.modal{display:none; position:fixed; inset:0; z-index:5000; background:rgba(0,0,0,.84); backdrop-filter:blur(10px); justify-content:center; align-items:center; padding:24px}
+.modal.open{display:flex}
+.modal-panel{width:min(1120px, 100%); display:grid; grid-template-columns:1fr 1fr; gap:20px}
+.modal-card{background:rgba(10,10,10,.97); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:24px; box-shadow:0 30px 100px rgba(0,0,0,.5)}
+.modal-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:18px}
+.modal-strap{font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--muted)}
+.credentials{margin-top:14px; padding:14px; border:1px dashed rgba(255,255,255,.12); border-radius:14px; color:#eaeaea; font-size:12px; line-height:1.8; white-space:pre-wrap; background:rgba(255,255,255,.02)}
+.close-row{margin-top:14px; display:flex; justify-content:flex-end}
+.viewer{width:min(1150px, 100%); display:grid; grid-template-rows:auto 1fr auto; height:min(92vh, 920px)}
+.viewer-frame{width:100%; height:100%; border:1px solid rgba(255,255,255,.1); border-radius:16px; background:#000}
+.viewer-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+#dashboard{display:none; position:fixed; inset:0; z-index:4000; background:radial-gradient(circle at top left, rgba(255,74,74,.08), transparent 28%), linear-gradient(180deg, #070707, #030303)}
+.dashboard-grid{display:grid; grid-template-columns:300px 1fr; height:100%}
+.sidebar{border-right:1px solid rgba(255,255,255,.07); padding:22px; overflow:auto; background:rgba(255,255,255,.015)}
+.main{padding:22px; overflow:auto}
+.profile{padding:18px; border:1px solid rgba(255,74,74,.25); border-radius:18px; background:rgba(255,74,74,.03); margin-bottom:18px}
+.profile .hid{font-size:13px; color:var(--accent2); margin-bottom:10px; word-break:break-all}
+.profile .name{font-size:20px; color:#fff; margin-bottom:8px}
+.profile .role{color:var(--muted); font-size:13px}
+.side-block{margin-top:18px; padding-top:18px; border-top:1px solid rgba(255,255,255,.08)}
+.tabs{display:flex; gap:10px; flex-wrap:wrap; margin:16px 0 18px}
+.tab{padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); cursor:pointer; font-size:12px}
+.tab.active{border-color:rgba(255,74,74,.45); background:rgba(255,74,74,.08); color:#fff}
+.panel{display:none}
+.panel.active{display:block}
+.grid-dashboard{display:grid; grid-template-columns:1.1fr .9fr; gap:20px; margin-top:18px}
+.terminal{min-height:220px; max-height:300px; overflow:auto; padding:16px; border:1px solid rgba(255,255,255,.08); border-radius:16px; background:#020202; color:#a7a7a7; font-size:12px; line-height:1.8; white-space:pre-wrap}
+.feed{display:grid; gap:12px}
+.feed-item{padding:14px 16px; border:1px solid rgba(255,255,255,.07); border-radius:14px; background:rgba(255,255,255,.02); font-size:12px; line-height:1.8}
+.dock{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+.service-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; margin-top:18px}
+.service{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); display:grid; gap:10px}
+.service strong{font-size:16px}
+.notice-grid{display:grid; gap:12px; margin-top:18px}
+.notice{padding:16px 18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); display:grid; gap:8px}
+.request-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.request-list{display:grid; gap:10px; margin-top:14px}
+.request-item{padding:14px 16px; border:1px solid rgba(255,255,255,.08); border-radius:14px; background:rgba(255,255,255,.02)}
+.help-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:18px}
+.help-card{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02)}
+.update-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px}
+.update-item{padding:16px 18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02)}
+.department-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:18px}
+.department{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); display:grid; gap:10px}
+.dashboard-notice{padding:16px 18px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(255,255,255,.02); margin-top:14px}
+.footer{padding:28px 10% 48px; color:var(--muted); font-family:var(--sans); line-height:1.8}
+@media (max-width: 1120px){
+  .grid-2,.grid-3,.modal-panel,.dashboard-grid,.grid-dashboard,.docs-grid,.service-grid,.request-grid,.help-grid,.update-grid,.department-grid{grid-template-columns:1fr}
+  section{padding:100px 6% 70px}
+  nav{padding:14px 18px}
+  .sidebar{border-right:none; border-bottom:1px solid rgba(255,255,255,.07)}
+}
+@media (max-width: 560px){
+  h1{font-size:clamp(2.2rem, 14vw, 4rem)}
+  .hero-actions,.dock,.viewer-actions{flex-direction:column}
+  .hero-actions > *, .dock > *, .viewer-actions > *{width:100%}
+}
+</style>
 </head>
 <body>
 <div class="scanline"></div>
@@ -59,7 +198,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
     <div class="boot-progress"><div id="boot-fill" class="boot-fill"></div></div>
     <div class="boot-footer">
       <div id="boot-state">INITIALIZING</div>
-      <div>NODE 001 • HUMAN-FIRST SURFACE</div>
+      <div>NODE 001 • GOVERNMENT SURFACE</div>
     </div>
   </div>
 </div><nav>
@@ -77,31 +216,30 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
     <div class="kicker">01 // public face • citizen front</div>
     <h1>Welcome<br><span class="outline">Home</span></h1>
     <p>
-      This portal is built for the person using it: easier to understand, easier to trust, and easier to return to.
-      It gives you a place to read official material, save documents, ask for help, send messages, and enter your own citizen space.
-    </p><div class="hero-actions">
-  <button onclick="openAuth()">ENTER SYSTEM</button>
-  <button class="secondary" onclick="document.getElementById('section-state').scrollIntoView({behavior:'smooth'})">STATE</button>
-  <button class="secondary" onclick="document.getElementById('section-notices').scrollIntoView({behavior:'smooth'})">NOTICES</button>
-  <button class="secondary" onclick="document.getElementById('section-docs').scrollIntoView({behavior:'smooth'})">DOCUMENTS</button>
-  <button class="secondary" onclick="document.getElementById('section-services').scrollIntoView({behavior:'smooth'})">SERVICES</button>
-</div>
-
-<div class="metric-row">
-  <div class="metric"><span class="label">Launch window</span><div class="value" id="countdown">000D : 00H : 00M : 00S</div></div>
-  <div class="metric"><span class="label">Census</span><div class="value" id="landing-census">0 citizens</div></div>
-  <div class="metric"><span class="label">Enrollment</span><div class="value" id="enroll-state">OPEN</div></div>
-  <div class="metric"><span class="label">Tone</span><div class="value">Human-first</div></div>
-</div>
-
-<div class="dock">
-  <button onclick="openAuth()">AUTH GATE</button>
-  <button class="secondary" onclick="openDocViewer('constitution')">CONSTITUTION</button>
-  <button class="secondary" onclick="openDocViewer('codes')">CODES</button>
-  <button class="secondary" onclick="openDocViewer('briefing')">TECH BRIEFING</button>
-  <button class="secondary" onclick="document.getElementById('section-help').scrollIntoView({behavior:'smooth'})">HELP DESK</button>
-</div>
-
+      This portal is made to feel like a real civic platform. It gives the public a place to read official updates,
+      open documents, view departments, request help, book appointments, and enter a private citizen space after login.
+      The design is calmer, clearer, and more usable.
+    </p>
+    <div class="hero-actions">
+      <button onclick="openAuth()">ENTER SYSTEM</button>
+      <button class="secondary" onclick="document.getElementById('section-state').scrollIntoView({behavior:'smooth'})">STATE</button>
+      <button class="secondary" onclick="document.getElementById('section-updates').scrollIntoView({behavior:'smooth'})">UPDATES</button>
+      <button class="secondary" onclick="document.getElementById('section-docs').scrollIntoView({behavior:'smooth'})">DOCUMENTS</button>
+      <button class="secondary" onclick="document.getElementById('section-services').scrollIntoView({behavior:'smooth'})">SERVICES</button>
+    </div>
+    <div class="metric-row">
+      <div class="metric"><span class="label">Launch window</span><div class="value" id="countdown">000D : 00H : 00M : 00S</div></div>
+      <div class="metric"><span class="label">Census</span><div class="value" id="landing-census">0 citizens</div></div>
+      <div class="metric"><span class="label">Enrollment</span><div class="value" id="enroll-state">OPEN</div></div>
+      <div class="metric"><span class="label">Tone</span><div class="value">Human-first</div></div>
+    </div>
+    <div class="dock">
+      <button onclick="openAuth()">AUTH GATE</button>
+      <button class="secondary" onclick="openDocViewer('constitution')">CONSTITUTION</button>
+      <button class="secondary" onclick="openDocViewer('codes')">CODES</button>
+      <button class="secondary" onclick="openDocViewer('briefing')">TECH BRIEFING</button>
+      <button class="secondary" onclick="document.getElementById('section-help').scrollIntoView({behavior:'smooth'})">HELP DESK</button>
+    </div>
   </div>
 </section><section id="section-state">
   <div class="kicker">02 // state architecture</div>
@@ -109,61 +247,64 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
     <div>
       <h2>The State</h2>
       <p>
-        Thirty-three buildings. One node. Zero bureaucracy. The interface is organized around real human needs: a welcoming front,
-        a visible rulebook, a document vault, a support desk, a request form, and a private profile room.
-      </p><div class="timeline">
-    <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Help & orientation</div><div class="small">Clear paths, plain language, and visible next steps.</div></div>
-    <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Identity & documents</div><div class="small">Your record, your files, and your saved materials.</div></div>
-    <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Services & requests</div><div class="small">Appointments, support tickets, and document requests.</div></div>
+        Thirty-three buildings. One node. Zero bureaucracy. The platform is organized around real citizen needs: clear departments,
+        a visible noticeboard, public services, document access, requests, appointments, and a private profile.
+      </p>
+      <div class="department-grid">
+        <div class="department"><div class="card-tag">DEPARTMENT 01</div><strong>Citizen Affairs</strong><div class="small">Identity, profile, enrollment, and general civic support.</div><button class="secondary" onclick="scrollToSection('section-services')">OPEN</button></div>
+        <div class="department"><div class="card-tag">DEPARTMENT 02</div><strong>Public Works</strong><div class="small">Infrastructure, maintenance, status, and civic notices.</div><button class="secondary" onclick="scrollToSection('section-updates')">OPEN</button></div>
+        <div class="department"><div class="card-tag">DEPARTMENT 03</div><strong>Records & Documents</strong><div class="small">Constitution, codes, records, and saved vault documents.</div><button class="secondary" onclick="scrollToSection('section-docs')">OPEN</button></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Help & orientation</div><div class="small">Clear paths, plain language, and obvious next steps.</div></div>
+        <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Identity & documents</div><div class="small">Your record, your files, and your saved materials.</div></div>
+        <div class="timeline-item"><div class="card-tag">CIVIC LAYER</div><div style="margin-top:6px;font-size:18px;">Services & requests</div><div class="small">Appointments, support tickets, and requests that feel real.</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><div class="card-tag">SYSTEM LOG</div><h3>Public feed</h3></div><div class="badge">ACTIVE</div></div>
+      <div id="public-feed" class="feed"></div>
+    </div>
   </div>
-</div>
-
-<div class="card">
-  <div class="card-head">
-    <div><div class="card-tag">SYSTEM LOG</div><h3>Public feed</h3></div>
-    <div class="badge">ACTIVE</div>
-  </div>
-  <div id="public-feed" class="feed"></div>
-</div>
-
-  </div>
-</section><section id="section-notices">
-  <div class="kicker">03 // public notices</div>
+</section><section id="section-updates">
+  <div class="kicker">03 // updates & announcements</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-head">
-        <div><div class="card-tag">NOTICEBOARD</div><h2>Daily notices</h2></div>
-        <div class="badge">LIVE</div>
-      </div>
+      <div class="card-head"><div><div class="card-tag">NOTICEBOARD</div><h2>Official updates</h2></div><div class="badge">LIVE</div></div>
       <p>
-        This part is made for regular people. It feels like a state bulletin: what is happening, what is available,
-        and what the user should do next.
+        This is where the state feels alive. You can publish updates, pin alerts, mark them as public, and show them immediately to the people.
       </p>
       <div id="notice-list" class="notice-grid"></div>
-    </div><div class="card">
-  <div class="card-head">
-    <div><div class="card-tag">TODAY</div><h3>What matters now</h3></div>
-    <div class="badge">SUMMARY</div>
-  </div>
-  <div class="timeline">
-    <div class="timeline-item"><div style="font-size:14px;">Documents are visible</div><div class="small">Open, save, and download from the public vault.</div></div>
-    <div class="timeline-item"><div style="font-size:14px;">Services are available</div><div class="small">Support, requests, and appointments are one click away.</div></div>
-    <div class="timeline-item"><div style="font-size:14px;">Registration is finite</div><div class="small">Once one citizen is issued in this browser, enrollment closes.</div></div>
-  </div>
-</div>
-
+    </div>
+    <div class="card">
+      <div class="card-head"><div><div class="card-tag">ADMIN DESK</div><h3>Post a new update</h3></div><div class="badge info">EDITOR</div></div>
+      <div class="small" style="margin-bottom:10px;">Use the admin code to unlock editing. After that, you can publish updates for everyone.</div>
+      <div style="display:grid;gap:12px;">
+        <input id="admin-code" placeholder="ADMIN CODE" autocomplete="off" />
+        <button class="secondary" onclick="unlockAdmin()">UNLOCK EDITOR</button>
+        <input id="update-title" placeholder="Update title" autocomplete="off" />
+        <textarea id="update-body" placeholder="Write the update for the public..."></textarea>
+        <select id="update-type">
+          <option value="general">General</option>
+          <option value="urgent">Urgent</option>
+          <option value="service">Service</option>
+          <option value="alert">Alert</option>
+        </select>
+        <div class="dock">
+          <button onclick="postUpdate()">PUBLISH UPDATE</button>
+          <button class="secondary" onclick="pinLatestUpdate()">PIN LATEST</button>
+          <button class="secondary" onclick="toggleEmergency()">TOGGLE EMERGENCY</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section><section id="section-ship">
   <div class="kicker">04 // vessel / transit asset</div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-head">
-        <div><div class="card-tag">HSA-13 // WAVERIDER</div><h2>Transit with purpose</h2></div>
-        <div class="badge">PRIME</div>
-      </div>
+      <div class="card-head"><div><div class="card-tag">HSA-13 // WAVERIDER</div><h2>Transit with purpose</h2></div><div class="badge">PRIME</div></div>
       <p>
-        The ship is part of the civic identity now. It is shown as a public asset, not a cold technical toy.
-        It belongs in the front-facing experience because people understand systems better when they can connect them to real symbols.
+        The ship is part of the civic identity now. It is public, understandable, and linked to the state without feeling cold or abstract.
       </p>
       <div class="metric-row">
         <div class="metric"><span class="label">Transfer</span><div class="value">72 hours</div></div>
@@ -173,10 +314,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
       </div>
     </div>
     <div class="card">
-      <div class="card-head">
-        <div><div class="card-tag">MOTION / STATUS</div><h3>Launch console</h3></div>
-        <div class="badge">TRACKED</div>
-      </div>
+      <div class="card-head"><div><div class="card-tag">MOTION / STATUS</div><h3>Launch console</h3></div><div class="badge">TRACKED</div></div>
       <div class="terminal" id="ship-terminal"></div>
       <div class="dock">
         <button onclick="openDocViewer('briefing')">OPEN BRIEFING</button>
@@ -190,16 +328,13 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
     <div>
       <h2>Documents</h2>
       <p>
-        The visible document layer is central. Users can open the official files, save them to their own vault, and download them.
-        This is the cleanest way to make the portal feel useful and trustworthy.
+        The visible document layer is central. Open the official files, save them to your vault, and download them.
+        This makes the portal feel trustworthy and useful.
       </p>
       <div class="docs-grid" id="docs-grid"></div>
     </div>
     <div class="card">
-      <div class="card-head">
-        <div><div class="card-tag">SAVED VAULT</div><h3>Local document cache</h3></div>
-        <div class="badge" id="saved-count">0 saved</div>
-      </div>
+      <div class="card-head"><div><div class="card-tag">SAVED VAULT</div><h3>Local document cache</h3></div><div class="badge" id="saved-count">0 saved</div></div>
       <div class="small" style="margin-bottom:14px;">Saved files remain in the browser vault so the user can reopen them instantly.</div>
       <div id="saved-list" class="saved-list"></div>
       <div class="dock">
@@ -215,11 +350,11 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
       <h2>Services</h2>
       <p>
         A real state feels human when it offers visible services. This section gives people practical actions:
-        support, notices, documents, appointments, and requests.
+        support, notices, appointments, document help, and civic requests.
       </p>
       <div class="service-grid">
         <div class="service"><div class="card-tag">SERVICE 01</div><strong>Citizen Support</strong><div class="small">Open help desk for questions, guidance, and system notices.</div><button class="secondary" onclick="serviceToast('Citizen Support opened.')">OPEN</button></div>
-        <div class="service"><div class="card-tag">SERVICE 02</div><strong>Public Notices</strong><div class="small">Daily updates, alerts, and announcements in plain language.</div><button class="secondary" onclick="document.getElementById('section-notices').scrollIntoView({behavior:'smooth'})">VIEW</button></div>
+        <div class="service"><div class="card-tag">SERVICE 02</div><strong>Public Notices</strong><div class="small">Daily updates, alerts, and announcements in plain language.</div><button class="secondary" onclick="scrollToSection('section-updates')">VIEW</button></div>
         <div class="service"><div class="card-tag">SERVICE 03</div><strong>Document Help</strong><div class="small">Open, save, and download official documents.</div><button class="secondary" onclick="openDocViewer('briefing')">OPEN</button></div>
       </div>
     </div>
@@ -235,41 +370,38 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
       <div class="card-head"><div><div class="card-tag">REQUEST CENTER</div><h2>Make a request</h2></div><div class="badge">OPEN</div></div>
       <p>
         Users can request support, ask for documents, or book an appointment. This makes the portal feel alive instead of static.
-      </p><div class="request-grid" style="margin-top:18px;">
-    <div>
-      <div class="small" style="margin-bottom:8px;">Request type</div>
-      <select id="request-type">
-        <option>Support</option>
-        <option>Document request</option>
-        <option>Appointment</option>
-        <option>General message</option>
-      </select>
+      </p>
+      <div class="request-grid" style="margin-top:18px;">
+        <div>
+          <div class="small" style="margin-bottom:8px;">Request type</div>
+          <select id="request-type">
+            <option>Support</option>
+            <option>Document request</option>
+            <option>Appointment</option>
+            <option>General message</option>
+          </select>
+        </div>
+        <div>
+          <div class="small" style="margin-bottom:8px;">Preferred day</div>
+          <input id="request-day" type="date" />
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="small" style="margin-bottom:8px;">Short description</div>
+        <textarea id="request-text" placeholder="Tell us what you need in simple words..."></textarea>
+      </div>
+      <div class="dock">
+        <button onclick="submitRequest()">SUBMIT REQUEST</button>
+        <button class="secondary" onclick="prefillRequest('Support')">SUPPORT</button>
+        <button class="secondary" onclick="prefillRequest('Appointment')">APPOINTMENT</button>
+        <button class="secondary" onclick="prefillRequest('Document request')">DOCUMENT</button>
+      </div>
     </div>
-    <div>
-      <div class="small" style="margin-bottom:8px;">Preferred day</div>
-      <input id="request-day" type="date" />
+    <div class="card">
+      <div class="card-head"><div><div class="card-tag">REQUESTS</div><h3>Your request history</h3></div><div class="badge" id="request-count">0</div></div>
+      <div class="small">Requests are stored locally in this browser for now. They map cleanly to a backend later.</div>
+      <div id="request-list" class="request-list"></div>
     </div>
-  </div>
-
-  <div style="margin-top:14px;">
-    <div class="small" style="margin-bottom:8px;">Short description</div>
-    <textarea id="request-text" placeholder="Tell us what you need in simple words..."></textarea>
-  </div>
-
-  <div class="dock">
-    <button onclick="submitRequest()">SUBMIT REQUEST</button>
-    <button class="secondary" onclick="prefillRequest('Support')">SUPPORT</button>
-    <button class="secondary" onclick="prefillRequest('Appointment')">APPOINTMENT</button>
-    <button class="secondary" onclick="prefillRequest('Document request')">DOCUMENT</button>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-head"><div><div class="card-tag">REQUESTS</div><h3>Your requests</h3></div><div class="badge" id="request-count">0</div></div>
-  <div class="small">Requests are stored locally in this browser for now. They will later map cleanly to a real backend table.</div>
-  <div id="request-list" class="request-list"></div>
-</div>
-
   </div>
 </section><section id="section-census">
   <div class="kicker">08 // census protocol</div>
@@ -298,7 +430,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
         <div class="timeline-item"><div style="font-size:14px;">Boot sequence</div><div class="small">A proper opening sequence instead of a blank page.</div></div>
         <div class="timeline-item"><div style="font-size:14px;">Landing</div><div class="small">A welcoming state front, not a developer tool.</div></div>
         <div class="timeline-item"><div style="font-size:14px;">Documents</div><div class="small">Open, save, and download from a real vault.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Support & requests</div><div class="small">Appointments and request forms that feel usable.</div></div>
+        <div class="timeline-item"><div style="font-size:14px;">Services & requests</div><div class="small">Appointments and request forms that feel usable.</div></div>
         <div class="timeline-item"><div style="font-size:14px;">Citizen space</div><div class="small">Identity, messages, and state tools after login.</div></div>
       </div>
     </div>
@@ -308,32 +440,27 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
   <div class="grid-2">
     <div class="card">
       <div class="card-head"><div><div class="card-tag">HELP DESK</div><h2>Need something?</h2></div><div class="badge">READY</div></div>
-      <p>
-        This area keeps the tone human. It gives the user clear answers, direct buttons, and a calmer path through the portal.
-      </p>
+      <p>This area keeps the tone human. It gives the user clear answers, direct buttons, and a calmer path through the portal.</p>
       <div class="help-grid">
         <div class="help-card"><div class="card-tag">QUESTION</div><h3 style="margin-top:8px;">How do I get my HID?</h3><div class="small">Open the auth gate, fill the form, generate once, and save the credentials immediately.</div></div>
         <div class="help-card"><div class="card-tag">DOCUMENTS</div><h3 style="margin-top:8px;">Where are the files?</h3><div class="small">They are in the public vault and in the citizen dashboard after login.</div></div>
         <div class="help-card"><div class="card-tag">REQUESTS</div><h3 style="margin-top:8px;">Can I ask for help?</h3><div class="small">Yes. Use the request center for support, appointments, and document requests.</div></div>
         <div class="help-card"><div class="card-tag">PROFILE</div><h3 style="margin-top:8px;">Can I export my record?</h3><div class="small">Yes. The dashboard includes export and snapshot tools for your local record.</div></div>
       </div>
-    </div><div class="card">
-  <div class="card-head"><div><div class="card-tag">SYSTEM NOTES</div><h3>Public guidance</h3></div><div class="badge">UPDATED</div></div>
-  <div id="help-feed" class="feed"></div>
-  <div class="dock">
-    <button class="secondary" onclick="openAuth()">OPEN GATE</button>
-    <button class="secondary" onclick="document.getElementById('section-docs').scrollIntoView({behavior:'smooth'})">OPEN DOCS</button>
-  </div>
-</div>
-
+    </div>
+    <div class="card">
+      <div class="card-head"><div><div class="card-tag">SYSTEM NOTES</div><h3>Public guidance</h3></div><div class="badge">UPDATED</div></div>
+      <div id="help-feed" class="feed"></div>
+      <div class="dock">
+        <button class="secondary" onclick="openAuth()">OPEN GATE</button>
+        <button class="secondary" onclick="scrollToSection('section-docs')">OPEN DOCS</button>
+      </div>
+    </div>
   </div>
 </section><div id="auth-modal" class="modal">
   <div class="modal-panel">
     <div class="modal-card">
-      <div class="modal-head">
-        <div><div class="modal-strap">ACCESS GATE</div><h2>Login</h2></div>
-        <div class="badge">SECURE</div>
-      </div>
+      <div class="modal-head"><div><div class="modal-strap">ACCESS GATE</div><h2>Login</h2></div><div class="badge">SECURE</div></div>
       <div style="display:grid;gap:12px;">
         <input id="login-hid" placeholder="HID (24 DIGITS)" autocomplete="off" />
         <input id="login-pass" type="password" placeholder="ACCESS KEY" autocomplete="off" />
@@ -342,10 +469,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
       <div class="close-row"><button class="secondary" onclick="closeAuth()">CLOSE</button></div>
     </div>
     <div class="modal-card">
-      <div class="modal-head">
-        <div><div class="modal-strap">IDENTITY ISSUANCE</div><h2>Register</h2></div>
-        <div class="badge" id="reg-lock-badge">OPEN</div>
-      </div>
+      <div class="modal-head"><div><div class="modal-strap">IDENTITY ISSUANCE</div><h2>Register</h2></div><div class="badge" id="reg-lock-badge">OPEN</div></div>
       <div class="small" style="margin-bottom:12px;">One citizen only in this browser. Once it is issued, the gate closes.</div>
       <div style="display:grid;gap:12px;">
         <input id="reg-name" placeholder="NAME" autocomplete="off" />
@@ -359,10 +483,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
   </div>
 </div><div id="doc-modal" class="modal">
   <div class="modal-card viewer">
-    <div class="modal-head">
-      <div><div class="modal-strap">DOCUMENT VIEWER</div><h2 id="doc-title">Document</h2></div>
-      <div class="badge" id="doc-saved-badge">NOT SAVED</div>
-    </div>
+    <div class="modal-head"><div><div class="modal-strap">DOCUMENT VIEWER</div><h2 id="doc-title">Document</h2></div><div class="badge" id="doc-saved-badge">NOT SAVED</div></div>
     <iframe id="doc-frame" class="viewer-frame" src="" title="Document Viewer"></iframe>
     <div class="viewer-actions">
       <button onclick="openDocExternal()">OPEN NEW TAB</button>
@@ -395,21 +516,20 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
           <button class="secondary" onclick="showTab('requests')">Requests</button>
           <button class="secondary" onclick="copyHID()">Copy HID</button>
           <button class="secondary" onclick="exportProfile()">Export Profile</button>
+          <button class="secondary" onclick="showTab('updates')">Updates</button>
           <button onclick="logout()">LOGOUT</button>
         </div>
       </div>
     </aside><main class="main">
   <div class="card">
-    <div class="card-head">
-      <div><div class="card-tag">PRIVATE NODE</div><h2>Citizen control room</h2></div>
-      <div class="badge" id="dashboard-state">ONLINE</div>
-    </div>
+    <div class="card-head"><div><div class="card-tag">PRIVATE NODE</div><h2>Citizen control room</h2></div><div class="badge" id="dashboard-state">ONLINE</div></div>
     <div class="tabs">
       <div class="tab active" data-tab="overview" onclick="showTab('overview')">Overview</div>
       <div class="tab" data-tab="docs" onclick="showTab('docs')">Docs</div>
       <div class="tab" data-tab="messages" onclick="showTab('messages')">Messages</div>
       <div class="tab" data-tab="identity" onclick="showTab('identity')">Identity</div>
       <div class="tab" data-tab="requests" onclick="showTab('requests')">Requests</div>
+      <div class="tab" data-tab="updates" onclick="showTab('updates')">Updates</div>
     </div>
 
     <div id="panel-overview" class="panel active">
@@ -436,6 +556,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
             <div>Message queue: live</div>
             <div>Document vault: available</div>
             <div>Requests: available</div>
+            <div>Updates: publishable by admin</div>
           </div>
           <div class="side-block">
             <div class="card-tag">QUICK LINKS</div>
@@ -444,6 +565,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
               <button class="secondary" onclick="showTab('messages')">Messages</button>
               <button class="secondary" onclick="showTab('identity')">Identity</button>
               <button class="secondary" onclick="showTab('requests')">Requests</button>
+              <button class="secondary" onclick="showTab('updates')">Updates</button>
             </div>
           </div>
         </div>
@@ -457,10 +579,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
           <div id="dashboard-docs" class="docs-grid" style="margin-top:14px;"></div>
         </div>
         <div class="card">
-          <div class="card-head">
-            <div><div class="card-tag">SAVED VAULT</div><h3>Local document cache</h3></div>
-            <div class="badge" id="saved-count-dash">0 saved</div>
-          </div>
+          <div class="card-head"><div><div class="card-tag">SAVED VAULT</div><h3>Local document cache</h3></div><div class="badge" id="saved-count-dash">0 saved</div></div>
           <div class="small" style="margin-bottom:12px;">Saved documents remain available in this browser vault.</div>
           <div id="dashboard-saved" class="saved-list" style="margin-top:12px;"></div>
           <div class="dock">
@@ -493,7 +612,7 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
         </div>
         <div class="card">
           <div class="card-tag">PERSONAL STATE</div>
-          <p class="small" style="margin-top:12px;">This dashboard is designed to feel calm and useful. It gives the user identity, access, documents, messages, and direct actions with no clutter.</p>
+          <p class="small" style="margin-top:12px;">This dashboard is designed to feel calm and useful. It gives the user identity, access, documents, messages, requests, and direct actions with no clutter.</p>
           <div class="dock">
             <button class="secondary" onclick="copyHID()">COPY HID</button>
             <button class="secondary" onclick="exportProfile()">EXPORT PROFILE</button>
@@ -537,12 +656,33 @@ input, textarea, select{ width:100%; background:rgba(0,0,0,.42); color:var(--tex
         </div>
       </div>
     </div>
+
+    <div id="panel-updates" class="panel">
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <div class="card-tag">LATEST UPDATES</div>
+          <div id="dashboard-updates" class="update-grid" style="margin-top:14px;"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><div class="card-tag">ADMIN QUICK EDIT</div><h3>Post to public board</h3></div><div class="badge info">ADMIN</div></div>
+          <div class="small">Only unlocked when you enter the correct admin code on the public updates screen.</div>
+          <div class="dock">
+            <button class="secondary" onclick="scrollToSection('section-updates')">OPEN EDITOR</button>
+            <button class="secondary" onclick="toggleEmergency()">EMERGENCY</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 
   </div>
+</div><div class="footer">
+  Heidenbillg OS is presented as a civic portal: public updates, documents, services, requests, notices, and a private citizen room.
+  The interface is built to feel like a real state surface—clear, human, and useful.
 </div><script>
-const STORAGE_KEY = "HB_DB_OS_CIVIC_V2";
+const STORAGE_KEY = "HB_DB_GOV_OS_V3";
+const ADMIN_CODE = "HEIDEN-ADMIN-001";
 const DOCS = [
   { id: "constitution", title: "The Heidenbillg Constitution", file: "The_Heidenbillg_Constitution (6).pdf", desc: "Core principles, structure, rights, and civic logic." },
   { id: "codes", title: "The Heidenbillg Codes", file: "The_Heidenbillg_Codes (1).pdf", desc: "Operational rules, conduct, and internal protocols." },
@@ -553,15 +693,22 @@ let DB = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
   users: [],
   messages: [],
   requests: [],
+  updates: [
+    { type: "general", title: "Welcome to the civic portal", body: "This is the public home for state information, services, requests, and documents.", pinned: true, time: new Date().toISOString() },
+    { type: "service", title: "Document vault open", body: "Citizens can open the constitution, codes, and technical briefing from the front page.", pinned: false, time: new Date().toISOString() },
+    { type: "alert", title: "Support desk active", body: "Use the request center or help desk if you need assistance.", pinned: false, time: new Date().toISOString() }
+  ],
+  notices: [
+    { title: "Identity issuance", body: "One citizen can be issued in this browser. Enrollment then closes.", time: new Date().toISOString() },
+    { title: "Documents", body: "Official files are visible and downloadable from the public vault.", time: new Date().toISOString() },
+    { title: "Appointments", body: "Request support, a document, or a meeting from the request center.", time: new Date().toISOString() }
+  ],
   census: 0,
   savedDocs: [],
   registrationLocked: false,
   issuedAt: null,
-  notes: [
-    { title: "Welcome", text: "This interface is built to feel calm, useful, and human.", time: new Date().toISOString() },
-    { title: "Documents", text: "Open, save, and download what matters.", time: new Date().toISOString() },
-    { title: "Services", text: "Support, requests, and appointments are available.", time: new Date().toISOString() }
-  ]
+  emergency: false,
+  adminUnlocked: false
 };
 
 let currentUser = null;
@@ -575,6 +722,7 @@ function escapeHtml(str){ return String(str).replaceAll("&","&amp;").replaceAll(
 function randChar(set){ return set[Math.floor(Math.random() * set.length)]; }
 function generateHID(){ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; let id = ""; for(let i=0;i<24;i++) id += randChar(chars); return id; }
 function generatePass(){ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let pass = ""; for(let i=0;i<16;i++) pass += randChar(chars); return pass; }
+function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 
 const bootLines = [
   "Initializing civic kernel...",
@@ -606,15 +754,16 @@ function runBoot(){
       el("boot").classList.add("hidden");
       bootComplete = true;
       document.body.style.overflow = "auto";
-      renderAll();
+      renderEverything();
       startShipCountdown();
       renderDocs();
       renderPublicFeed();
       renderServiceFeed();
-      renderSavedDocs();
       renderNotices();
-      renderRequests();
+      renderUpdates();
+      renderSavedDocs();
       renderHelpFeed();
+      renderRequests();
       loadMessages();
       showTab("overview");
       updateEnrollmentUI();
@@ -647,7 +796,7 @@ function renderServiceFeed(){
     "Citizen Support: available.",
     "Public Notices: up to date.",
     "Document Help: open, save, download.",
-    "User flow: landing → documents → services → access."
+    "User flow: landing → updates → documents → services → access."
   ];
   feed.innerHTML = items.map(t => `
     <div class="feed-item">
@@ -658,11 +807,8 @@ function renderServiceFeed(){
   `).join("");
 }
 function renderNotices(){
-  const notices = [
-    { title: "Identity issuance", body: DB.registrationLocked ? "Enrollment is closed in this browser." : "One citizen can be issued here." },
-    { title: "Documents", body: "Constitution, codes, and briefing are visible from the front page." },
-    { title: "Support", body: "Use the help desk or request center for real user needs." }
-  ];
+  const notices = DB.notices.map(n => ({...n}));
+  if(DB.emergency){ notices.unshift({ title: "Emergency mode active", body: "Follow the latest official instruction in the updates feed.", time: new Date().toISOString() }); }
   el("notice-list").innerHTML = notices.map(n => `
     <div class="notice">
       <div class="card-tag">NOTICE</div>
@@ -671,12 +817,28 @@ function renderNotices(){
     </div>
   `).join("");
 }
+function renderUpdates(){
+  const list = [...DB.updates].sort((a,b) => (b.pinned - a.pinned) || (new Date(b.time) - new Date(a.time)));
+  const html = list.map(u => `
+    <div class="update-item">
+      <div class="card-tag">${u.pinned ? "PINNED" : u.type.toUpperCase()} • ${new Date(u.time).toLocaleDateString()}</div>
+      <strong style="display:block;margin-top:6px;font-size:16px;">${escapeHtml(u.title)}</strong>
+      <div class="small" style="margin-top:8px;">${escapeHtml(u.body)}</div>
+      <div class="dock" style="margin-top:12px;">
+        <button class="secondary" onclick="pinUpdate('${encodeURIComponent(u.time)}')">${u.pinned ? 'UNPIN' : 'PIN'}</button>
+        <button class="secondary" onclick="copyUpdate('${encodeURIComponent(u.time)}')">COPY</button>
+      </div>
+    </div>
+  `).join("");
+  el("dashboard-updates").innerHTML = html || `<div class="update-item">No updates yet.</div>`;
+}
 function renderHelpFeed(){
   const items = [
     "Need your HID? Use the auth gate to register once.",
     "Need a document? Open the vault and save it locally.",
     "Need support? Submit a request from the request center.",
-    "Need your record? Open the dashboard and export it."
+    "Need your record? Open the dashboard and export it.",
+    "Need updates? The public board is editable by the admin desk."
   ];
   el("help-feed").innerHTML = items.map(t => `
     <div class="feed-item">
@@ -686,7 +848,16 @@ function renderHelpFeed(){
     </div>
   `).join("");
 }
-function renderAll(){
+function renderRequests(){
+  el("request-count").textContent = DB.requests.length;
+  el("request-count-dash").textContent = DB.requests.length;
+  const list = DB.requests.length === 0
+    ? `<div class="request-item">No requests yet.</div>`
+    : DB.requests.map(r => `<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join("");
+  el("request-list").innerHTML = list;
+  el("dashboard-request-list").innerHTML = list;
+}
+function renderEverything(){
   el("landing-census").textContent = `${DB.census} citizen${DB.census === 1 ? "" : "s"}`;
   el("census-num").textContent = DB.census.toLocaleString();
   el("census-stat").textContent = `${DB.census} citizen${DB.census === 1 ? "" : "s"}`;
@@ -697,10 +868,10 @@ function renderAll(){
   el("register-btn").disabled = DB.registrationLocked;
   el("register-btn").style.opacity = DB.registrationLocked ? "0.45" : "1";
   el("register-btn").textContent = DB.registrationLocked ? "REGISTRATION CLOSED" : "GENERATE HID";
-  updateScrollStat();
   el("saved-count-dash").textContent = `${DB.savedDocs.length} saved`;
   el("request-count").textContent = DB.requests.length;
   el("request-count-dash").textContent = DB.requests.length;
+  updateScrollStat();
 }
 function updateEnrollmentUI(){
   const locked = DB.registrationLocked || DB.users.length >= 1;
@@ -795,6 +966,66 @@ function renderSavedDocs(){
 }
 function clearSavedDocs(){ DB.savedDocs = []; saveDB(); renderDocs(); renderSavedDocs(); refreshDocViewerBadge(); serviceToast("Vault cleared."); }
 
+function unlockAdmin(){
+  const code = el("admin-code").value.trim();
+  if(code === ADMIN_CODE){
+    DB.adminUnlocked = true;
+    saveDB();
+    serviceToast("Admin editor unlocked.");
+    el("update-title").focus();
+    renderNotices();
+  } else {
+    serviceToast("Invalid admin code.");
+  }
+}
+function postUpdate(){
+  if(!DB.adminUnlocked){ serviceToast("Unlock the editor first."); return; }
+  const title = el("update-title").value.trim();
+  const body = el("update-body").value.trim();
+  const type = el("update-type").value;
+  if(!title || !body){ serviceToast("Title and body are required."); return; }
+  DB.updates.unshift({ title, body, type, pinned:false, time:new Date().toISOString() });
+  saveDB();
+  renderUpdates();
+  renderNotices();
+  logPublic(`Update posted: ${title}`);
+  el("update-title").value = "";
+  el("update-body").value = "";
+}
+function pinLatestUpdate(){
+  if(!DB.adminUnlocked){ serviceToast("Unlock the editor first."); return; }
+  if(DB.updates.length === 0) return;
+  DB.updates[0].pinned = !DB.updates[0].pinned;
+  saveDB();
+  renderUpdates();
+  logPublic(DB.updates[0].pinned ? "Latest update pinned." : "Latest update unpinned.");
+}
+function pinUpdate(timeEncoded){
+  if(!DB.adminUnlocked){ serviceToast("Unlock the editor first."); return; }
+  const time = decodeURIComponent(timeEncoded);
+  const item = DB.updates.find(u => u.time === time);
+  if(!item) return;
+  item.pinned = !item.pinned;
+  saveDB();
+  renderUpdates();
+}
+function copyUpdate(timeEncoded){
+  const time = decodeURIComponent(timeEncoded);
+  const item = DB.updates.find(u => u.time === time);
+  if(!item) return;
+  const text = `${item.title}\n\n${item.body}`;
+  navigator.clipboard?.writeText(text).catch(()=>{});
+  serviceToast("Update copied.");
+}
+function toggleEmergency(){
+  if(!DB.adminUnlocked){ serviceToast("Unlock the editor first."); return; }
+  DB.emergency = !DB.emergency;
+  saveDB();
+  renderNotices();
+  renderPublicFeed();
+  serviceToast(DB.emergency ? "Emergency mode active." : "Emergency mode cleared.");
+}
+
 function register(){
   if(DB.registrationLocked || DB.users.length >= 1){ DB.registrationLocked = true; saveDB(); updateEnrollmentUI(); el("credentials").textContent = "REGISTRATION CLOSED. One citizen has already been issued in this browser."; alert("REGISTRATION CLOSED: this browser already has a citizen issued."); return; }
   const name = el("reg-name").value.trim();
@@ -814,16 +1045,15 @@ function login(){
   const u = DB.users.find(x => x.hid === hid && x.pass === pass);
   if(!u){ alert("ACCESS DENIED"); return; }
   currentUser = u; el("dashboard").style.display = "block"; closeAuth(); document.body.style.overflow = "hidden";
-  populateDashboard(); showTab("overview"); logPrivate("SYSTEM ACCESS GRANTED"); loadMessages(); renderRequests(); serviceToast(`Welcome back, ${u.name}.`);
+  populateDashboard(); showTab("overview"); logPrivate("SYSTEM ACCESS GRANTED"); loadMessages(); renderRequests(); renderUpdates(); serviceToast(`Welcome back, ${u.name}.`);
 }
 function logout(){ currentUser = null; el("dashboard").style.display = "none"; document.body.style.overflow = "auto"; logPublic("User session ended."); serviceToast("Session closed."); }
-
 function populateDashboard(){
   el("user-hid").textContent = currentUser.hid; el("user-name").textContent = currentUser.name; el("user-role").textContent = currentUser.role; el("user-credits").textContent = currentUser.credits.toLocaleString();
   el("identity-hid").textContent = currentUser.hid; el("identity-name").textContent = currentUser.name; el("identity-email").textContent = currentUser.email; el("identity-role").textContent = currentUser.role; el("identity-credits").textContent = currentUser.credits.toLocaleString(); el("identity-issue").textContent = currentUser.issuedAt ? new Date(currentUser.issuedAt).toLocaleString() : "—";
   const health = Math.min(18 + DB.census, 100); el("health-bar").style.width = health + "%"; el("health-text").textContent = `${health}%`; el("system-mode").textContent = "PRIVATE NODE";
 }
-function showTab(tab){ ["overview","docs","messages","identity","requests"].forEach(t => { el("panel-" + t).classList.toggle("active", t === tab); const tabBtn = document.querySelector(`.tab[data-tab="${t}"]`); if(tabBtn) tabBtn.classList.toggle("active", t === tab); }); }
+function showTab(tab){ ["overview","docs","messages","identity","requests","updates"].forEach(t => { el("panel-" + t).classList.toggle("active", t === tab); const tabBtn = document.querySelector(`.tab[data-tab="${t}"]`); if(tabBtn) tabBtn.classList.toggle("active", t === tab); }); }
 
 function sendMessage(){ if(!currentUser) return; const text = el("msg").value.trim(); if(!text) return; DB.messages.push({ from: currentUser.hid, name: currentUser.name, text, time: nowTime() }); saveDB(); el("msg").value = ""; loadMessages(); logPrivate("Message transmitted."); }
 function loadMessages(){ const box = el("messages"); if(DB.messages.length === 0){ box.innerHTML = `<div class="feed-item">No messages yet.</div>`; return; } box.innerHTML = DB.messages.map(m => `<div class="feed-item"><div class="card-tag">${escapeHtml(m.time)} • ${escapeHtml(m.name || m.from)}</div><div style="margin-top:8px;">${escapeHtml(m.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(m.from)}</div></div>`).join(""); }
@@ -837,10 +1067,7 @@ function submitRequest(){
   const text = el("request-text").value.trim();
   if(!text){ serviceToast("Please write a short description first."); return; }
   DB.requests.unshift({ type, day, text, time: nowTime(), from: currentUser ? currentUser.name : "Public user" });
-  saveDB();
-  renderRequests();
-  el("request-text").value = "";
-  serviceToast("Request submitted.");
+  saveDB(); renderRequests(); el("request-text").value = ""; serviceToast("Request submitted.");
 }
 function submitDashboardRequest(){
   const type = el("dash-request-type").value;
@@ -848,25 +1075,19 @@ function submitDashboardRequest(){
   const text = el("dash-request-text").value.trim();
   if(!text){ logPrivate("Request rejected: missing description."); return; }
   DB.requests.unshift({ type, day, text, time: nowTime(), from: currentUser ? currentUser.name : "Citizen" });
-  saveDB();
-  renderRequests();
-  el("dash-request-text").value = "";
-  logPrivate("Request submitted.");
-  serviceToast("Request sent to the desk.");
+  saveDB(); renderRequests(); el("dash-request-text").value = ""; logPrivate("Request submitted."); serviceToast("Request sent to the desk.");
 }
 function prefillRequest(type){ el("request-type").value = type; document.getElementById("section-requests").scrollIntoView({behavior:'smooth'}); }
 function renderRequests(){
   el("request-count").textContent = DB.requests.length;
   el("request-count-dash").textContent = DB.requests.length;
-  const list = DB.requests.length === 0
-    ? `<div class="request-item">No requests yet.</div>`
-    : DB.requests.map(r => `<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join("");
+  const list = DB.requests.length === 0 ? `<div class="request-item">No requests yet.</div>` : DB.requests.map(r => `<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join("");
   el("request-list").innerHTML = list;
   el("dashboard-request-list").innerHTML = list;
 }
 
 function saveSessionSnapshot(){
-  const snapshot = { currentUser, census: DB.census, savedDocs: DB.savedDocs, messages: DB.messages.slice(-25), requests: DB.requests.slice(-25), at: new Date().toISOString() };
+  const snapshot = { currentUser, census: DB.census, savedDocs: DB.savedDocs, messages: DB.messages.slice(-25), requests: DB.requests.slice(-25), updates: DB.updates.slice(0,10), at: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(snapshot, null, 2)], {type:"application/json"});
   const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = "heidenbillg-session-snapshot.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); logPrivate("Session snapshot exported.");
 }
@@ -883,11 +1104,12 @@ function jumpToDashboard(){ if(currentUser){ el("dashboard").style.display = "bl
 
 renderDocs();
 renderSavedDocs();
-renderAll();
+renderEverything();
 renderServiceFeed();
 renderNotices();
 renderHelpFeed();
 renderRequests();
+renderUpdates();
 updateEnrollmentUI();
 showTab("overview");
 loadMessages();
