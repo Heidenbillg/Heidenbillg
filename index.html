@@ -1,212 +1,303 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEIDENBILLG | SISTEMA OPERATIVO v3.0</title>
-    <style>
-        :root {
-            --bg: #030303; --accent: #ff3e3e; --mars: #ff4500; --text: #ffffff;
-            --dim: #444; --border: 1px solid #1a1a1a; --glow: 0 0 30px rgba(255, 62, 62, 0.2);
-            --font-mono: 'JetBrains Mono', monospace;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEIDENBILLG CORE</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
-        
-        /* Efectos Visuales */
-        .scanline { width: 100%; height: 100vh; position: fixed; z-index: 9999; pointer-events: none; opacity: 0.1; background: linear-gradient(to bottom, transparent 50%, #000 51%); background-size: 100% 4px; }
-        .vignette { position: fixed; inset: 0; z-index: 9998; pointer-events: none; background: radial-gradient(circle, transparent 40%, black 150%); }
+<style>
+:root {
+    --bg:#050505;
+    --accent:#ff3e3e;
+    --text:#fff;
+    --dim:#555;
+}
 
-        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 5000; backdrop-filter: blur(20px); border-bottom: var(--border); }
-        .logo { font-family: var(--font-mono); font-weight: 900; font-size: 1.2rem; }
-        .outline { -webkit-text-stroke: 1px var(--text); color: transparent; }
+body {
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:monospace;
+}
 
-        section { min-height: 100vh; padding: 140px 10%; border-bottom: var(--border); position: relative; }
-        .label { font-family: var(--font-mono); color: var(--accent); font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 20px; display: block; }
-        h1 { font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; line-height: 0.8; margin-bottom: 40px; letter-spacing: -5px; }
+/* SECTIONS */
+section {
+    min-height:100vh;
+    padding:80px;
+    border-bottom:1px solid #111;
+}
 
-        /* Grid de Nodos y Constitución */
-        .grid-system { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; }
-        .card { border: var(--border); padding: 30px; background: rgba(255,255,255,0.01); transition: 0.4s; position: relative; }
-        .card:hover { border-color: var(--accent); background: rgba(255,62,62,0.02); }
+/* NAV */
+nav {
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:20px;
+    background:linear-gradient(to bottom, #000, transparent);
+    display:flex;
+    justify-content:space-between;
+}
 
-        /* Terminal de Acceso */
-        .terminal-container { max-width: 650px; margin: 0 auto; background: #050505; border: 1px solid #222; padding: 40px; box-shadow: var(--glow); }
-        .tabs { display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid #1a1a1a; }
-        .tab { padding: 10px; cursor: pointer; font-family: var(--font-mono); font-size: 0.7rem; color: var(--dim); transition: 0.3s; }
-        .tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        
-        input, textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid #333; color: white; padding: 15px 0; margin-bottom: 20px; font-family: var(--font-mono); outline: none; transition: 0.3s; }
-        input:focus, textarea:focus { border-color: var(--accent); }
-        .btn-sync { width: 100%; padding: 20px; background: white; color: black; border: none; font-weight: 900; font-family: var(--font-mono); cursor: pointer; transition: 0.4s; text-transform: uppercase; }
-        .btn-sync:hover { background: var(--accent); color: white; letter-spacing: 2px; }
+/* BUTTON */
+button {
+    background:black;
+    border:1px solid var(--accent);
+    color:white;
+    padding:10px;
+    cursor:pointer;
+}
+button:hover { background:var(--accent); }
 
-        /* Dashboard Overlay */
-        #os-overlay { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 8000; grid-template-columns: 300px 1fr; }
-        .sidebar { border-right: var(--border); padding: 40px; display: flex; flex-direction: column; justify-content: space-between; }
-        .main-view { padding: 60px; overflow-y: auto; }
-        
-        .live-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; margin-right: 10px; }
-        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-    </style>
+/* LOGIN MODAL */
+#login-modal {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+}
+
+.box {
+    border:1px solid var(--accent);
+    padding:20px;
+    width:300px;
+}
+
+/* DASHBOARD */
+#dashboard {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    z-index:2000;
+}
+
+.sidebar {
+    width:250px;
+    border-right:1px solid #111;
+    padding:20px;
+}
+
+.main {
+    flex:1;
+    padding:20px;
+}
+
+.flex { display:flex; }
+
+/* CENSUS */
+.bar {
+    height:5px;
+    background:#111;
+}
+.fill {
+    height:100%;
+    background:var(--accent);
+}
+</style>
 </head>
+
 <body>
-    <div class="scanline"></div>
-    <div class="vignette"></div>
 
-    <nav>
-        <div class="logo">HEIDENBILLG <span class="outline">OS_3.0</span></div>
-        <div class="nav-links" style="font-family: monospace; font-size: 0.7rem;">
-            <a href="#mars" style="color: var(--dim); text-decoration: none; margin-left: 20px;">// MARTE</a>
-            <a href="#citizenship" style="color: white; border: 1px solid #333; padding: 8px 15px; text-decoration: none; margin-left: 20px;">[ ACCESO HID ]</a>
-        </div>
-    </nav>
+<nav>
+    <div onclick="openLogin()" style="cursor:pointer;">HEIDENBILLG</div>
+    <div id="scroll-stat">0%</div>
+</nav>
 
-    <!-- 01: MARTE -->
-    <section id="mars">
-        <span class="label">// Proyecto Extra-Planetario HSA-13</span>
-        <h1>WAVE<br><span class="outline">RIDER</span></h1>
-        <p style="max-width: 500px; color: #777;">Propulsión AV-E garantizada. Tiempo estimado a Nodo Marte-01: 72 Horas.</p>
-    </section>
+<!-- 🚀 SPACESHIP -->
+<section>
+<h1>HSA-13 WAVERIDER</h1>
+<p>Interplanetary system. 72h Earth–Mars transfer.</p>
 
-    <!-- 02: CONSTITUCIÓN -->
-    <section id="constitution">
-        <span class="label">// Corpus Juris</span>
-        <h1>LA <span class="outline">PIRÁMIDE</span></h1>
-        <div class="grid-system">
-            <div class="card"><h3>ART. I</h3><p style="color: #666; font-size: 0.8rem;">El mando reside en un Director y un Board de 12.</p></div>
-            <div class="card"><h3>ART. X</h3><p style="color: #666; font-size: 0.8rem;">Banco Central BCH automatizado. Impuesto plano 18%.</p></div>
-        </div>
-    </section>
+<div id="countdown"></div>
+</section>
 
-    <!-- 03: ADMISIÓN -->
-    <section id="citizenship">
-        <div class="terminal-container">
-            <div class="tabs">
-                <div id="tab-reg" class="tab active" onclick="switchMode('reg')">NUEVA ALTA</div>
-                <div id="tab-log" class="tab" onclick="switchMode('log')">LOG IN</div>
-            </div>
+<!-- 🏛 STATE -->
+<section>
+<h1>THE STATE</h1>
+<p>33 buildings. One node. Zero bureaucracy.</p>
+</section>
 
-            <div id="panel-reg">
-                <span class="label"><span class="live-dot"></span>SOLICITUD CIUDADANÍA</span>
-                <input type="text" id="reg-name" placeholder="NOMBRE COMPLETO">
-                <input type="email" id="reg-email" placeholder="EMAIL CIFRADO">
-                <input type="text" id="reg-job" placeholder="ESPECIALIDAD TÉCNICA (NIVEL VII)">
-                <textarea id="reg-merit" placeholder="RESUMEN DE MÉRITO..." rows="3"></textarea>
-                <button class="btn-sync" onclick="processRegister()">Sincronizar con Corpus Juris</button>
-            </div>
+<!-- 📊 CENSUS -->
+<section>
+<h1>CENSUS</h1>
+<div id="census-num">0</div>
+<div class="bar"><div id="census-bar" class="fill"></div></div>
+</section>
 
-            <div id="panel-log" style="display: none;">
-                <span class="label"><span class="live-dot"></span>VALIDAR HID</span>
-                <input type="text" id="log-hid" placeholder="HID-XXXXXX">
-                <button class="btn-sync" onclick="processLogin()">Acceder al Sistema</button>
-            </div>
+<!-- 🔐 LOGIN -->
+<div id="login-modal" class="flex">
+<div class="box">
+<input id="login-hid" placeholder="HID">
+<input id="login-pass" type="password" placeholder="KEY">
+<button onclick="login()">LOGIN</button>
 
-            <div id="term-output" style="margin-top: 25px; font-family: monospace; font-size: 0.65rem; color: var(--accent); min-height: 1.2rem;"></div>
-        </div>
-    </section>
+<hr>
 
-    <!-- DASHBOARD OVERLAY -->
-    <div id="os-overlay">
-        <aside class="sidebar">
-            <div>
-                <div style="border: 1px solid var(--accent); padding: 20px; text-align: center; margin-bottom: 20px;">
-                    <span style="font-size: 0.5rem; color: var(--accent); font-family: monospace;">HID_STATUS: VALIDADO</span>
-                    <div id="user-hid-display" style="font-size: 1.2rem; margin-top: 10px; font-family: monospace;">HID-DEBUG</div>
-                </div>
-                <div class="card" style="padding: 15px;">
-                    <span style="font-size: 0.5rem; color: #555;">CRÉDITOS-H</span>
-                    <div style="color: #00ff00; font-family: monospace;">1,250.00</div>
-                </div>
-            </div>
-            <button class="btn-sync" onclick="toggleOS(false)" style="font-size: 0.7rem; padding: 15px;">Logout</button>
-        </aside>
-        <main class="main-view">
-            <h1 class="outline" id="welcome-msg">HOLA, CIUDADANO</h1>
-            <div class="grid-system">
-                <div class="card"><h4>MISIÓN SOBERANÍA</h4><p style="font-size: 0.8rem; color: #555;">Censo actual: 850 / 100.000</p></div>
-                <div class="card"><h4>ESTADO VITAL</h4><div style="width:100%; height:4px; background:#111; margin-top:15px;"><div style="width:98%; height:100%; background:#00ff00;"></div></div></div>
-            </div>
-        </main>
-    </div>
+<input id="reg-name" placeholder="NAME">
+<input id="reg-email" placeholder="EMAIL">
+<input id="reg-role" placeholder="ROLE">
+<button onclick="register()">GENERATE HID</button>
 
-    <script>
-        // Lógica de Pestañas
-        function switchMode(mode) {
-            document.getElementById('panel-reg').style.display = mode === 'reg' ? 'block' : 'none';
-            document.getElementById('panel-log').style.display = mode === 'log' ? 'block' : 'none';
-            document.getElementById('tab-reg').classList.toggle('active', mode === 'reg');
-            document.getElementById('tab-log').classList.toggle('active', mode === 'log');
-        }
+<div id="credentials"></div>
 
-        // Simulación de Terminal
-        function printTerm(steps, callback) {
-            const out = document.getElementById('term-output');
-            let i = 0;
-            const interval = setInterval(() => {
-                out.innerText = steps[i];
-                i++;
-                if (i >= steps.length) {
-                    clearInterval(interval);
-                    if(callback) callback();
-                }
-            }, 800);
-        }
+<button onclick="closeLogin()">CLOSE</button>
+</div>
+</div>
 
-        // REGISTRO AUTOMATIZADO
-        function processRegister() {
-            const data = {
-                name: document.getElementById('reg-name').value,
-                email: document.getElementById('reg-email').value,
-                job: document.getElementById('reg-job').value,
-                merit: document.getElementById('reg-merit').value
-            };
+<!-- 🧠 DASHBOARD -->
+<div id="dashboard">
+<div class="flex">
 
-            if(!data.name || !data.email) return alert("Identidad requerida.");
+<div class="sidebar">
+<h3 id="user-hid"></h3>
+<p id="user-name"></p>
+<p id="user-role"></p>
+<p id="user-credits"></p>
+<button onclick="logout()">LOGOUT</button>
+</div>
 
-            printTerm([
-                "> Iniciando escaneo de mérito...",
-                "> Cifrando túnel PGP Nivel VII...",
-                "> VALIDACIÓN COMPLETA. ENVIANDO HID..."
-            ], () => {
-                const generatedHID = "HID-" + Math.random().toString(36).substr(2, 6).toUpperCase();
-                
-                // Preparar Email Automatizado
-                const subject = `SOLICITUD DE ALTA CIUDADANA - ${data.name}`;
-                const body = `--- PROTOCOLO DE IDENTIDAD HEIDENBILLG ---\n\nCIUDADANO: ${data.name}\nEMAIL: ${data.email}\nESPECIALIDAD: ${data.job}\nHID ASIGNADO: ${generatedHID}\n\nMÉRITO EXPUESTO:\n${data.merit}\n\nESTADO: SINCRONIZACIÓN INICIADA.`;
-                
-                window.location.href = `mailto:heidenbillg@://gmail.com{encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+<div class="main">
+<h2>NODE TERMINAL</h2>
 
-                // Guardar localmente y entrar
-                localStorage.setItem('heiden_hid', generatedHID);
-                localStorage.setItem('heiden_name', data.name);
-                enterSystem(data.name, generatedHID);
-            });
-        }
+<div id="log"></div>
 
-        // LOGIN
-        function processLogin() {
-            const hid = document.getElementById('log-hid').value;
-            if(!hid) return alert("HID necesario.");
+<input id="msg" placeholder="Message">
+<button onclick="sendMessage()">SEND</button>
 
-            printTerm(["> Verificando integridad...", "> Acceso concedido."], () => {
-                const savedName = localStorage.getItem('heiden_name') || "CIUDADANO";
-                enterSystem(savedName, hid);
-            });
-        }
+<div id="messages"></div>
+</div>
 
-        function enterSystem(name, hid) {
-            document.getElementById('welcome-msg').innerText = `HOLA, ${name.toUpperCase()}`;
-            document.getElementById('user-hid-display').innerText = hid.toUpperCase();
-            setTimeout(() => toggleOS(true), 500);
-        }
+</div>
+</div>
 
-        function toggleOS(show) {
-            const os = document.getElementById('os-overlay');
-            os.style.display = show ? 'grid' : 'none';
-            document.body.style.overflow = show ? 'hidden' : 'auto';
-        }
-    </script>
+<script>
+// =======================
+// DATABASE
+// =======================
+let DB = JSON.parse(localStorage.getItem("HB_DB")) || {
+    users:[],
+    messages:[],
+    census:0
+};
+
+function saveDB(){ localStorage.setItem("HB_DB", JSON.stringify(DB)); }
+
+// =======================
+// CORE
+// =======================
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function generateHID(){
+    let h="";
+    for(let i=0;i<24;i++) h+=chars[Math.floor(Math.random()*chars.length)];
+    return h;
+}
+
+function generatePass(){
+    let p="";
+    const c="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#";
+    for(let i=0;i<16;i++) p+=c[Math.floor(Math.random()*c.length)];
+    return p;
+}
+
+// =======================
+// AUTH
+// =======================
+let currentUser=null;
+
+function register(){
+    let user={
+        hid:generateHID(),
+        pass:generatePass(),
+        name:reg-name.value,
+        email:reg-email.value,
+        role:reg-role.value,
+        credits:100
+    };
+
+    DB.users.push(user);
+    DB.census++;
+    saveDB();
+    updateCensus();
+
+    credentials.innerHTML=`HID:<br>${user.hid}<br>PASS:<br>${user.pass}`;
+}
+
+function login(){
+    let u=DB.users.find(x=>x.hid===login-hid.value && x.pass===login-pass.value);
+    if(!u) return alert("DENIED");
+
+    currentUser=u;
+    dashboard.style.display="block";
+    login-modal.style.display="none";
+
+    user-hid.innerText=u.hid;
+    user-name.innerText=u.name;
+    user-role.innerText=u.role;
+    user-credits.innerText=u.credits;
+
+    loadMessages();
+}
+
+function logout(){ location.reload(); }
+
+// =======================
+// MESSAGES
+// =======================
+function sendMessage(){
+    let m={from:currentUser.hid,text:msg.value,time:new Date().toLocaleTimeString()};
+    DB.messages.push(m);
+    saveDB();
+    msg.value="";
+    loadMessages();
+}
+
+function loadMessages(){
+    messages.innerHTML=DB.messages.map(m=>`[${m.time}] ${m.from}: ${m.text}`).join("<br>");
+}
+
+// =======================
+// UI
+// =======================
+function openLogin(){ login-modal.style.display="flex"; }
+function closeLogin(){ login-modal.style.display="none"; }
+
+// =======================
+// CENSUS
+// =======================
+function updateCensus(){
+    census-num.innerText=DB.census;
+    census-bar.style.width=(DB.census/100000*100)+"%";
+}
+updateCensus();
+
+// =======================
+// COUNTDOWN
+// =======================
+setInterval(()=>{
+    let d=new Date("2028-04-01")-Date.now();
+    let days=Math.floor(d/86400000);
+    countdown.innerText=days+" DAYS";
+},1000);
+
+// =======================
+// SCROLL
+// =======================
+window.onscroll=()=>{
+    let s=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+    scroll-stat.innerText=Math.round(s)+"%";
+};
+
+</script>
+
 </body>
 </html>
+
