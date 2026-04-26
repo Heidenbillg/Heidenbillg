@@ -1,303 +1,1334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HEIDENBILLG CORE</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HEIDENBILLG CORE // SYSTEM NODE</title>
 
 <style>
-:root {
-    --bg:#050505;
-    --accent:#ff3e3e;
-    --text:#fff;
-    --dim:#555;
+:root{
+  --bg:#050505;
+  --bg2:#0a0a0a;
+  --panel:#0e0e0e;
+  --accent:#ff3e3e;
+  --accent2:#ff7b7b;
+  --text:#ffffff;
+  --dim:#7a7a7a;
+  --line:#161616;
+  --ok:#22c55e;
+  --warn:#f59e0b;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-body {
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:monospace;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top, rgba(255,62,62,.08), transparent 30%),
+    linear-gradient(180deg, #030303 0%, #050505 100%);
+  color:var(--text);
+  font-family:var(--mono);
+  overflow-x:hidden;
 }
 
-/* SECTIONS */
-section {
-    min-height:100vh;
-    padding:80px;
-    border-bottom:1px solid #111;
+/* Global effects */
+.scanline{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:2px;
+  pointer-events:none;
+  background:rgba(255,255,255,0.03);
+  z-index:9998;
+  animation:scan 8s linear infinite;
+}
+@keyframes scan{
+  from{transform:translateY(0)}
+  to{transform:translateY(100vh)}
 }
 
-/* NAV */
-nav {
-    position:fixed;
-    top:0;
-    width:100%;
-    padding:20px;
-    background:linear-gradient(to bottom, #000, transparent);
-    display:flex;
-    justify-content:space-between;
+.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.04;
+  z-index:9997;
+  background-image:
+    linear-gradient(transparent 50%, rgba(255,255,255,.12) 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.08) 50%);
+  background-size:3px 3px, 3px 3px;
+  mix-blend-mode:screen;
 }
 
-/* BUTTON */
-button {
-    background:black;
-    border:1px solid var(--accent);
-    color:white;
-    padding:10px;
-    cursor:pointer;
+/* Navigation */
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,.0));
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.03);
 }
-button:hover { background:var(--accent); }
-
-/* LOGIN MODAL */
-#login-modal {
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.9);
-    justify-content:center;
-    align-items:center;
+.nav-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  user-select:none;
 }
-
-.box {
-    border:1px solid var(--accent);
-    padding:20px;
-    width:300px;
+.brand-mark{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 20px rgba(255,62,62,.8);
 }
-
-/* DASHBOARD */
-#dashboard {
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:black;
-    z-index:2000;
+.nav-title{
+  font-size:13px;
+  letter-spacing:3px;
+  text-transform:uppercase;
 }
-
-.sidebar {
-    width:250px;
-    border-right:1px solid #111;
-    padding:20px;
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:12px;
+  color:var(--dim);
 }
-
-.main {
-    flex:1;
-    padding:20px;
+.badge{
+  padding:6px 10px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  border-radius:999px;
 }
 
-.flex { display:flex; }
-
-/* CENSUS */
-.bar {
-    height:5px;
-    background:#111;
+/* Sections */
+section{
+  min-height:100vh;
+  padding:120px 10% 80px;
+  border-bottom:1px solid var(--line);
+  position:relative;
 }
-.fill {
-    height:100%;
-    background:var(--accent);
+.kicker{
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+h1{
+  margin:0 0 18px;
+  font-size:clamp(2.8rem, 10vw, 6.8rem);
+  line-height:.92;
+  letter-spacing:-1px;
+}
+h2{
+  margin:0 0 14px;
+  font-size:clamp(2rem, 4vw, 3.2rem);
+  line-height:1;
+}
+h3{
+  margin:0 0 10px;
+  font-size:20px;
+}
+p{
+  margin:0;
+  max-width:760px;
+  color:#b9b9b9;
+  line-height:1.8;
+  font-family:var(--sans);
+}
+
+.outline{
+  color:transparent;
+  -webkit-text-stroke:1px var(--text);
+  text-stroke:1px var(--text);
+}
+.accent{
+  color:var(--accent);
+}
+.dim{
+  color:var(--dim);
+}
+
+/* Layout blocks */
+.grid-2{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:28px;
+  align-items:start;
+}
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:20px;
+}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.015));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.28);
+}
+.card:hover{
+  border-color:rgba(255,62,62,.35);
+  transform:translateY(-2px);
+  transition:.25s ease;
+}
+.card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:14px;
+}
+.card-tag{
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent2);
+}
+.small{
+  font-size:12px;
+  color:var(--dim);
+  line-height:1.7;
+}
+
+/* Buttons */
+button, .button{
+  appearance:none;
+  border:none;
+  outline:none;
+  cursor:pointer;
+  font-family:var(--mono);
+  color:var(--text);
+  background:transparent;
+  border:1px solid var(--accent);
+  border-radius:14px;
+  padding:12px 16px;
+  transition:.25s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  text-decoration:none;
+}
+button:hover, .button:hover{
+  background:var(--accent);
+  transform:translateY(-1px);
+  box-shadow:0 0 24px rgba(255,62,62,.2);
+}
+.button.secondary{
+  border-color:rgba(255,255,255,.14);
+}
+.button.secondary:hover{
+  background:rgba(255,255,255,.07);
+  box-shadow:none;
+}
+.button.full{
+  width:100%;
+}
+
+/* Inputs */
+input, textarea{
+  width:100%;
+  background:rgba(0,0,0,.35);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:13px 14px;
+  font-family:var(--mono);
+  outline:none;
+  transition:.25s ease;
+}
+input:focus, textarea:focus{
+  border-color:rgba(255,62,62,.75);
+  box-shadow:0 0 0 3px rgba(255,62,62,.12);
+}
+textarea{
+  resize:none;
+  min-height:120px;
+}
+
+/* Top hero / boot */
+#boot{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:
+    radial-gradient(circle at center, rgba(255,62,62,.08), transparent 36%),
+    #000;
+  transition:opacity .6s ease, transform .6s ease;
+}
+#boot.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(1.01);
+}
+.boot-panel{
+  width:min(760px, 90vw);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:24px;
+  background:rgba(255,255,255,.02);
+  padding:28px;
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
+}
+.boot-title{
+  font-size:14px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:18px;
+}
+.boot-line{
+  font-size:12px;
+  line-height:1.9;
+  color:#bfbfbf;
+}
+.boot-progress{
+  margin-top:22px;
+  height:8px;
+  width:100%;
+  border-radius:999px;
+  background:#101010;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.05);
+}
+.boot-fill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  box-shadow:0 0 20px rgba(255,62,62,.55);
+  transition:width .35s ease;
+}
+.boot-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:16px;
+  font-size:11px;
+  color:var(--dim);
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+/* Landing */
+#landing{
+  display:flex;
+  align-items:center;
+}
+.hero-copy{
+  max-width:860px;
+}
+.hero-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:28px;
+}
+.metric-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  margin-top:28px;
+}
+.metric{
+  min-width:160px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:rgba(255,255,255,.02);
+}
+.metric .label{
+  display:block;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--dim);
+  margin-bottom:8px;
+}
+.metric .value{
+  font-size:18px;
+  color:var(--text);
+}
+
+/* Timeline cards */
+.timeline{
+  display:grid;
+  gap:14px;
+  margin-top:22px;
+}
+.timeline-item{
+  padding:18px 18px 18px 20px;
+  border-left:2px solid var(--accent);
+  background:rgba(255,255,255,.02);
+  border-radius:0 14px 14px 0;
+}
+
+/* Census */
+.bar{
+  width:100%;
+  height:10px;
+  background:#111;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  overflow:hidden;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  box-shadow:0 0 20px rgba(255,62,62,.35);
+  transition:width .8s ease;
+}
+.census-box{
+  display:grid;
+  gap:12px;
+  margin-top:22px;
+}
+.stat-line{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:13px;
+  color:#d1d1d1;
+}
+.stat-line span:last-child{
+  color:var(--text);
+}
+
+/* Modal */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:rgba(0,0,0,.84);
+  backdrop-filter:blur(10px);
+  justify-content:center;
+  align-items:center;
+  padding:24px;
+}
+.modal.open{
+  display:flex;
+}
+.modal-panel{
+  width:min(860px, 100%);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.modal-card{
+  background:rgba(10,10,10,.96);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:24px;
+  box-shadow:0 30px 100px rgba(0,0,0,.5);
+}
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  margin-bottom:18px;
+}
+.modal-strap{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--dim);
+}
+.credentials{
+  margin-top:14px;
+  padding:14px;
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:14px;
+  color:#eaeaea;
+  font-size:12px;
+  line-height:1.8;
+  white-space:pre-wrap;
+  background:rgba(255,255,255,.02);
+}
+.close-row{
+  margin-top:14px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+/* Dashboard */
+#dashboard{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:4000;
+  background:
+    radial-gradient(circle at top left, rgba(255,62,62,.07), transparent 30%),
+    linear-gradient(180deg, #070707, #030303);
+}
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  height:100%;
+}
+.sidebar{
+  border-right:1px solid rgba(255,255,255,.07);
+  padding:22px;
+  overflow:auto;
+  background:rgba(255,255,255,.015);
+}
+.main{
+  padding:22px;
+  overflow:auto;
+}
+.profile{
+  padding:18px;
+  border:1px solid rgba(255,62,62,.25);
+  border-radius:18px;
+  background:rgba(255,62,62,.03);
+  margin-bottom:18px;
+}
+.profile .hid{
+  font-size:13px;
+  color:var(--accent2);
+  margin-bottom:10px;
+  word-break:break-all;
+}
+.profile .name{
+  font-size:20px;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.profile .role{
+  color:var(--dim);
+  font-size:13px;
+}
+.side-block{
+  margin-top:18px;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.feed{
+  display:grid;
+  gap:12px;
+}
+.feed-item{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  background:rgba(255,255,255,.02);
+  font-size:12px;
+  line-height:1.7;
+}
+.terminal{
+  min-height:180px;
+  max-height:240px;
+  overflow:auto;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:#020202;
+  color:#9f9f9f;
+  font-size:12px;
+  line-height:1.8;
+  white-space:pre-wrap;
+}
+.grid-dashboard{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:20px;
+  margin-top:18px;
+}
+.tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:16px 0 18px;
+}
+.tab{
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  cursor:pointer;
+  font-size:12px;
+}
+.tab.active{
+  border-color:rgba(255,62,62,.45);
+  background:rgba(255,62,62,.08);
+  color:#fff;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .grid-2, .grid-3, .modal-panel, .dashboard-grid, .grid-dashboard{
+    grid-template-columns:1fr;
+  }
+  section{
+    padding:100px 6% 70px;
+  }
+  nav{
+    padding:16px 18px;
+  }
+  .sidebar{
+    border-right:none;
+    border-bottom:1px solid rgba(255,255,255,.07);
+  }
+}
+@media (max-width: 560px){
+  h1{font-size:clamp(2.2rem, 14vw, 4rem)}
+  .hero-actions{flex-direction:column}
+  .hero-actions > *{width:100%}
 }
 </style>
 </head>
 
 <body>
+<div class="scanline"></div>
+<div class="noise"></div>
+
+<!-- BOOT SEQUENCE -->
+<div id="boot">
+  <div class="boot-panel">
+    <div class="boot-title">HEIDENBILLG CORE SYSTEM // BOOT SEQUENCE</div>
+    <div id="boot-log" class="boot-line"></div>
+    <div class="boot-progress"><div id="boot-fill" class="boot-fill"></div></div>
+    <div class="boot-footer">
+      <div id="boot-state">INITIALIZING</div>
+      <div>NODE 001 • SECURE CORE</div>
+    </div>
+  </div>
+</div>
 
 <nav>
-    <div onclick="openLogin()" style="cursor:pointer;">HEIDENBILLG</div>
-    <div id="scroll-stat">0%</div>
+  <div class="nav-brand" onclick="openAuth()">
+    <div class="brand-mark"></div>
+    <div class="nav-title">HEIDENBILLG</div>
+  </div>
+  <div class="nav-right">
+    <div class="badge" id="nav-status">PUBLIC NODE</div>
+    <div class="badge" id="scroll-stat">0%</div>
+  </div>
 </nav>
 
-<!-- 🚀 SPACESHIP -->
-<section>
-<h1>HSA-13 WAVERIDER</h1>
-<p>Interplanetary system. 72h Earth–Mars transfer.</p>
+<!-- PUBLIC LANDING -->
+<section id="landing">
+  <div class="hero-copy">
+    <div class="kicker">01 // PUBLIC FACE • ORIGIN NODE</div>
+    <h1>HSA-13<br><span class="outline">WAVERIDER</span></h1>
+    <p>
+      A sovereign-grade interface for identity, structure, census, logistics, and controlled access.
+      This front layer is designed to feel like a real institution: cinematic on entry, precise in operation,
+      and scalable into a true networked system later.
+    </p>
 
-<div id="countdown"></div>
+    <div class="hero-actions">
+      <button onclick="openAuth()">ENTER SYSTEM</button>
+      <button class="secondary" onclick="document.getElementById('section-state').scrollIntoView({behavior:'smooth'})">VIEW STATE</button>
+      <button class="secondary" onclick="document.getElementById('section-census').scrollIntoView({behavior:'smooth'})">VIEW CENSUS</button>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric">
+        <span class="label">Launch window</span>
+        <div class="value" id="countdown">000D : 00H : 00M : 00S</div>
+      </div>
+      <div class="metric">
+        <span class="label">Census</span>
+        <div class="value" id="landing-census">0 citizens</div>
+      </div>
+      <div class="metric">
+        <span class="label">State mode</span>
+        <div class="value">COLD START</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- 🏛 STATE -->
-<section>
-<h1>THE STATE</h1>
-<p>33 buildings. One node. Zero bureaucracy.</p>
+<!-- STATE SECTION -->
+<section id="section-state">
+  <div class="kicker">02 // STATE ARCHITECTURE</div>
+  <div class="grid-2">
+    <div>
+      <h2>THE STATE</h2>
+      <p>
+        Thirty-three buildings. One node. Zero bureaucracy. The architecture is organized as a public narrative
+        surface, a controlled access layer, and a private operational dashboard. That separation is intentional:
+        it gives the system a visible identity, a gate, and a working core.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="card-tag">CORE / DOMAIN 01</div>
+          <div style="margin-top:6px;font-size:18px;">H-LOGIC & COMMAND</div>
+          <div class="small">Administrative logic, identity handling, and central decision flow.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-tag">CORE / DOMAIN 02</div>
+          <div style="margin-top:6px;font-size:18px;">HESA & ENERGY</div>
+          <div class="small">Infrastructure, systems health, and operational continuity.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-tag">CORE / DOMAIN 03</div>
+          <div style="margin-top:6px;font-size:18px;">HOTA / DOCK</div>
+          <div class="small">Transit, launch systems, and external interface.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-tag">SYSTEM LOG</div>
+          <h3>PUBLIC FEED</h3>
+        </div>
+        <div class="badge">ACTIVE</div>
+      </div>
+      <div id="public-feed" class="feed"></div>
+    </div>
+  </div>
 </section>
 
-<!-- 📊 CENSUS -->
-<section>
-<h1>CENSUS</h1>
-<div id="census-num">0</div>
-<div class="bar"><div id="census-bar" class="fill"></div></div>
+<!-- SHIP SECTION -->
+<section id="section-ship">
+  <div class="kicker">03 // VEHICLE / TRANSIT ASSET</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-tag">HSA-13 // WAVERIDER</div>
+      <h2>Interplanetary Corridor</h2>
+      <p>
+        The vessel is presented as a high-authority transit asset, with a controlled technical aesthetic and a strong
+        identity layer. This section is visual, narrative, and operational at once.
+      </p>
+
+      <div class="census-box">
+        <div class="stat-line"><span>Transfer time</span><span>72 hours</span></div>
+        <div class="stat-line"><span>Mode</span><span>Constant-flow transit</span></div>
+        <div class="stat-line"><span>Shielding</span><span>Hafnium matrix</span></div>
+        <div class="stat-line"><span>Crew</span><span>5 specialists</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-tag">MOTION / STATUS</div>
+          <h3>Launch Countdown</h3>
+        </div>
+        <div class="badge">TRACKED</div>
+      </div>
+      <div class="terminal" id="ship-terminal"></div>
+    </div>
+  </div>
 </section>
 
-<!-- 🔐 LOGIN -->
-<div id="login-modal" class="flex">
-<div class="box">
-<input id="login-hid" placeholder="HID">
-<input id="login-pass" type="password" placeholder="KEY">
-<button onclick="login()">LOGIN</button>
+<!-- CENSUS SECTION -->
+<section id="section-census">
+  <div class="kicker">04 // CENSUS PROTOCOL</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-tag">POPULATION STATE</div>
+      <h2>Census</h2>
+      <p>
+        The system begins at zero. Every registration increments the census and updates the live progress bar.
+        This is the simplest honest version of a sovereign growth metric: a visible count of active identities.
+      </p>
 
-<hr>
+      <div class="census-box">
+        <div class="stat-line"><span>Current population</span><span id="census-num">0</span></div>
+        <div class="stat-line"><span>Target</span><span>100,000</span></div>
+      </div>
 
-<input id="reg-name" placeholder="NAME">
-<input id="reg-email" placeholder="EMAIL">
-<input id="reg-role" placeholder="ROLE">
-<button onclick="register()">GENERATE HID</button>
+      <div style="margin-top:20px;" class="bar">
+        <div id="census-bar" class="fill"></div>
+      </div>
+    </div>
 
-<div id="credentials"></div>
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-tag">REGISTRATION FEED</div>
+          <h3>What users see</h3>
+        </div>
+        <div class="badge">LIVE</div>
+      </div>
+      <p class="small">
+        When a user opens the gateway, they see the boot sequence first, then the landing page, then the auth modal.
+        After registration, they see their HID and password once. After login, the private dashboard opens with identity,
+        logs, messages, and state tools.
+      </p>
+      <div class="timeline" style="margin-top:16px;">
+        <div class="timeline-item">
+          <div style="font-size:14px;">Boot sequence</div>
+          <div class="small">System ignition and initialization lines.</div>
+        </div>
+        <div class="timeline-item">
+          <div style="font-size:14px;">Public landing</div>
+          <div class="small">Visible first impression and narrative frame.</div>
+        </div>
+        <div class="timeline-item">
+          <div style="font-size:14px;">Auth gate</div>
+          <div class="small">Login/register modal with generated credentials.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<button onclick="closeLogin()">CLOSE</button>
+<!-- AUTH MODAL -->
+<div id="auth-modal" class="modal">
+  <div class="modal-panel">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="modal-strap">ACCESS GATE</div>
+          <h2>Login</h2>
+        </div>
+        <div class="badge">SECURE</div>
+      </div>
+
+      <div style="display:grid;gap:12px;">
+        <input id="login-hid" placeholder="HID (24 DIGITS)" autocomplete="off" />
+        <input id="login-pass" type="password" placeholder="ACCESS KEY" autocomplete="off" />
+        <button class="full" onclick="login()">LOGIN</button>
+      </div>
+
+      <div class="close-row">
+        <button class="secondary" onclick="closeAuth()">CLOSE</button>
+      </div>
+    </div>
+
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="modal-strap">IDENTITY ISSUANCE</div>
+          <h2>Register</h2>
+        </div>
+        <div class="badge">NEW HID</div>
+      </div>
+
+      <div style="display:grid;gap:12px;">
+        <input id="reg-name" placeholder="NAME" autocomplete="off" />
+        <input id="reg-email" placeholder="EMAIL" autocomplete="off" />
+        <input id="reg-role" placeholder="ROLE / SPECIALTY" autocomplete="off" />
+        <button class="full" onclick="register()">GENERATE HID</button>
+      </div>
+
+      <div id="credentials" class="credentials">HID and password will appear here after registration.</div>
+
+      <div class="close-row">
+        <button class="secondary" onclick="closeAuth()">CLOSE</button>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
 
-<!-- 🧠 DASHBOARD -->
+<!-- DASHBOARD -->
 <div id="dashboard">
-<div class="flex">
+  <div class="dashboard-grid">
+    <aside class="sidebar">
+      <div class="profile">
+        <div class="hid" id="user-hid">---</div>
+        <div class="name" id="user-name">No user</div>
+        <div class="role" id="user-role">---</div>
+      </div>
 
-<div class="sidebar">
-<h3 id="user-hid"></h3>
-<p id="user-name"></p>
-<p id="user-role"></p>
-<p id="user-credits"></p>
-<button onclick="logout()">LOGOUT</button>
-</div>
+      <div class="side-block">
+        <div class="card-tag">CREDITS</div>
+        <h3 id="user-credits">0</h3>
+      </div>
 
-<div class="main">
-<h2>NODE TERMINAL</h2>
+      <div class="side-block">
+        <div class="card-tag">SYSTEM HEALTH</div>
+        <div style="margin-top:12px;" class="bar">
+          <div id="health-bar" class="fill" style="width:0%"></div>
+        </div>
+        <div class="small" style="margin-top:8px;" id="health-text">0%</div>
+      </div>
 
-<div id="log"></div>
+      <div class="side-block">
+        <div class="card-tag">USER ACTIONS</div>
+        <div style="display:grid;gap:10px;margin-top:12px;">
+          <button class="secondary" onclick="showTab('feed')">Feed</button>
+          <button class="secondary" onclick="showTab('messages')">Messages</button>
+          <button class="secondary" onclick="showTab('identity')">Identity</button>
+          <button onclick="logout()">LOGOUT</button>
+        </div>
+      </div>
+    </aside>
 
-<input id="msg" placeholder="Message">
-<button onclick="sendMessage()">SEND</button>
+    <main class="main">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-tag">PRIVATE NODE</div>
+            <h2>Node Control Interface</h2>
+          </div>
+          <div class="badge" id="dashboard-state">ONLINE</div>
+        </div>
 
-<div id="messages"></div>
-</div>
+        <div class="tabs">
+          <div class="tab active" data-tab="feed" onclick="showTab('feed')">System Feed</div>
+          <div class="tab" data-tab="messages" onclick="showTab('messages')">Messages</div>
+          <div class="tab" data-tab="identity" onclick="showTab('identity')">Identity</div>
+        </div>
 
-</div>
+        <div id="tab-feed" class="tab-panel">
+          <div class="grid-dashboard">
+            <div>
+              <div class="terminal" id="log"></div>
+
+              <div style="display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:14px;">
+                <input id="msg" placeholder="Transmit message to the node..." />
+                <button onclick="sendMessage()">SEND</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-tag">STATE SUMMARY</div>
+              <div class="small" style="margin-top:12px;line-height:1.9;">
+                <div>Identity layer: active</div>
+                <div>Population state: synced</div>
+                <div>Access mode: private</div>
+                <div>Launch window: monitored</div>
+                <div>Message queue: live</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-messages" class="tab-panel" style="display:none;">
+          <div class="card" style="margin-top:18px;">
+            <div class="card-tag">GLOBAL MESSAGE STREAM</div>
+            <div id="messages" class="feed" style="margin-top:14px;"></div>
+          </div>
+        </div>
+
+        <div id="tab-identity" class="tab-panel" style="display:none;">
+          <div class="grid-2" style="margin-top:18px;">
+            <div class="card">
+              <div class="card-tag">CITIZEN FILE</div>
+              <div class="small" style="margin-top:12px;line-height:2;">
+                <div><strong>HID:</strong> <span id="identity-hid">---</span></div>
+                <div><strong>Name:</strong> <span id="identity-name">---</span></div>
+                <div><strong>Email:</strong> <span id="identity-email">---</span></div>
+                <div><strong>Role:</strong> <span id="identity-role">---</span></div>
+                <div><strong>Credits:</strong> <span id="identity-credits">0</span></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-tag">SYSTEM NOTES</div>
+              <p class="small" style="margin-top:12px;">
+                This is the place where you can later wire in real backend logic:
+                Supabase tables, auth, message persistence, role permissions, and live census synchronization.
+                The visual layer is already prepared for that transition.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 </div>
 
 <script>
-// =======================
-// DATABASE
-// =======================
-let DB = JSON.parse(localStorage.getItem("HB_DB")) || {
-    users:[],
-    messages:[],
-    census:0
+/* =========================
+   DATABASE / STATE
+========================= */
+const STORAGE_KEY = "HB_DB_V4";
+
+let DB = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+  users: [],
+  messages: [],
+  census: 0
 };
 
-function saveDB(){ localStorage.setItem("HB_DB", JSON.stringify(DB)); }
+let currentUser = null;
+let bootComplete = false;
 
-// =======================
-// CORE
-// =======================
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+/* =========================
+   HELPERS
+========================= */
+function saveDB(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+}
+
+function getEl(id){
+  return document.getElementById(id);
+}
+
+function randChar(set){
+  return set[Math.floor(Math.random() * set.length)];
+}
 
 function generateHID(){
-    let h="";
-    for(let i=0;i<24;i++) h+=chars[Math.floor(Math.random()*chars.length)];
-    return h;
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let id = "";
+  for(let i = 0; i < 24; i++) id += randChar(chars);
+  return id;
 }
 
 function generatePass(){
-    let p="";
-    const c="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#";
-    for(let i=0;i<16;i++) p+=c[Math.floor(Math.random()*c.length)];
-    return p;
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+  let pass = "";
+  for(let i = 0; i < 16; i++) pass += randChar(chars);
+  return pass;
 }
 
-// =======================
-// AUTH
-// =======================
-let currentUser=null;
+function nowTime(){
+  return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
 
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#39;");
+}
+
+/* =========================
+   BOOT SEQUENCE
+========================= */
+const bootLines = [
+  "Initializing core kernel...",
+  "Loading identity layer...",
+  "Mounting system nodes...",
+  "Synchronizing census protocol...",
+  "Calibrating launch corridor...",
+  "HEIDENBILLG CORE ONLINE"
+];
+
+let bootIndex = 0;
+function runBoot(){
+  const log = getEl("boot-log");
+  const fill = getEl("boot-fill");
+  const state = getEl("boot-state");
+  const progress = Math.round((bootIndex / bootLines.length) * 100);
+
+  if(bootIndex < bootLines.length){
+    const line = document.createElement("div");
+    line.className = "boot-line";
+    line.textContent = bootLines[bootIndex];
+    log.appendChild(line);
+
+    fill.style.width = progress + "%";
+    state.textContent = bootLines[bootIndex].toUpperCase();
+
+    bootIndex++;
+    setTimeout(runBoot, 850);
+  }else{
+    fill.style.width = "100%";
+    state.textContent = "BOOT COMPLETE";
+    setTimeout(() => {
+      getEl("boot").classList.add("hidden");
+      bootComplete = true;
+      updateLandingData();
+      setPublicFeed();
+      startShipTerminal();
+    }, 700);
+  }
+}
+runBoot();
+
+/* =========================
+   PUBLIC FEED
+========================= */
+function setPublicFeed(){
+  const feed = getEl("public-feed");
+  const items = [
+    "Public node active. Narrative layer online.",
+    "Identity and census systems synchronized.",
+    "Auth gate available for controlled access.",
+    "Launch corridor monitoring enabled."
+  ];
+  feed.innerHTML = items.map(t => `
+    <div class="feed-item">
+      <div class="card-tag">SYSTEM</div>
+      <div style="margin-top:6px;">${escapeHtml(t)}</div>
+      <div class="small" style="margin-top:8px;">${nowTime()}</div>
+    </div>
+  `).join("");
+}
+
+/* =========================
+   LANDING / CENSUS / SHIP
+========================= */
+function updateLandingData(){
+  getEl("landing-census").textContent = `${DB.census} citizens`;
+  getEl("census-num").textContent = DB.census.toLocaleString();
+  getEl("census-bar").style.width = `${Math.min((DB.census / 100000) * 100, 100)}%`;
+  updateScrollStat();
+}
+
+function startShipTerminal(){
+  const target = new Date("2028-04-01T00:00:00").getTime();
+  const terminal = getEl("ship-terminal");
+
+  function tick(){
+    const now = Date.now();
+    const dist = target - now;
+
+    if(dist <= 0){
+      terminal.textContent = "LANZAMIENTO INICIADO";
+      getEl("countdown").textContent = "LAUNCHED";
+      return;
+    }
+
+    const days = Math.floor(dist / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((dist % (1000 * 60)) / 1000);
+
+    const cd = `${String(days).padStart(3,"0")}D : ${String(hours).padStart(2,"0")}H : ${String(minutes).padStart(2,"0")}M : ${String(seconds).padStart(2,"0")}S`;
+    getEl("countdown").textContent = cd;
+
+    terminal.innerHTML = [
+      `> Launch window: ${cd}`,
+      `> Orbit corridor: stable`,
+      `> Engine core: monitored`,
+      `> Vessel status: primed`
+    ].join("<br>");
+  }
+
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* =========================
+   SCROLL STAT
+========================= */
+function updateScrollStat(){
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0;
+  getEl("scroll-stat").textContent = pct + "%";
+}
+window.addEventListener("scroll", updateScrollStat);
+
+/* =========================
+   AUTH MODAL
+========================= */
+function openAuth(){
+  if(!bootComplete) return;
+  getEl("auth-modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAuth(){
+  getEl("auth-modal").classList.remove("open");
+  document.body.style.overflow = "auto";
+}
+
+function openGateway(){
+  openAuth();
+}
+
+getEl("auth-modal").addEventListener("click", (e) => {
+  if(e.target.id === "auth-modal") closeAuth();
+});
+
+/* =========================
+   REGISTER
+========================= */
 function register(){
-    let user={
-        hid:generateHID(),
-        pass:generatePass(),
-        name:reg-name.value,
-        email:reg-email.value,
-        role:reg-role.value,
-        credits:100
-    };
+  const name = getEl("reg-name").value.trim();
+  const email = getEl("reg-email").value.trim();
+  const role = getEl("reg-role").value.trim();
 
-    DB.users.push(user);
-    DB.census++;
-    saveDB();
-    updateCensus();
+  if(!name || !email || !role){
+    getEl("credentials").textContent = "ERROR: NAME, EMAIL, AND ROLE ARE REQUIRED.";
+    return;
+  }
 
-    credentials.innerHTML=`HID:<br>${user.hid}<br>PASS:<br>${user.pass}`;
+  const hid = generateHID();
+  const pass = generatePass();
+
+  const user = {
+    hid,
+    pass,
+    name,
+    email,
+    role,
+    credits: 100
+  };
+
+  DB.users.push(user);
+  DB.census += 1;
+  saveDB();
+  updateLandingData();
+
+  getEl("credentials").textContent =
+`HID:
+${hid}
+
+PASSWORD:
+${pass}
+
+SAVE THESE CREDENTIALS NOW.
+THE PASSWORD WILL NOT BE SHOWN AGAIN AFTER YOU CLOSE THIS WINDOW.`;
+
+  logPublic(`New citizen registered: ${name}`);
+  setPublicFeed();
 }
 
+/* =========================
+   LOGIN
+========================= */
 function login(){
-    let u=DB.users.find(x=>x.hid===login-hid.value && x.pass===login-pass.value);
-    if(!u) return alert("DENIED");
+  const hid = getEl("login-hid").value.trim();
+  const pass = getEl("login-pass").value.trim();
 
-    currentUser=u;
-    dashboard.style.display="block";
-    login-modal.style.display="none";
+  const u = DB.users.find(x => x.hid === hid && x.pass === pass);
+  if(!u){
+    alert("ACCESS DENIED");
+    return;
+  }
 
-    user-hid.innerText=u.hid;
-    user-name.innerText=u.name;
-    user-role.innerText=u.role;
-    user-credits.innerText=u.credits;
+  currentUser = u;
 
-    loadMessages();
+  getEl("dashboard").style.display = "block";
+  closeAuth();
+  document.body.style.overflow = "hidden";
+
+  populateDashboard();
+  logPrivate("SYSTEM ACCESS GRANTED");
+  showTab("feed");
 }
 
-function logout(){ location.reload(); }
+/* =========================
+   DASHBOARD POPULATION
+========================= */
+function populateDashboard(){
+  getEl("user-hid").textContent = currentUser.hid;
+  getEl("user-name").textContent = currentUser.name;
+  getEl("user-role").textContent = currentUser.role;
+  getEl("user-credits").textContent = currentUser.credits.toLocaleString();
 
-// =======================
-// MESSAGES
-// =======================
+  getEl("identity-hid").textContent = currentUser.hid;
+  getEl("identity-name").textContent = currentUser.name;
+  getEl("identity-email").textContent = currentUser.email;
+  getEl("identity-role").textContent = currentUser.role;
+  getEl("identity-credits").textContent = currentUser.credits.toLocaleString();
+
+  const health = Math.min(20 + DB.census, 100);
+  getEl("health-bar").style.width = health + "%";
+  getEl("health-text").textContent = `${health}%`;
+}
+
+/* =========================
+   TAB CONTROL
+========================= */
+function showTab(tab){
+  ["feed","messages","identity"].forEach(t => {
+    const panel = getEl("tab-" + t);
+    const tabBtn = document.querySelector(`.tab[data-tab="${t}"]`);
+    if(panel) panel.style.display = (t === tab) ? "block" : "none";
+    if(tabBtn) tabBtn.classList.toggle("active", t === tab);
+  });
+}
+
+/* =========================
+   MESSAGES
+========================= */
 function sendMessage(){
-    let m={from:currentUser.hid,text:msg.value,time:new Date().toLocaleTimeString()};
-    DB.messages.push(m);
-    saveDB();
-    msg.value="";
-    loadMessages();
+  if(!currentUser) return;
+
+  const text = getEl("msg").value.trim();
+  if(!text) return;
+
+  DB.messages.push({
+    from: currentUser.hid,
+    name: currentUser.name,
+    text,
+    time: nowTime()
+  });
+
+  saveDB();
+  getEl("msg").value = "";
+  loadMessages();
+  logPrivate("Message transmitted.");
 }
 
 function loadMessages(){
-    messages.innerHTML=DB.messages.map(m=>`[${m.time}] ${m.from}: ${m.text}`).join("<br>");
+  const box = getEl("messages");
+
+  if(DB.messages.length === 0){
+    box.innerHTML = `<div class="feed-item">No messages yet.</div>`;
+    return;
+  }
+
+  box.innerHTML = DB.messages.map(m => `
+    <div class="feed-item">
+      <div class="card-tag">${escapeHtml(m.time)} • ${escapeHtml(m.name || m.from)}</div>
+      <div style="margin-top:8px;">${escapeHtml(m.text)}</div>
+      <div class="small" style="margin-top:8px;">${escapeHtml(m.from)}</div>
+    </div>
+  `).join("");
 }
 
-// =======================
-// UI
-// =======================
-function openLogin(){ login-modal.style.display="flex"; }
-function closeLogin(){ login-modal.style.display="none"; }
+/* =========================
+   LOGS
+========================= */
+function logPublic(message){
+  const feed = getEl("public-feed");
+  if(!feed) return;
 
-// =======================
-// CENSUS
-// =======================
-function updateCensus(){
-    census-num.innerText=DB.census;
-    census-bar.style.width=(DB.census/100000*100)+"%";
+  const item = document.createElement("div");
+  item.className = "feed-item";
+  item.innerHTML = `
+    <div class="card-tag">PUBLIC</div>
+    <div style="margin-top:6px;">${escapeHtml(message)}</div>
+    <div class="small" style="margin-top:8px;">${nowTime()}</div>
+  `;
+  feed.prepend(item);
 }
-updateCensus();
 
-// =======================
-// COUNTDOWN
-// =======================
-setInterval(()=>{
-    let d=new Date("2028-04-01")-Date.now();
-    let days=Math.floor(d/86400000);
-    countdown.innerText=days+" DAYS";
-},1000);
+function logPrivate(message){
+  const log = getEl("log");
+  if(!log) return;
+  log.innerHTML += `> [${nowTime()}] ${escapeHtml(message)}<br>`;
+  log.scrollTop = log.scrollHeight;
+}
 
-// =======================
-// SCROLL
-// =======================
-window.onscroll=()=>{
-    let s=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
-    scroll-stat.innerText=Math.round(s)+"%";
-};
+/* =========================
+   LOGOUT
+========================= */
+function logout(){
+  currentUser = null;
+  getEl("dashboard").style.display = "none";
+  document.body.style.overflow = "auto";
+  logPublic("User session ended.");
+  setPublicFeed();
+}
 
+/* =========================
+   INITIAL HYGIENE
+========================= */
+updateLandingData();
+loadMessages();
+showTab("feed");
+
+/* Optional: enter key submit in auth */
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape"){
+    closeAuth();
+  }
+});
 </script>
-
 </body>
 </html>
-
