@@ -1,393 +1,218 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HEIDENBILLG</title>
 <style>
-  :root{
-    --bg:#000;
-    --text:#fff;
-    --dim:#9a9a9a;
-    --line:#1f1f1f;
-    --accent:#ff3e3e;
-  }
-
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    overflow-x:hidden;
-  }
-
-  nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:50;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 34px;
-    background:linear-gradient(to bottom, rgba(0,0,0,.96), rgba(0,0,0,0));
-    backdrop-filter: blur(10px);
-  }
-  nav .brand{
-    font-size:14px;
-    letter-spacing:.12em;
-    cursor:pointer;
-    user-select:none;
-  }
-  nav .right{
-    display:flex;
-    gap:14px;
-    align-items:center;
-    font-size:13px;
-    color:var(--dim);
-  }
-  nav .chip{
-    padding:6px 10px;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:999px;
-    background:rgba(255,255,255,.02);
-  }
-
-  section{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:120px 24px 80px;
-    position:relative;
-  }
-
-  .stack{
-    width:min(920px,100%);
-  }
-
-  .eyebrow{
-    font-size:12px;
-    letter-spacing:.28em;
-    text-transform:uppercase;
-    color:var(--accent);
-    margin-bottom:16px;
-  }
-
-  h1{
-    font-size:clamp(3rem,8vw,6.4rem);
-    line-height:.92;
-    letter-spacing:-.06em;
-    font-weight:700;
-  }
-
-  h2{
-    font-size:clamp(2.2rem,5vw,4.2rem);
-    line-height:1;
-    letter-spacing:-.05em;
-    font-weight:650;
-  }
-
-  p{
-    margin:16px auto 0;
-    max-width:640px;
-    color:var(--dim);
-    font-size:clamp(1rem,1.8vw,1.2rem);
-    line-height:1.7;
-  }
-
-  .actions{
-    margin-top:28px;
-    display:flex;
-    justify-content:center;
-    gap:14px;
-    flex-wrap:wrap;
-  }
-
-  button{
-    border:none;
-    cursor:pointer;
-    padding:13px 22px;
-    border-radius:999px;
-    font-size:15px;
-    transition:.25s ease;
-    font-weight:600;
-  }
-  .primary{
-    background:var(--accent);
-    color:#fff;
-  }
-  .secondary{
-    background:#111;
-    color:#fff;
-    border:1px solid rgba(255,255,255,.12);
-  }
-  button:hover{
-    transform:translateY(-1px) scale(1.02);
-  }
-
-  .panel{
-    width:min(920px,100%);
-    margin:0 auto;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.02);
-    border-radius:28px;
-    padding:28px;
-    box-shadow:0 24px 90px rgba(0,0,0,.35);
-    backdrop-filter: blur(12px);
-  }
-
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
-    margin-top:22px;
-  }
-  .card{
-    text-align:left;
-    padding:18px;
-    border-radius:20px;
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.06);
-    min-height:128px;
-  }
-  .label{
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.18em;
-    color:var(--dim);
-    margin-bottom:8px;
-  }
-  .value{
-    font-size:28px;
-    line-height:1;
-    font-weight:700;
-  }
-  .mini{
-    margin-top:8px;
-    color:var(--dim);
-    font-size:13px;
-    line-height:1.5;
-  }
-
-  .bar{
-    margin-top:18px;
-    width:100%;
-    height:8px;
-    border-radius:999px;
-    background:#121212;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.06);
-  }
-  .fill{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg, var(--accent), #ff7b7b);
-    transition:width 1.1s ease;
-  }
-
-  .modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:100;
-    background:rgba(0,0,0,.92);
-    backdrop-filter: blur(12px);
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-  }
-  .modal.open{display:flex}
-  .modal .box{
-    width:min(380px,100%);
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(15,15,15,.98);
-    border-radius:26px;
-    padding:22px;
-    box-shadow:0 24px 90px rgba(0,0,0,.5);
-  }
-  .modal h3{
-    font-size:22px;
-    margin-bottom:10px;
-  }
-  .modal .sub{
-    color:var(--dim);
-    font-size:13px;
-    line-height:1.6;
-    margin-bottom:18px;
-  }
-  input{
-    width:100%;
-    margin-bottom:10px;
-    padding:13px 14px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.1);
-    background:#090909;
-    color:#fff;
-    outline:none;
-    font-size:14px;
-  }
-  input:focus{
-    border-color:rgba(255,62,62,.7);
-    box-shadow:0 0 0 3px rgba(255,62,62,.12);
-  }
-
-  .hidden-reveal{
-    opacity:0;
-    transform:translateY(26px);
-    transition:1s cubic-bezier(.2,.8,.2,1);
-  }
-  .hidden-reveal.show{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-  .orb{
-    position:absolute;
-    width:420px;
-    height:420px;
-    border-radius:50%;
-    background:radial-gradient(circle at 30% 30%, rgba(255,62,62,.22), rgba(255,62,62,.04) 35%, transparent 70%);
-    filter:blur(8px);
-    pointer-events:none;
-    animation:float 10s ease-in-out infinite;
-  }
-  @keyframes float{
-    0%,100%{transform:translateY(0) translateX(0)}
-    50%{transform:translateY(-16px) translateX(10px)}
-  }
-
-  .quote{
-    margin-top:16px;
-    color:var(--dim);
-    font-size:13px;
-    letter-spacing:.06em;
-  }
-
-  .foot{
-    color:var(--dim);
-    font-size:12px;
-    margin-top:18px;
-    line-height:1.6;
-  }
-
-  @media (max-width: 760px){
-    nav{padding:16px 18px}
-    .grid{grid-template-columns:1fr}
-    .actions{flex-direction:column;align-items:center}
-    button{width:min(240px,100%)}
-    h1{font-size:clamp(2.8rem,14vw,4.6rem)}
-  }
+:root{
+  --bg:#000;
+  --panel:#0b0b0b;
+  --line:#1f1f1f;
+  --text:#fff;
+  --muted:#9a9a9a;
+  --accent:#ff3e3e;
+  --accent2:#ff7b7b;
+  --ok:#4cd37b;
+  --shadow:0 26px 90px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:radial-gradient(circle at top, rgba(255,62,62,.08), transparent 28%), #000;
+  color:var(--text);
+  overflow-x:hidden;
+}
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:18px 28px;backdrop-filter:blur(14px);
+  background:linear-gradient(to bottom, rgba(0,0,0,.96), rgba(0,0,0,0));
+}
+.brand{font-size:13px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;user-select:none}
+.nav-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.chip{padding:7px 11px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.02);font-size:12px;color:#ddd}
+section{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:118px 24px 80px;position:relative;
+}
+.hero,.panel{width:min(1120px,100%)}
+h1{font-size:clamp(3rem,10vw,7rem);line-height:.92;letter-spacing:-.07em}
+h2{font-size:clamp(2rem,5vw,4rem);line-height:1;letter-spacing:-.05em}
+p{max-width:760px;margin:16px auto 0;color:var(--muted);font-size:clamp(1rem,1.6vw,1.18rem);line-height:1.7}
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+button{
+  border:none;cursor:pointer;border-radius:999px;padding:13px 20px;font-size:15px;font-weight:600;
+  transition:.25s ease;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+button:hover{transform:translateY(-1px) scale(1.02)}
+.primary{background:var(--accent);color:#fff}
+.secondary{background:#111;color:#fff;border:1px solid rgba(255,255,255,.1)}
+.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.12)}
+.panel{
+  margin:0 auto;border:1px solid rgba(255,255,255,.07);border-radius:28px;padding:26px;
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+  box-shadow:var(--shadow);backdrop-filter:blur(12px);
+}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+.card{
+  text-align:left;padding:18px;border-radius:20px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);min-height:132px;transition:.2s ease;
+}
+.card:hover{transform:translateY(-2px);border-color:rgba(255,62,62,.22)}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-bottom:8px}
+.value{font-size:28px;line-height:1;font-weight:700}
+.mini{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.5}
+.bar{margin-top:18px;width:100%;height:8px;border-radius:999px;background:#121212;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.fill{width:0%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .9s ease}
+.hidden-reveal{opacity:0;transform:translateY(24px);transition:1s cubic-bezier(.2,.8,.2,1)}
+.hidden-reveal.show{opacity:1;transform:translateY(0)}
+.orb{position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(255,62,62,.22), rgba(255,62,62,.05) 34%, transparent 70%);filter:blur(8px);pointer-events:none;animation:float 10s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-16px) translateX(12px)}}
+.searchbar{
+  width:min(760px,100%);margin:22px auto 0;display:flex;gap:10px;align-items:center;
+  padding:12px 14px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03)
+}
+.searchbar input{
+  flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:16px;font-family:inherit
+}
+.searchbar .hint{color:var(--muted);font-size:12px;white-space:nowrap}
+.shop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+.product{
+  text-align:left;padding:18px;border-radius:22px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;gap:10px;min-height:220px;transition:.2s ease
+}
+.product:hover{transform:translateY(-2px);border-color:rgba(255,62,62,.22)}
+.product .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.badge{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+.price{font-size:24px;font-weight:700}
+.desc{color:var(--muted);font-size:13px;line-height:1.6;flex:1}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row button{flex:1;min-width:120px}
+.two-col{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:22px}
+.list{display:grid;gap:10px;margin-top:12px}
+.item{
+  display:flex;justify-content:space-between;gap:10px;align-items:center;
+  padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)
+}
+.item small{color:var(--muted)}
+.total{display:flex;justify-content:space-between;align-items:center;padding-top:14px;margin-top:14px;border-top:1px solid rgba(255,255,255,.08);font-size:18px;font-weight:700}
+.modal{
+  display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
+  align-items:center;justify-content:center;padding:18px
+}
+.modal.open{display:flex}
+.box{
+  width:min(420px,100%);padding:24px;border-radius:26px;background:rgba(15,15,15,.98);
+  border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 90px rgba(0,0,0,.5)
+}
+.box h3{font-size:24px;margin-bottom:10px}
+.sub{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:16px}
+input,textarea{
+  width:100%;margin-bottom:10px;padding:13px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.1);
+  background:#090909;color:#fff;outline:none;font-size:14px
+}
+input:focus,textarea:focus{border-color:rgba(255,62,62,.75);box-shadow:0 0 0 3px rgba(255,62,62,.12)}
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:3000;min-width:240px;max-width:min(92vw,360px);
+  padding:14px 16px;border-radius:16px;background:rgba(15,15,15,.98);border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--shadow);opacity:0;transform:translateY(14px);pointer-events:none;transition:.35s ease
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.fadein{animation:fadeIn 1s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.drawer{
+  position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:rgba(10,10,10,.98);z-index:2500;
+  border-left:1px solid rgba(255,255,255,.08);transform:translateX(100%);transition:.35s ease;display:flex;flex-direction:column
+}
+.drawer.open{transform:translateX(0)}
+.drawer header{padding:18px 18px 0;display:flex;justify-content:space-between;align-items:center}
+.drawer .content{padding:18px;overflow:auto;flex:1}
+.drawer .footer{padding:18px;border-top:1px solid rgba(255,255,255,.08)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:10px}
+.kv span:last-child{color:#fff}
+@media (max-width: 920px){
+  .grid,.shop-grid,.two-col{grid-template-columns:1fr}
+  nav{padding:16px 18px}
+  .searchbar{width:100%}
+  h1{font-size:clamp(2.8rem,13vw,5.5rem)}
+}
 </style>
 </head>
 <body>
-
-<nav>
+<div class="orb" style="top:10%;left:50%;transform:translateX(-50%);"></div><nav>
   <div class="brand" onclick="openAccess()">HEIDENBILLG</div>
-  <div class="right">
+  <div class="nav-right">
     <div class="chip" id="censusChip">0 ciudadanos</div>
     <div class="chip" id="creditChip">0 créditos</div>
+    <button class="ghost" onclick="toggleCart()">Cesta <span id="cartCount">0</span></button>
   </div>
-</nav>
-
-<section>
-  <div class="orb" style="top:10%;left:50%;transform:translateX(-50%);"></div>
-  <div class="stack hidden-reveal">
+</nav><section>
+  <div class="hero hidden-reveal">
     <div class="eyebrow">HID • acceso civil</div>
     <h1>HEIDENBILLG</h1>
-    <p>Sistema minimalista. Un acceso. Un HID. Un archivo. Movimiento suave. Conversión limpia.</p>
+    <p>Sistema minimalista. Buscar, guardar, añadir a cesta y acceder. Todo fluido, limpio y automático.</p>
     <div class="actions">
-      <button class="secondary" onclick="scrollToId('info')">Info</button>
-      <button class="primary" onclick="openBuy()">Comprar HID</button>
+      <button class="secondary" onclick="scrollToId('store')">Info</button>
+      <button class="primary" onclick="openAccess()">Comprar HID</button>
     </div>
-    <div class="quote">Diseñado para parecer premium. Hecho para funcionar.</div>
-  </div>
-</section>
-
-<section id="info">
-  <div class="stack hidden-reveal">
-    <div class="eyebrow">01 • visión</div>
-    <h2>Una sola idea por pantalla.</h2>
-    <p>Menos ruido, más intención. Más movimiento, menos texto. Todo conduce al acceso, a la identidad y al archivo.</p>
-    <div class="actions">
-      <button class="secondary" onclick="scrollToId('buy')">Ver compra</button>
-      <button class="primary" onclick="openAccess()">Acceder</button>
+    <div class="searchbar">
+      <input id="searchInput" placeholder="Buscar documentos, HID, acceso..." oninput="renderStore()" />
+      <div class="hint">Buscar</div>
     </div>
   </div>
-</section>
-
-<section id="buy">
-  <div class="stack hidden-reveal">
-    <div class="eyebrow">02 • compra simulada</div>
-    <h2>Obtener HID</h2>
-    <p>Flujo estilo Apple: corto, limpio y claro. El pago es simulado; el objetivo es experiencia y presentación.</p>
-    <div class="actions">
-      <button class="secondary" onclick="openDocs()">Info</button>
-      <button class="primary" onclick="openCheckout()">Comprar</button>
-    </div>
-  </div>
-</section>
-
-<section id="docs">
-  <div class="stack hidden-reveal">
-    <div class="eyebrow">03 • documentos</div>
-    <h2>Constitución y códigos</h2>
-    <p>Acceso visual a la base documental. Puedes abrir, guardar y descargar desde un visor limpio.</p>
-    <div class="actions">
-      <button class="secondary" onclick="openAccess()">Info</button>
-      <button class="primary" onclick="openDocsViewer()">Abrir</button>
-    </div>
-  </div>
-</section>
-
-<section id="state">
+</section><section id="store">
   <div class="panel hidden-reveal">
-    <div class="eyebrow">04 • estado</div>
-    <h2>0 → 1 → comunidad</h2>
+    <div class="eyebrow">01 • tienda mínima</div>
+    <h2>Elige, guarda, compra</h2>
+    <p>Una cesta, un archivo, una identidad. Puedes añadir cosas, guardarlas y volver luego.</p>
+    <div class="shop-grid" id="shopGrid"></div>
+  </div>
+</section><section id="info">
+  <div class="panel hidden-reveal">
+    <div class="eyebrow">02 • estado</div>
+    <h2>Un solo nodo</h2>
     <div class="grid">
       <div class="card">
         <div class="label">Censo</div>
         <div class="value" id="census">0</div>
-        <div class="mini">Se actualiza automáticamente.</div>
+        <div class="mini">Se actualiza solo.</div>
       </div>
       <div class="card">
         <div class="label">Lanzamiento</div>
-        <div class="value" id="countdown">---</div>
-        <div class="mini">Ventana HSA-13.</div>
+        <div class="value" id="countdown">--:--</div>
+        <div class="mini">HSA-13 activo.</div>
       </div>
       <div class="card">
         <div class="label">Estado</div>
         <div class="value">Activo</div>
-        <div class="mini">Interfaz viva y fluida.</div>
+        <div class="mini">Interfaz viva.</div>
       </div>
     </div>
     <div class="bar"><div class="fill" id="fill"></div></div>
-    <div class="foot">Créditos diarios automáticos. Acceso ordenado. Registro persistente.</div>
   </div>
-</section>
-
-<section id="dashboard">
-  <div class="stack hidden-reveal">
-    <div class="eyebrow">05 • panel</div>
-    <h2>Zona ciudadana</h2>
-    <p>Identidad, credenciales, documentos y acciones en una sola vista.</p>
+</section><section id="dashboard">
+  <div class="panel hidden-reveal">
+    <div class="eyebrow">03 • panel ciudadano</div>
+    <h2>Tu espacio</h2>
+    <p>Credenciales, guardados, cesta y acciones rápidas.</p>
     <div class="actions">
       <button class="secondary" onclick="claimDaily()">+100 diario</button>
+      <button class="secondary" onclick="openSaved()">Guardados</button>
+      <button class="secondary" onclick="openMessages()">Mensajes</button>
       <button class="primary" onclick="logout()">Salir</button>
     </div>
-    <div class="grid" style="margin-top:28px;">
+    <div class="grid">
       <div class="card">
         <div class="label">HID</div>
         <div class="value" id="userHid">---</div>
-        <div class="mini">Tu identidad privada.</div>
+        <div class="mini">Tu identificación.</div>
       </div>
       <div class="card">
         <div class="label">Clave</div>
-        <div class="value" style="font-size:20px;" id="userPass">---</div>
-        <div class="mini">Guárdala con cuidado.</div>
+        <div class="value" id="userPass" style="font-size:18px;">---</div>
+        <div class="mini">Guárdala bien.</div>
       </div>
       <div class="card">
         <div class="label">Créditos</div>
@@ -395,288 +220,404 @@
         <div class="mini">Saldo activo.</div>
       </div>
     </div>
-    <div class="actions">
-      <button class="secondary" onclick="openDocsViewer()">Docs</button>
-      <button class="secondary" onclick="openMessages()">Mensajes</button>
-      <button class="secondary" onclick="exportProfile()">Exportar</button>
-    </div>
   </div>
-</section>
-
-<div class="modal" id="modalBuy">
-  <div class="box">
-    <h3>Comprar HID</h3>
-    <div class="sub">Experiencia simulada. Se genera tu HID al finalizar.</div>
-    <button class="secondary" onclick="nextToCheckout()">Continuar</button>
-    <div style="height:10px"></div>
-    <button class="primary" onclick="closeModals()">Cancelar</button>
-  </div>
-</div>
-
-<div class="modal" id="modalCheckout">
-  <div class="box">
-    <h3>Pago</h3>
-    <div class="sub">Solo para demo visual. No hay cobro real.</div>
-    <input id="buyerName" placeholder="Nombre">
-    <input id="buyerEmail" placeholder="Email">
-    <button class="primary" onclick="completePurchase()">Pagar</button>
-    <div style="height:10px"></div>
-    <button class="secondary" onclick="closeModals()">Cancelar</button>
-  </div>
-</div>
-
-<div class="modal" id="modalAccess">
+</section><div class="modal" id="accessModal">
   <div class="box">
     <h3>Acceso</h3>
-    <div class="sub">Entra con tu HID y tu clave.</div>
-    <input id="loginHid" placeholder="HID">
-    <input id="loginPass" placeholder="Clave" type="password">
-    <button class="primary" onclick="login()">Entrar</button>
-    <div style="height:10px"></div>
-    <button class="secondary" onclick="closeModals()">Cerrar</button>
+    <div class="sub">Compra simulada. Se genera tu HID al finalizar.</div>
+    <input id="buyerName" placeholder="Nombre" />
+    <input id="buyerEmail" placeholder="Email" />
+    <div class="actions" style="margin-top:12px;">
+      <button class="secondary" onclick="openCheckout()">Continuar</button>
+      <button class="primary" onclick="closeAll()">Cancelar</button>
+    </div>
   </div>
-</div>
-
-<div class="modal" id="modalSuccess">
+</div><div class="modal" id="checkoutModal">
+  <div class="box">
+    <h3>Pago</h3>
+    <div class="sub">Experiencia visual. No hay cobro real.</div>
+    <div class="kv"><span>HID</span><span>Incluido</span></div>
+    <div class="kv"><span>Docs</span><span>Incluidos</span></div>
+    <div class="actions" style="margin-top:14px;">
+      <button class="secondary" onclick="completePurchase()">Pagar</button>
+      <button class="primary" onclick="closeAll()">Cancelar</button>
+    </div>
+  </div>
+</div><div class="modal" id="successModal">
   <div class="box">
     <h3>Confirmado</h3>
-    <div class="sub">Tu identidad está lista.</div>
-    <div class="card" style="margin:14px 0; text-align:left;">
+    <div class="sub">Tu acceso ya está listo.</div>
+    <div class="card">
       <div class="label">HID</div>
       <div id="newHid" class="value" style="font-size:16px;"></div>
       <div class="label" style="margin-top:12px;">Clave</div>
       <div id="newPass" class="value" style="font-size:16px;"></div>
     </div>
-    <button class="primary" onclick="openDashboard()">Ir al panel</button>
-    <div style="height:10px"></div>
-    <button class="secondary" onclick="closeModals()">Cerrar</button>
+    <div class="actions" style="margin-top:14px;">
+      <button class="secondary" onclick="openDashboard()">Ir al panel</button>
+      <button class="primary" onclick="closeAll()">Cerrar</button>
+    </div>
   </div>
-</div>
-
-<div class="modal" id="modalDocs">
-  <div class="box">
-    <h3>Documentos</h3>
-    <div class="sub">Vista rápida del archivo.</div>
-    <button class="secondary" onclick="alert('Constitución')">Constitución</button>
-    <div style="height:10px"></div>
-    <button class="secondary" onclick="alert('Códigos')">Códigos</button>
-    <div style="height:14px"></div>
-    <button class="primary" onclick="closeModals()">Cerrar</button>
-  </div>
-</div>
-
-<div class="modal" id="modalMsgs">
+</div><div class="modal" id="messagesModal">
   <div class="box">
     <h3>Mensajes</h3>
     <div class="sub">Canal rápido.</div>
     <input id="msgInput" placeholder="Escribe..." />
-    <button class="primary" onclick="sendMessage()">Enviar</button>
-    <div id="msgLog" style="margin-top:12px; text-align:left; font-size:13px; max-height:160px; overflow:auto;"></div>
-    <div style="height:10px"></div>
-    <button class="secondary" onclick="closeModals()">Cerrar</button>
+    <button class="secondary" onclick="sendMessage()">Enviar</button>
+    <div id="msgLog" style="margin-top:12px;max-height:180px;overflow:auto;text-align:left;font-size:13px;"></div>
+    <div class="actions" style="margin-top:14px;">
+      <button class="primary" onclick="closeAll()">Cerrar</button>
+    </div>
   </div>
-</div>
+</div><div class="drawer" id="cartDrawer">
+  <header>
+    <div>
+      <div class="eyebrow" style="margin-bottom:8px;">Cesta</div>
+      <div style="font-size:22px;font-weight:700;">Seleccionados</div>
+    </div>
+    <button class="ghost" onclick="toggleCart()">Cerrar</button>
+  </header>
+  <div class="content">
+    <div id="cartList" class="list"></div>
+    <div class="total"><span>Total</span><span id="cartTotal">0</span></div>
+    <div class="actions" style="justify-content:flex-start;">
+      <button class="secondary" onclick="checkoutCart()">Comprar cesta</button>
+      <button class="ghost" onclick="clearCart()">Vaciar</button>
+    </div>
+    <div class="mini" style="margin-top:14px;">Se guarda localmente y se restaura al volver.</div>
+  </div>
+  <div class="footer">
+    <div class="kv"><span>Guardados</span><span id="savedCount">0</span></div>
+    <div class="kv"><span>Estado</span><span>Automático</span></div>
+  </div>
+</div><div class="toast" id="toast"></div><script>
+const KEY = "HB_STORE_MINI_V1";
+const DB = JSON.parse(localStorage.getItem(KEY)) || {
+  users: [],
+  census: 0,
+  messages: [],
+  cart: [],
+  saved: [],
+  daily: { last: null, claimed: false }
+};
+let current = null;
+let activeQuery = "";
 
-<script>
-  const KEY = "HB_MINI_APPLE";
-  const APP = JSON.parse(localStorage.getItem(KEY)) || {
-    users: [],
-    census: 0,
-    messages: [],
-    daily: { last: null, claimed: false }
-  };
+const PRODUCTS = [
+  { id:"hid", name:"HID Civil", type:"Acceso", price:0, badge:"esencial", desc:"Credencial digital para entrar al sistema." },
+  { id:"constitution", name:"Constitución", type:"Documento", price:0, badge:"archivo", desc:"Base legal y estructura del Estado." },
+  { id:"codes", name:"Códigos", type:"Documento", price:0, badge:"normas", desc:"Reglas y protocolos internos." },
+  { id:"briefing", name:"Briefing HSA-13", type:"Documento", price:0, badge:"nave", desc:"Resumen técnico de la nave y misión." },
+  { id:"support", name:"Plan de soporte", type:"Servicio", price:0, badge:"ayuda", desc:"Acceso a ayuda, solicitudes y soporte." },
+  { id:"wallet", name:"Billetera civil", type:"Economía", price:0, badge:"créditos", desc:"Gestión de crédito diario y saldo." }
+];
 
-  let current = null;
+function save(){ localStorage.setItem(KEY, JSON.stringify(DB)); }
+function today(){ return new Date().toDateString(); }
+function genHID(){ const c="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; return Array.from({length:24},()=>c[Math.floor(Math.random()*c.length)]).join(""); }
+function genPASS(){ const c="abcdef0123456789"; return Array.from({length:12},()=>c[Math.floor(Math.random()*c.length)]).join(""); }
+function q(id){ return document.getElementById(id); }
+function scrollToId(id){ document.getElementById(id).scrollIntoView({behavior:"smooth"}); }
 
-  function save(){ localStorage.setItem(KEY, JSON.stringify(APP)); }
+function toast(msg){
+  const t = q("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(window._toast);
+  window._toast = setTimeout(()=>t.classList.remove("show"), 1800);
+}
 
-  function genHID(){
-    const c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    return Array.from({length:24}, () => c[Math.floor(Math.random()*c.length)]).join("");
-  }
+function openModal(id){ q(id).classList.add("open"); }
+function closeAll(){ document.querySelectorAll(".modal").forEach(m=>m.classList.remove("open")); }
+function openAccess(){ openModal("accessModal"); }
+function openCheckout(){
+  const name = q("buyerName").value.trim();
+  const email = q("buyerEmail").value.trim();
+  if(!name || !email) return toast("Completa nombre y email.");
+  closeAll(); openModal("checkoutModal");
+}
+function openSaved(){
+  closeAll();
+  q("cartDrawer").classList.remove("open");
+  openModal("messagesModal");
+  q("msgLog").innerHTML = DB.saved.length
+    ? DB.saved.map(s => `<div class="kv"><span>${escapeHTML(s.name)}</span><span>${escapeHTML(s.type)}</span></div>`).join("")
+    : `<div class="mini">Nada guardado todavía.</div>`;
+  q("messagesModal").querySelector("h3").textContent = "Guardados";
+  q("messagesModal").querySelector(".sub").textContent = "Tus elementos guardados.";
+  q("msgInput").style.display = "none";
+  q("messagesModal button.secondary").textContent = "Cerrar";
+}
+function openMessages(){
+  closeAll();
+  openModal("messagesModal");
+  q("messagesModal").querySelector("h3").textContent = "Mensajes";
+  q("messagesModal").querySelector(".sub").textContent = "Canal rápido.";
+  q("msgInput").style.display = "block";
+  q("messagesModal button.secondary").textContent = "Enviar";
+  renderMessages();
+}
+function escapeHTML(s){ return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 
-  function genPASS(){
-    const c = "abcdef0123456789";
-    return Array.from({length:12}, () => c[Math.floor(Math.random()*c.length)]).join("");
-  }
+function completePurchase(){
+  const name = q("buyerName").value.trim();
+  const email = q("buyerEmail").value.trim();
+  if(!name || !email) return toast("Completa nombre y email.");
+  const user = { name, email, hid: genHID(), pass: genPASS(), credits: 0, lastClaim: null };
+  DB.users.push(user);
+  DB.census += 1;
+  current = user;
+  DB.saved = DB.saved.length ? DB.saved : [PRODUCTS[0], PRODUCTS[1]];
+  save();
+  q("newHid").textContent = user.hid;
+  q("newPass").textContent = user.pass;
+  updateAll();
+  closeAll();
+  openModal("successModal");
+  revealDashboard();
+  toast("Compra simulada completada.");
+}
 
-  function scrollToId(id){
-    document.getElementById(id).scrollIntoView({behavior:"smooth"});
-  }
+function login(){
+  const hid = q("loginHid").value.trim();
+  const pass = q("loginPass").value.trim();
+  const u = DB.users.find(x => x.hid === hid && x.pass === pass);
+  if(!u) return toast("Acceso denegado.");
+  current = u;
+  closeAll();
+  revealDashboard();
+  updateUserPanel();
+  toast("Acceso correcto.");
+}
 
-  function openModals(id){
-    closeModals();
-    document.getElementById(id).classList.add("open");
-  }
+function revealDashboard(){
+  scrollToId("dashboard");
+  setTimeout(()=>q("dashboard").querySelector(".hidden-reveal").classList.add("show"), 120);
+}
 
-  function openBuy(){ openModals("modalBuy"); }
-  function openAccess(){ openModals("modalAccess"); }
-  function openDocs(){ scrollToId("docs"); }
-  function openDocsViewer(){ openModals("modalDocs"); }
-  function openMessages(){ renderMessages(); openModals("modalMsgs"); }
+function logout(){
+  current = null;
+  location.reload();
+}
 
-  function closeModals(){
-    document.querySelectorAll(".modal").forEach(m => m.classList.remove("open"));
-  }
+function claimDaily(){
+  if(!current) return toast("Primero entra.");
+  const t = today();
+  if(current.lastClaim === t) return toast("Ya reclamado hoy.");
+  current.credits += 100;
+  current.lastClaim = t;
+  save();
+  updateUserPanel();
+  updateAll();
+  toast("+100 créditos.");
+}
 
-  function nextToCheckout(){
-    closeModals();
-    openModals("modalCheckout");
-  }
+function addToCart(id){
+  const product = PRODUCTS.find(p => p.id === id);
+  if(!product) return;
+  if(DB.cart.some(x => x.id === id)) return toast("Ya está en la cesta.");
+  DB.cart.push(product);
+  save();
+  renderCart();
+  toast("Añadido a la cesta.");
+}
 
-  function completePurchase(){
-    const name = buyerName.value.trim();
-    const email = buyerEmail.value.trim();
-    if(!name || !email) return alert("Completa nombre y email.");
+function saveItem(id){
+  const product = PRODUCTS.find(p => p.id === id);
+  if(!product) return;
+  if(DB.saved.some(x => x.id === id)) return toast("Ya guardado.");
+  DB.saved.push(product);
+  save();
+  renderStore();
+  renderSavedBadge();
+  toast("Guardado.");
+}
 
-    const user = {
-      name,
-      email,
-      hid: genHID(),
-      pass: genPASS(),
-      credits: 0,
-      lastClaim: null
-    };
+function removeSaved(id){
+  DB.saved = DB.saved.filter(x => x.id !== id);
+  save();
+  renderStore();
+  renderSavedBadge();
+}
 
-    APP.users.push(user);
-    APP.census++;
-    current = user;
-    save();
+function checkoutCart(){
+  if(!DB.cart.length) return toast("La cesta está vacía.");
+  closeCart();
+  openModal("accessModal");
+  toast("Cesta lista para compra.");
+}
 
-    newHid.textContent = user.hid;
-    newPass.textContent = user.pass;
+function clearCart(){
+  DB.cart = [];
+  save();
+  renderCart();
+  toast("Cesta vacía.");
+}
 
-    updateUI();
-    closeModals();
-    openModals("modalSuccess");
-    revealDashboard();
-  }
+function toggleCart(){
+  q("cartDrawer").classList.toggle("open");
+  renderCart();
+}
+function closeCart(){ q("cartDrawer").classList.remove("open"); }
 
-  function login(){
-    const u = APP.users.find(x => x.hid === loginHid.value.trim() && x.pass === loginPass.value.trim());
-    if(!u) return alert("Acceso denegado.");
-    current = u;
-    closeModals();
-    revealDashboard();
-    updateUserPanel();
-  }
-
-  function revealDashboard(){
-    document.getElementById("dashboard").scrollIntoView({behavior:"smooth"});
-    setTimeout(() => {
-      document.querySelector("#dashboard .hidden-reveal").classList.add("show");
-    }, 150);
-    updateUserPanel();
-  }
-
-  function openDashboard(){
-    closeModals();
-    revealDashboard();
-  }
-
-  function claimDaily(){
-    if(!current) return alert("Primero entra.");
-    const today = new Date().toDateString();
-    if(current.lastClaim === today) return alert("Ya reclamado hoy.");
-    current.credits += 100;
-    current.lastClaim = today;
-    save();
-    updateUserPanel();
-    updateUI();
-  }
-
-  function sendMessage(){
-    if(!current) return alert("Primero entra.");
-    const text = msgInput.value.trim();
-    if(!text) return;
-    APP.messages.push({ from: current.name, text, time: new Date().toLocaleTimeString() });
-    msgInput.value = "";
-    save();
-    renderMessages();
-  }
-
-  function renderMessages(){
-    msgLog.innerHTML = APP.messages.slice(-12).map(m => `
-      <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);">
-        <div style="color:#fff">${m.from}</div>
-        <div style="color:var(--dim)">${m.text}</div>
+function renderStore(){
+  activeQuery = q("searchInput").value.trim().toLowerCase();
+  const filtered = PRODUCTS.filter(p => {
+    const hay = `${p.name} ${p.type} ${p.desc} ${p.badge}`.toLowerCase();
+    return hay.includes(activeQuery);
+  });
+  q("shopGrid").innerHTML = filtered.map(p => `
+    <div class="product fadein">
+      <div class="top">
+        <div>
+          <div class="badge">${p.type}</div>
+          <h3 style="margin-top:6px;font-size:24px;line-height:1.05;">${p.name}</h3>
+        </div>
+        <div class="badge">${p.badge}</div>
       </div>
-    `).join("");
+      <div class="price">${p.price === 0 ? "Incluido" : `$${p.price}`}</div>
+      <div class="desc">${p.desc}</div>
+      <div class="row">
+        <button class="secondary" onclick="saveItem('${p.id}')">Guardar</button>
+        <button class="primary" onclick="addToCart('${p.id}')">Añadir</button>
+      </div>
+    </div>
+  `).join("") || `<div class="card"><div class="mini">Sin resultados.</div></div>`;
+}
+
+function renderCart(){
+  q("cartCount").textContent = DB.cart.length;
+  const total = DB.cart.reduce((a,b)=>a + (b.price || 0), 0);
+  q("cartTotal").textContent = total;
+  q("cartList").innerHTML = DB.cart.length ? DB.cart.map(p => `
+    <div class="item">
+      <div>
+        <div style="font-weight:600">${escapeHTML(p.name)}</div>
+        <small>${escapeHTML(p.type)}</small>
+      </div>
+      <button class="ghost" onclick="removeFromCart('${p.id}')">Quitar</button>
+    </div>
+  `).join("") : `<div class="mini">Tu cesta está vacía.</div>`;
+}
+
+function removeFromCart(id){
+  DB.cart = DB.cart.filter(x => x.id !== id);
+  save();
+  renderCart();
+  toast("Quitado.");
+}
+
+function renderSavedBadge(){
+  q("savedCount").textContent = DB.saved.length;
+}
+
+function renderMessages(){
+  q("msgLog").innerHTML = DB.messages.length ? DB.messages.slice(-12).map(m => `
+    <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);">
+      <div style="color:#fff">${escapeHTML(m.from)}</div>
+      <div style="color:var(--muted)">${escapeHTML(m.text)}</div>
+    </div>
+  `).join("") : `<div class="mini">Sin mensajes.</div>`;
+}
+
+function sendMessage(){
+  if(q("msgInput").style.display === "none") return;
+  if(!current) return toast("Primero entra.");
+  const text = q("msgInput").value.trim();
+  if(!text) return;
+  DB.messages.push({ from: current.name, text, time: new Date().toLocaleTimeString() });
+  q("msgInput").value = "";
+  save();
+  renderMessages();
+  toast("Enviado.");
+}
+
+function openCheckout(){
+  closeAll();
+  openModal("checkoutModal");
+}
+
+function openDashboard(){
+  closeAll();
+  revealDashboard();
+  updateUserPanel();
+}
+
+function updateUserPanel(){
+  if(!current) return;
+  q("userHid").textContent = current.hid;
+  q("userPass").textContent = current.pass;
+  q("userCredits").textContent = current.credits;
+  q("creditChip").textContent = `${current.credits} créditos`;
+}
+
+function updateAll(){
+  q("census").textContent = DB.census;
+  q("censusChip").textContent = `${DB.census} ciudadanos`;
+  q("fill").style.width = Math.min((DB.census / 100000) * 100, 100) + "%";
+  q("savedCount").textContent = DB.saved.length;
+  renderCart();
+  renderSavedBadge();
+  renderStore();
+  renderMessages();
+  if(current) updateUserPanel();
+}
+
+function escapeHTML(s){ return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
+
+function getSecondsToMidnight(){
+  const now = new Date();
+  const end = new Date();
+  end.setHours(24,0,0,0);
+  return Math.max(0, Math.floor((end - now)/1000));
+}
+function updateCountdown(){
+  const s = getSecondsToMidnight();
+  const h = String(Math.floor(s/3600)).padStart(2,"0");
+  const m = String(Math.floor((s%3600)/60)).padStart(2,"0");
+  q("countdown").textContent = `${h}:${m}`;
+}
+
+function updateReveal(){
+  document.querySelectorAll(".hidden-reveal").forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if(top < window.innerHeight - 90) el.classList.add("show");
+  });
+}
+
+function openSavedPanel(){
+  q("msgInput").style.display = "none";
+  q("msgLog").innerHTML = DB.saved.length ? DB.saved.map(p => `
+    <div class="item"><div><strong>${escapeHTML(p.name)}</strong><br><small>${escapeHTML(p.type)}</small></div><button class="ghost" onclick="removeSaved('${p.id}')">Quitar</button></div>
+  `).join("") : `<div class="mini">Nada guardado todavía.</div>`;
+  openModal("messagesModal");
+}
+
+function updateNavScroll(){
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0;
+  q("creditChip").dataset.scroll = pct;
+}
+window.addEventListener("scroll", () => { updateReveal(); updateNavScroll(); });
+window.addEventListener("click", updateReveal);
+
+function closeModalOnly(){ closeAll(); }
+
+// init
+renderStore();
+renderCart();
+renderSavedBadge();
+updateAll();
+updateCountdown();
+updateReveal();
+setInterval(updateCountdown, 1000);
+setInterval(()=>{
+  if(current && today() !== current.lastClaim){
+    // no automatic second claim; only shows availability by keeping UI fresh
   }
+  updateAll();
+}, 4000);
 
-  function updateUserPanel(){
-    if(!current) return;
-    userHid.textContent = current.hid;
-    userPass.textContent = current.pass;
-    userCredits.textContent = current.credits;
-  }
-
-  function updateUI(){
-    census.textContent = APP.census;
-    censusChip.textContent = `${APP.census} ciudadanos`;
-    creditChip.textContent = current ? `${current.credits} créditos` : "0 créditos";
-    fill.style.width = Math.min((APP.census / 100000) * 100, 100) + "%";
-    renderMessages();
-    if(current) updateUserPanel();
-  }
-
-  function exportProfile(){
-    if(!current) return alert("Primero entra.");
-    const blob = new Blob([JSON.stringify(current, null, 2)], {type:"application/json"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "heidenbillg-profile.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  function logout(){
-    current = null;
-    location.reload();
-  }
-
-  function getSecondsToMidnight(){
-    const now = new Date();
-    const end = new Date();
-    end.setHours(24,0,0,0);
-    return Math.max(0, Math.floor((end - now)/1000));
-  }
-
-  function updateCountdown(){
-    const s = getSecondsToMidnight();
-    const h = String(Math.floor(s/3600)).padStart(2,"0");
-    const m = String(Math.floor((s%3600)/60)).padStart(2,"0");
-    countdown.textContent = `${h}:${m}`;
-  }
-
-  function updateReveal(){
-    document.querySelectorAll(".hidden-reveal").forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if(top < window.innerHeight - 90) el.classList.add("show");
-    });
-  }
-
-  function updateUIEverywhere(){
-    updateCountdown();
-    updateReveal();
-    updateUI();
-  }
-
-  updateUIEverywhere();
-  setInterval(updateCountdown, 1000);
-  setInterval(updateUIEverywhere, 2500);
-  window.addEventListener("scroll", updateReveal);
-  window.addEventListener("click", updateReveal);
-
-  function handleScrollChip(){
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0;
-    scroll.textContent = `${pct}%`;
-  }
-  window.addEventListener("scroll", handleScrollChip);
-
-  handleScrollChip();
-</script>
-</body>
+q("msgInput").addEventListener("keydown", (e)=>{ if(e.key === "Enter") sendMessage(); });
+</script></body>
 </html>
