@@ -1,1031 +1,682 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HEIDENBILLG OS | ESTADO DIGITAL</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HEIDENBILLG</title>
 <style>
-:root{
-  --bg:#030303;
-  --panel:#101010;
-  --line:#1c1c1c;
-  --accent:#ff4a4a;
-  --accent2:#ff7b7b;
-  --ok:#35d07f;
-  --warn:#f5b14c;
-  --info:#6db7ff;
-  --text:#f4f4f4;
-  --muted:#9b9b9b;
-  --shadow:0 24px 80px rgba(0,0,0,.36);
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:radial-gradient(circle at top, rgba(255,74,74,.08), transparent 34%), linear-gradient(180deg, #020202, #050505);
-  color:var(--text);
-  font-family:var(--mono);
-  overflow-x:hidden;
-}
-.scanline{position:fixed;top:0;left:0;width:100%;height:2px;background:rgba(255,255,255,.03);pointer-events:none;z-index:9998;animation:scan 7s linear infinite}
-@keyframes scan{from{transform:translateY(0)}to{transform:translateY(100vh)}}
-.noise{position:fixed;inset:0;pointer-events:none;z-index:9997;opacity:.045;mix-blend-mode:screen;background-image:linear-gradient(transparent 50%, rgba(255,255,255,.12) 50%),linear-gradient(90deg, transparent 50%, rgba(255,255,255,.08) 50%);background-size:3px 3px,3px 3px}
-nav{position:fixed;top:0;left:0;width:100%;z-index:1000;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 24px;backdrop-filter:blur(12px);background:linear-gradient(to bottom, rgba(0,0,0,.96), rgba(0,0,0,0));border-bottom:1px solid rgba(255,255,255,.04)}
-.nav-left{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
-.brand-dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px rgba(255,74,74,.9)}
-.brand{font-size:13px;letter-spacing:3px;text-transform:uppercase}
-.nav-right{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
-.badge{padding:6px 10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);border-radius:999px;font-size:11px;letter-spacing:1px;color:#ddd}
-section{min-height:100vh;padding:118px 10% 84px;border-bottom:1px solid rgba(255,255,255,.06);position:relative}
-.kicker{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
-h1{margin:0 0 18px;font-size:clamp(2.8rem, 9vw, 6.8rem);line-height:.92;letter-spacing:-1px}
-h2{margin:0 0 14px;font-size:clamp(1.9rem, 4vw, 3.2rem);line-height:1}
-h3{margin:0 0 10px;font-size:20px}
-p{margin:0;max-width:900px;color:#c2c2c2;line-height:1.7;font-family:var(--sans)}
-.small{font-size:12px;line-height:1.7;color:var(--muted);font-family:var(--sans)}
-.outline{color:transparent;-webkit-text-stroke:1px var(--text)}
-.grid-2{display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:start}
-.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.014));border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
-.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
-.card-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2)}
-.timeline{display:grid;gap:14px;margin-top:20px}
-.timeline-item{padding:16px 18px 16px 20px;border-left:2px solid var(--accent);border-radius:0 14px 14px 0;background:rgba(255,255,255,.02)}
-.metric-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
-.metric{min-width:168px;padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.02)}
-.metric .label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:8px}
-.metric .value{font-size:18px;color:var(--text)}
-button,.button{appearance:none;border:none;outline:none;cursor:pointer;font-family:var(--mono);color:var(--text);background:transparent;border:1px solid var(--accent);border-radius:14px;padding:12px 16px;transition:.25s ease;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
-button:hover,.button:hover{background:var(--accent);box-shadow:0 0 22px rgba(255,74,74,.22);transform:translateY(-1px)}
-button.secondary,.button.secondary{border-color:rgba(255,255,255,.14)}
-button.secondary:hover,.button.secondary:hover{background:rgba(255,255,255,.07);box-shadow:none}
-button.ok,.button.ok{border-color:rgba(53,208,127,.45)}
-button.warn,.button.warn{border-color:rgba(245,177,76,.55)}
-button.info,.button.info{border-color:rgba(109,183,255,.55)}
-button.full,.button.full{width:100%}
-input,textarea,select{width:100%;background:rgba(0,0,0,.42);color:var(--text);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 14px;font-family:var(--mono);outline:none;transition:.25s ease}
-input:focus,textarea:focus,select:focus{border-color:rgba(255,74,74,.75);box-shadow:0 0 0 3px rgba(255,74,74,.12)}
-textarea{resize:none;min-height:110px}
-.bar{width:100%;height:10px;background:#101010;border:1px solid rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
-.fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 20px rgba(255,74,74,.35);transition:width .8s ease}
-#boot{position:fixed;inset:0;z-index:10000;display:flex;justify-content:center;align-items:center;flex-direction:column;background:radial-gradient(circle at center, rgba(255,74,74,.1), transparent 34%), #000;transition:opacity .6s ease, transform .6s ease}
-#boot.hidden{opacity:0;pointer-events:none;transform:scale(1.01)}
-.boot-panel{width:min(900px, 90vw);border:1px solid rgba(255,255,255,.1);border-radius:24px;background:rgba(255,255,255,.02);padding:28px;box-shadow:0 30px 90px rgba(0,0,0,.45)}
-.boot-title{font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
-.boot-line{font-size:12px;line-height:1.8;color:#bfbfbf}
-.boot-progress{margin-top:22px;height:8px;width:100%;border-radius:999px;background:#101010;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
-.boot-fill{width:0%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 20px rgba(255,74,74,.55);transition:width .35s ease}
-.boot-footer{display:flex;justify-content:space-between;gap:20px;margin-top:16px;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-#landing{display:flex;align-items:center}
-.hero-copy{max-width:960px}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
-.docs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
-.doc-card{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);display:grid;gap:10px}
-.doc-actions{display:flex;gap:10px;flex-wrap:wrap}
-.saved-list{display:grid;gap:10px;margin-top:12px}
-.saved-item{padding:12px 14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);font-size:12px;color:#d8d8d8;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.modal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.84);backdrop-filter:blur(10px);justify-content:center;align-items:center;padding:24px}
-.modal.open{display:flex}
-.modal-panel{width:min(1120px,100%);display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.modal-card{background:rgba(10,10,10,.97);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;box-shadow:0 30px 100px rgba(0,0,0,.5)}
-.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px}
-.modal-strap{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
-.credentials{margin-top:14px;padding:14px;border:1px dashed rgba(255,255,255,.12);border-radius:14px;color:#eaeaea;font-size:12px;line-height:1.8;white-space:pre-wrap;background:rgba(255,255,255,.02)}
-.close-row{margin-top:14px;display:flex;justify-content:flex-end}
-.viewer{width:min(1150px,100%);display:grid;grid-template-rows:auto 1fr auto;height:min(92vh,920px)}
-.viewer-frame{width:100%;height:100%;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:#000}
-.viewer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-#dashboard{display:none;position:fixed;inset:0;z-index:4000;background:radial-gradient(circle at top left, rgba(255,74,74,.08), transparent 28%), linear-gradient(180deg, #070707, #030303)}
-.dashboard-grid{display:grid;grid-template-columns:300px 1fr;height:100%}
-.sidebar{border-right:1px solid rgba(255,255,255,.07);padding:22px;overflow:auto;background:rgba(255,255,255,.015)}
-.main{padding:22px;overflow:auto}
-.profile{padding:18px;border:1px solid rgba(255,74,74,.25);border-radius:18px;background:rgba(255,74,74,.03);margin-bottom:18px}
-.profile .hid{font-size:13px;color:var(--accent2);margin-bottom:10px;word-break:break-all}
-.profile .name{font-size:20px;color:#fff;margin-bottom:8px}
-.profile .role{color:var(--muted);font-size:13px}
-.side-block{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08)}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 18px}
-.tab{padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);cursor:pointer;font-size:12px}
-.tab.active{border-color:rgba(255,74,74,.45);background:rgba(255,74,74,.08);color:#fff}
-.panel{display:none}
-.panel.active{display:block}
-.grid-dashboard{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;margin-top:18px}
-.terminal{min-height:220px;max-height:300px;overflow:auto;padding:16px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:#020202;color:#a7a7a7;font-size:12px;line-height:1.8;white-space:pre-wrap}
-.feed{display:grid;gap:12px}
-.feed-item{padding:14px 16px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.02);font-size:12px;line-height:1.7}
-.dock{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
-.service{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);display:grid;gap:10px}
-.service strong{font-size:16px}
-.notice-grid{display:grid;gap:12px;margin-top:18px}
-.notice{padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);display:grid;gap:8px}
-.request-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.request-list{display:grid;gap:10px;margin-top:14px}
-.request-item{padding:14px 16px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02)}
-.help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
-.help-card{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02)}
-.update-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
-.update-item{padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02)}
-.department-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
-.department{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);display:grid;gap:10px}
-.challenge-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
-.challenge{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.02);display:grid;gap:10px}
-.credit-bar-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-top:12px}
-.footer{padding:28px 10% 48px;color:var(--muted);font-family:var(--sans);line-height:1.8}
-@media (max-width:1120px){
-  .grid-2,.grid-3,.modal-panel,.dashboard-grid,.grid-dashboard,.docs-grid,.service-grid,.request-grid,.help-grid,.update-grid,.department-grid,.challenge-grid{grid-template-columns:1fr}
-  section{padding:100px 6% 70px}
-  nav{padding:14px 18px}
-  .sidebar{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
-}
-@media (max-width:560px){
-  h1{font-size:clamp(2.2rem,14vw,4rem)}
-  .hero-actions,.dock,.viewer-actions{flex-direction:column}
-  .hero-actions > *, .dock > *, .viewer-actions > *{width:100%}
-}
+  :root{
+    --bg:#000;
+    --text:#fff;
+    --dim:#9a9a9a;
+    --line:#1f1f1f;
+    --accent:#ff3e3e;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+
+  nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:50;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 34px;
+    background:linear-gradient(to bottom, rgba(0,0,0,.96), rgba(0,0,0,0));
+    backdrop-filter: blur(10px);
+  }
+  nav .brand{
+    font-size:14px;
+    letter-spacing:.12em;
+    cursor:pointer;
+    user-select:none;
+  }
+  nav .right{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    font-size:13px;
+    color:var(--dim);
+  }
+  nav .chip{
+    padding:6px 10px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:999px;
+    background:rgba(255,255,255,.02);
+  }
+
+  section{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 24px 80px;
+    position:relative;
+  }
+
+  .stack{
+    width:min(920px,100%);
+  }
+
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:16px;
+  }
+
+  h1{
+    font-size:clamp(3rem,8vw,6.4rem);
+    line-height:.92;
+    letter-spacing:-.06em;
+    font-weight:700;
+  }
+
+  h2{
+    font-size:clamp(2.2rem,5vw,4.2rem);
+    line-height:1;
+    letter-spacing:-.05em;
+    font-weight:650;
+  }
+
+  p{
+    margin:16px auto 0;
+    max-width:640px;
+    color:var(--dim);
+    font-size:clamp(1rem,1.8vw,1.2rem);
+    line-height:1.7;
+  }
+
+  .actions{
+    margin-top:28px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+
+  button{
+    border:none;
+    cursor:pointer;
+    padding:13px 22px;
+    border-radius:999px;
+    font-size:15px;
+    transition:.25s ease;
+    font-weight:600;
+  }
+  .primary{
+    background:var(--accent);
+    color:#fff;
+  }
+  .secondary{
+    background:#111;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.12);
+  }
+  button:hover{
+    transform:translateY(-1px) scale(1.02);
+  }
+
+  .panel{
+    width:min(920px,100%);
+    margin:0 auto;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.02);
+    border-radius:28px;
+    padding:28px;
+    box-shadow:0 24px 90px rgba(0,0,0,.35);
+    backdrop-filter: blur(12px);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:22px;
+  }
+  .card{
+    text-align:left;
+    padding:18px;
+    border-radius:20px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+    min-height:128px;
+  }
+  .label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    color:var(--dim);
+    margin-bottom:8px;
+  }
+  .value{
+    font-size:28px;
+    line-height:1;
+    font-weight:700;
+  }
+  .mini{
+    margin-top:8px;
+    color:var(--dim);
+    font-size:13px;
+    line-height:1.5;
+  }
+
+  .bar{
+    margin-top:18px;
+    width:100%;
+    height:8px;
+    border-radius:999px;
+    background:#121212;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.06);
+  }
+  .fill{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg, var(--accent), #ff7b7b);
+    transition:width 1.1s ease;
+  }
+
+  .modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(0,0,0,.92);
+    backdrop-filter: blur(12px);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .modal.open{display:flex}
+  .modal .box{
+    width:min(380px,100%);
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(15,15,15,.98);
+    border-radius:26px;
+    padding:22px;
+    box-shadow:0 24px 90px rgba(0,0,0,.5);
+  }
+  .modal h3{
+    font-size:22px;
+    margin-bottom:10px;
+  }
+  .modal .sub{
+    color:var(--dim);
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:18px;
+  }
+  input{
+    width:100%;
+    margin-bottom:10px;
+    padding:13px 14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#090909;
+    color:#fff;
+    outline:none;
+    font-size:14px;
+  }
+  input:focus{
+    border-color:rgba(255,62,62,.7);
+    box-shadow:0 0 0 3px rgba(255,62,62,.12);
+  }
+
+  .hidden-reveal{
+    opacity:0;
+    transform:translateY(26px);
+    transition:1s cubic-bezier(.2,.8,.2,1);
+  }
+  .hidden-reveal.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .orb{
+    position:absolute;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(255,62,62,.22), rgba(255,62,62,.04) 35%, transparent 70%);
+    filter:blur(8px);
+    pointer-events:none;
+    animation:float 10s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0) translateX(0)}
+    50%{transform:translateY(-16px) translateX(10px)}
+  }
+
+  .quote{
+    margin-top:16px;
+    color:var(--dim);
+    font-size:13px;
+    letter-spacing:.06em;
+  }
+
+  .foot{
+    color:var(--dim);
+    font-size:12px;
+    margin-top:18px;
+    line-height:1.6;
+  }
+
+  @media (max-width: 760px){
+    nav{padding:16px 18px}
+    .grid{grid-template-columns:1fr}
+    .actions{flex-direction:column;align-items:center}
+    button{width:min(240px,100%)}
+    h1{font-size:clamp(2.8rem,14vw,4.6rem)}
+  }
 </style>
 </head>
 <body>
-<div class="scanline"></div>
-<div class="noise"></div><div id="boot">
-  <div class="boot-panel">
-    <div class="boot-title">HEIDENBILLG OS // ARRANQUE CIVIL</div>
-    <div id="boot-log" class="boot-line"></div>
-    <div class="boot-progress"><div id="boot-fill" class="boot-fill"></div></div>
-    <div class="boot-footer">
-      <div id="boot-state">INICIALIZANDO</div>
-      <div>NODO 001 • INTERFAZ GUBERNAMENTAL</div>
-    </div>
-  </div>
-</div><nav>
-  <div class="nav-left" onclick="openAuth()"><div class="brand-dot"></div><div class="brand">Heidenbillg OS</div></div>
-  <div class="nav-right">
-    <div class="badge" id="system-mode">NODO PÚBLICO</div>
-    <div class="badge" id="scroll-stat">0%</div>
-    <div class="badge" id="census-stat">0 ciudadanos</div>
-    <div class="badge" id="credit-stat">0 créditos</div>
-  </div>
-</nav><section id="landing">
-  <div class="hero-copy">
-    <div class="kicker">01 // frente público • acceso ciudadano</div>
-    <h1>Bienvenido<br><span class="outline">A Casa</span></h1>
-    <p>Portal civil con noticias, documentos, servicios, misiones y acceso ciudadano. Menos texto. Más acción.</p>
-    <div class="hero-actions">
-      <button onclick="openAuth()">ENTRAR</button>
-      <button class="secondary" onclick="scrollToSection('section-updates')">NOTICIAS</button>
-      <button class="secondary" onclick="scrollToSection('section-docs')">DOCUMENTOS</button>
-      <button class="secondary" onclick="scrollToSection('section-services')">SERVICIOS</button>
-      <button class="secondary" onclick="scrollToSection('section-challenges')">MISIONES</button>
-      <button class="secondary" onclick="scrollToSection('section-help')">AYUDA</button>
-    </div>
-    <div class="metric-row">
-      <div class="metric"><span class="label">Cuenta atrás</span><div class="value" id="countdown">000D : 00H : 00M : 00S</div></div>
-      <div class="metric"><span class="label">Censo</span><div class="value" id="landing-census">0 ciudadanos</div></div>
-      <div class="metric"><span class="label">Alta</span><div class="value" id="enroll-state">ABIERTA</div></div>
-      <div class="metric"><span class="label">Créditos diarios</span><div class="value">+100</div></div>
-    </div>
-    <div class="dock">
-      <button onclick="openAuth()">PUERTA</button>
-      <button class="secondary" onclick="openDocViewer('constitution')">CONSTITUCIÓN</button>
-      <button class="secondary" onclick="openDocViewer('codes')">CÓDIGOS</button>
-      <button class="secondary" onclick="openDocViewer('briefing')">BRIEFING</button>
-      <button class="secondary" onclick="scrollToSection('section-challenges')">CRÉDITOS</button>
-    </div>
-  </div>
-</section><section id="section-state">
-  <div class="kicker">02 // arquitectura del estado</div>
-  <div class="grid-2">
-    <div>
-      <h2>El Estado</h2>
-      <div class="department-grid">
-        <div class="department"><div class="card-tag">DEPARTAMENTO 01</div><strong>Ciudadanía</strong><div class="small">Identidad y perfil.</div><button class="secondary" onclick="scrollToSection('section-help')">ABRIR</button></div>
-        <div class="department"><div class="card-tag">DEPARTAMENTO 02</div><strong>Obras Públicas</strong><div class="small">Avisos y actualizaciones.</div><button class="secondary" onclick="scrollToSection('section-updates')">ABRIR</button></div>
-        <div class="department"><div class="card-tag">DEPARTAMENTO 03</div><strong>Registro</strong><div class="small">Documentos y archivo.</div><button class="secondary" onclick="scrollToSection('section-docs')">ABRIR</button></div>
-      </div>
-      <div class="timeline">
-        <div class="timeline-item"><div class="card-tag">CAPA CIVIL</div><div style="margin-top:6px;font-size:18px;">Acceso rápido</div><div class="small">Botones primero. Texto después.</div></div>
-        <div class="timeline-item"><div class="card-tag">CAPA CIVIL</div><div style="margin-top:6px;font-size:18px;">Tono humano</div><div class="small">Simple, directo y real.</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">REGISTRO</div><h3>Actividad pública</h3></div><div class="badge">ACTIVO</div></div>
-      <div id="public-feed" class="feed"></div>
-    </div>
-  </div>
-</section><section id="section-updates">
-  <div class="kicker">03 // noticias y avisos</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">TABLÓN</div><h2>Actualizaciones oficiales</h2></div><div class="badge">EN VIVO</div></div>
-      <div style="display:grid;gap:12px;margin-bottom:14px;">
-        <input id="updates-search" placeholder="Buscar avisos..." autocomplete="off">
-        <div class="dock">
-          <button class="secondary" onclick="filterUpdates()">BUSCAR</button>
-          <button class="secondary" onclick="clearUpdateFilter()">LIMPIAR</button>
-          <button class="secondary" onclick="scrollToSection('section-docs')">IR A DOCS</button>
-        </div>
-      </div>
-      <div id="notice-list" class="notice-grid"></div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">EDITOR</div><h3>Publicar aviso</h3></div><div class="badge info">ADMIN</div></div>
-      <div style="display:grid;gap:12px;">
-        <input id="admin-code" placeholder="CÓDIGO ADMIN" autocomplete="off">
-        <button class="secondary" onclick="unlockAdmin()">DESBLOQUEAR</button>
-        <input id="update-title" placeholder="Título" autocomplete="off">
-        <textarea id="update-body" placeholder="Escribe el aviso..." style="min-height:90px"></textarea>
-        <select id="update-type"><option value="general">General</option><option value="urgent">Urgente</option><option value="service">Servicio</option><option value="alert">Alerta</option></select>
-        <div class="dock">
-          <button onclick="postUpdate()">PUBLICAR</button>
-          <button class="secondary" onclick="pinLatestUpdate()">FIJAR</button>
-          <button class="secondary" onclick="toggleEmergency()">EMERGENCIA</button>
-        </div>
-      </div>
-      <div class="dashboard-notice small" id="admin-hint">Consejo: usa avisos cortos. El tablero funciona mejor con texto limpio.</div>
-    </div>
-  </div>
-</section><section id="section-ship">
-  <div class="kicker">04 // nave</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">HSA-13</div><h2>Waverider</h2></div><div class="badge">PRIME</div></div>
-      <div class="metric-row">
-        <div class="metric"><span class="label">Tránsito</span><div class="value">72 horas</div></div>
-        <div class="metric"><span class="label">Modo</span><div class="value">Flujo constante</div></div>
-        <div class="metric"><span class="label">Blindaje</span><div class="value">Hafnio</div></div>
-        <div class="metric"><span class="label">Tripulación</span><div class="value">5</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">ESTADO</div><h3>Lanzamiento</h3></div><div class="badge">SEGUIMIENTO</div></div>
-      <div class="terminal" id="ship-terminal"></div>
-      <div class="dock">
-        <button onclick="openDocViewer('briefing')">BRIEFING</button>
-        <button class="secondary" onclick="copyLaunchStatus()">COPIAR</button>
-      </div>
-    </div>
-  </div>
-</section><section id="section-docs">
-  <div class="kicker">05 // documentos</div>
-  <div class="grid-2">
-    <div>
-      <h2>Documentos</h2>
-      <div style="display:grid;gap:12px;margin-bottom:14px;">
-        <input id="docs-search" placeholder="Buscar documentos..." autocomplete="off">
-        <div class="dock">
-          <button class="secondary" onclick="filterDocs()">BUSCAR</button>
-          <button class="secondary" onclick="clearDocFilter()">LIMPIAR</button>
-        </div>
-      </div>
-      <div class="docs-grid" id="docs-grid"></div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">VAULT</div><h3>Guardados</h3></div><div class="badge" id="saved-count">0</div></div>
-      <div id="saved-list" class="saved-list"></div>
-      <div class="dock">
-        <button class="secondary" onclick="clearSavedDocs()">BORRAR</button>
-        <button class="secondary" onclick="openDocViewer('constitution')">ABRIR PRINCIPAL</button>
-      </div>
-    </div>
-  </div>
-</section><section id="section-services">
-  <div class="kicker">06 // servicios</div>
-  <div class="grid-2">
-    <div>
-      <h2>Servicios</h2>
-      <div class="service-grid">
-        <div class="service"><div class="card-tag">SERVICIO 01</div><strong>Ayuda</strong><button class="secondary" onclick="serviceToast('Ayuda abierta.')">ABRIR</button></div>
-        <div class="service"><div class="card-tag">SERVICIO 02</div><strong>Avisos</strong><button class="secondary" onclick="scrollToSection('section-updates')">VER</button></div>
-        <div class="service"><div class="card-tag">SERVICIO 03</div><strong>Documentos</strong><button class="secondary" onclick="openDocViewer('briefing')">ABRIR</button></div>
-        <div class="service"><div class="card-tag">SERVICIO 04</div><strong>Misiones</strong><button class="secondary" onclick="scrollToSection('section-challenges')">ABRIR</button></div>
-        <div class="service"><div class="card-tag">SERVICIO 05</div><strong>Solicitudes</strong><button class="secondary" onclick="scrollToSection('section-requests')">ABRIR</button></div>
-        <div class="service"><div class="card-tag">SERVICIO 06</div><strong>Créditos</strong><button class="secondary" onclick="scrollToSection('section-challenges')">ABRIR</button></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">FEED</div><h3>Hoy</h3></div><div class="badge">EN VIVO</div></div>
-      <div id="service-feed" class="feed"></div>
-    </div>
-  </div>
-</section><section id="section-challenges">
-  <div class="kicker">07 // misiones</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">CRÉDITOS</div><h2>Gana más</h2></div><div class="badge ok">+100 / DÍA</div></div>
-      <p>Empiezas con 0. Recibes 100 al día. Ganas más con misiones.</p>
-      <div class="metric-row">
-        <div class="metric"><span class="label">Saldo</span><div class="value" id="credit-balance">0</div></div>
-        <div class="metric"><span class="label">Hoy</span><div class="value" id="daily-status">LISTO</div></div>
-        <div class="metric"><span class="label">Racha</span><div class="value" id="daily-streak">0</div></div>
-        <div class="metric"><span class="label">Próximo</span><div class="value" id="next-daily">--:--</div></div>
-      </div>
-      <div class="credit-bar-row">
-        <div class="bar"><div id="credit-bar" class="fill"></div></div>
-        <div class="badge" id="credit-cap">BOLSA CIVIL</div>
-      </div>
-      <div class="dock">
-        <button id="daily-btn" onclick="claimDailyCredits()">RECLAMAR 100</button>
-        <button class="secondary" onclick="grantBonus(25,'lectura')">LEER +25</button>
-        <button class="secondary" onclick="grantBonus(20,'aviso')">AVISO +20</button>
-        <button class="secondary" onclick="grantBonus(15,'documento')">DOC +15</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">MISIONES</div><h3>Activas</h3></div><div class="badge">LISTAS</div></div>
-      <div id="challenge-grid" class="challenge-grid"></div>
-    </div>
-  </div>
-</section><section id="section-help">
-  <div class="kicker">08 // ayuda</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">AYUDA</div><h2>Acciones rápidas</h2></div><div class="badge">LISTA</div></div>
-      <div class="help-grid">
-        <div class="help-card"><div class="card-tag">HID</div><h3 style="margin-top:8px;">Crear identidad</h3><button class="secondary" onclick="openAuth()">ABRIR PUERTA</button></div>
-        <div class="help-card"><div class="card-tag">DOCS</div><h3 style="margin-top:8px;">Leer archivos</h3><button class="secondary" onclick="openDocViewer('constitution')">ABRIR VAULT</button></div>
-        <div class="help-card"><div class="card-tag">SOLICITUDES</div><h3 style="margin-top:8px;">Pedir ayuda</h3><button class="secondary" onclick="scrollToSection('section-requests')">ABRIR</button></div>
-        <div class="help-card"><div class="card-tag">CRÉDITOS</div><h3 style="margin-top:8px;">Ganar más</h3><button class="secondary" onclick="scrollToSection('section-challenges')">ABRIR</button></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">GUÍA</div><h3>Ayuda automática</h3></div><div class="badge">ACTUALIZADA</div></div>
-      <div id="help-feed" class="feed"></div>
-    </div>
-  </div>
-</section><section id="section-requests">
-  <div class="kicker">09 // solicitudes y citas</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">CENTRO DE SOLICITUDES</div><h2>Enviar solicitud</h2></div><div class="badge">ABIERTO</div></div>
-      <div class="request-grid" style="margin-top:18px;">
-        <div><div class="small" style="margin-bottom:8px;">Tipo</div><select id="request-type"><option>Ayuda</option><option>Documento</option><option>Cita</option><option>Mensaje</option></select></div>
-        <div><div class="small" style="margin-bottom:8px;">Día</div><input id="request-day" type="date"></div>
-      </div>
-      <div style="margin-top:14px;"><div class="small" style="margin-bottom:8px;">Mensaje</div><textarea id="request-text" placeholder="Explica brevemente..."></textarea></div>
-      <div class="dock">
-        <button onclick="submitRequest()">ENVIAR</button>
-        <button class="secondary" onclick="prefillRequest('Ayuda')">AYUDA</button>
-        <button class="secondary" onclick="prefillRequest('Cita')">CITA</button>
-        <button class="secondary" onclick="prefillRequest('Documento')">DOCUMENTO</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">SOLICITUDES</div><h3>Tu cola</h3></div><div class="badge" id="request-count">0</div></div>
-      <div id="request-list" class="request-list"></div>
-    </div>
-  </div>
-</section><section id="section-census">
-  <div class="kicker">10 // censo</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-tag">ESTADO POBLACIONAL</div>
-      <h2>Censo</h2>
-      <div class="metric-row">
-        <div class="metric"><span class="label">Población</span><div class="value" id="census-num">0</div></div>
-        <div class="metric"><span class="label">Objetivo</span><div class="value">100,000</div></div>
-        <div class="metric"><span class="label">Alta</span><div class="value" id="public-enrollment">ABIERTA</div></div>
-      </div>
-      <div style="margin-top:20px;" class="bar"><div id="census-bar" class="fill"></div></div>
-      <div class="dock"><button onclick="openAuth()">PEDIR ACCESO</button><button class="secondary" onclick="jumpToDashboard()">VER CONTROL</button></div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div><div class="card-tag">FLUJO</div><h3>Qué ve la gente</h3></div><div class="badge">VISIBLE</div></div>
-      <div class="timeline">
-        <div class="timeline-item"><div style="font-size:14px;">Arranque</div><div class="small">Una entrada limpia.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Portada</div><div class="small">Rápida y humana.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Documentos</div><div class="small">Abrir y guardar.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Misiones</div><div class="small">Ganar créditos con acciones útiles.</div></div>
-        <div class="timeline-item"><div style="font-size:14px;">Zona ciudadana</div><div class="small">Identidad, mensajes, solicitudes y exportación.</div></div>
-      </div>
-    </div>
-  </div>
-</section><div id="auth-modal" class="modal">
-  <div class="modal-panel">
-    <div class="modal-card">
-      <div class="modal-head"><div><div class="modal-strap">PUERTA DE ACCESO</div><h2>Entrar</h2></div><div class="badge">SEGURO</div></div>
-      <div style="display:grid;gap:12px;">
-        <input id="login-hid" placeholder="HID (24 CARACTERES)" autocomplete="off">
-        <input id="login-pass" type="password" placeholder="CLAVE" autocomplete="off">
-        <button class="full" onclick="login()">ACCEDER</button>
-      </div>
-      <div class="close-row"><button class="secondary" onclick="closeAuth()">CERRAR</button></div>
-    </div>
-    <div class="modal-card">
-      <div class="modal-head"><div><div class="modal-strap">EMISIÓN DE IDENTIDAD</div><h2>Registro</h2></div><div class="badge" id="reg-lock-badge">ABIERTA</div></div>
-      <div class="small" style="margin-bottom:12px;">Solo una ciudadanía por navegador. Después se cierra.</div>
-      <div style="display:grid;gap:12px;">
-        <input id="reg-name" placeholder="NOMBRE" autocomplete="off">
-        <input id="reg-email" placeholder="EMAIL" autocomplete="off">
-        <input id="reg-role" placeholder="ROL / ESPECIALIDAD" autocomplete="off">
-        <button class="full" id="register-btn" onclick="register()">GENERAR HID</button>
-      </div>
-      <div id="credentials" class="credentials">Aquí aparecerán tu HID y tu contraseña tras registrarte.</div>
-      <div class="close-row"><button class="secondary" onclick="closeAuth()">CERRAR</button></div>
-    </div>
-  </div>
-</div><div id="doc-modal" class="modal">
-  <div class="modal-card viewer">
-    <div class="modal-head"><div><div class="modal-strap">VISOR DE DOCUMENTOS</div><h2 id="doc-title">Documento</h2></div><div class="badge" id="doc-saved-badge">NO GUARDADO</div></div>
-    <iframe id="doc-frame" class="viewer-frame" src="" title="Visor de documentos"></iframe>
-    <div class="viewer-actions">
-      <button onclick="openDocExternal()">ABRIR TAB NUEVA</button>
-      <button class="secondary" onclick="toggleSaveCurrentDoc()">GUARDAR</button>
-      <button class="secondary" onclick="downloadCurrentDoc()">DESCARGAR</button>
-      <button class="secondary" onclick="closeDocViewer()">CERRAR</button>
-    </div>
-  </div>
-</div><div id="dashboard">
-  <div class="dashboard-grid">
-    <aside class="sidebar">
-      <div class="profile">
-        <div class="hid" id="user-hid">---</div>
-        <div class="name" id="user-name">Sin usuario</div>
-        <div class="role" id="user-role">---</div>
-      </div>
-      <div class="side-block"><div class="card-tag">CRÉDITOS</div><h3 id="user-credits">0</h3></div>
-      <div class="side-block"><div class="card-tag">SALUD DEL SISTEMA</div><div style="margin-top:12px;" class="bar"><div id="health-bar" class="fill"></div></div><div class="small" style="margin-top:8px;" id="health-text">0%</div></div>
-      <div class="side-block">
-        <div class="card-tag">ACCIONES</div>
-        <div style="display:grid;gap:10px;margin-top:12px;">
-          <button class="secondary" onclick="showTab('overview')">Resumen</button>
-          <button class="secondary" onclick="showTab('docs')">Docs</button>
-          <button class="secondary" onclick="showTab('messages')">Mensajes</button>
-          <button class="secondary" onclick="showTab('identity')">Identidad</button>
-          <button class="secondary" onclick="showTab('requests')">Solicitudes</button>
-          <button class="secondary" onclick="showTab('updates')">Noticias</button>
-          <button class="secondary" onclick="showTab('credits')">Créditos</button>
-          <button class="secondary" onclick="copyHID()">Copiar HID</button>
-          <button class="secondary" onclick="exportProfile()">Exportar perfil</button>
-          <button onclick="logout()">SALIR</button>
-        </div>
-      </div>
-    </aside><main class="main">
-  <div class="card">
-    <div class="card-head"><div><div class="card-tag">NODO PRIVADO</div><h2>Control ciudadano</h2></div><div class="badge" id="dashboard-state">EN LÍNEA</div></div>
-    <div class="tabs">
-      <div class="tab active" data-tab="overview" onclick="showTab('overview')">Resumen</div>
-      <div class="tab" data-tab="docs" onclick="showTab('docs')">Docs</div>
-      <div class="tab" data-tab="messages" onclick="showTab('messages')">Mensajes</div>
-      <div class="tab" data-tab="identity" onclick="showTab('identity')">Identidad</div>
-      <div class="tab" data-tab="requests" onclick="showTab('requests')">Solicitudes</div>
-      <div class="tab" data-tab="updates" onclick="showTab('updates')">Noticias</div>
-      <div class="tab" data-tab="credits" onclick="showTab('credits')">Créditos</div>
-    </div>
 
-    <div id="panel-overview" class="panel active">
-      <div class="grid-dashboard">
-        <div>
-          <div class="terminal" id="log"></div>
-          <div style="display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:14px;">
-            <input id="msg" placeholder="Escribe un mensaje para tu registro...">
-            <button onclick="sendMessage()">ENVIAR</button>
-          </div>
-          <div class="dock">
-            <button class="secondary" onclick="saveSessionSnapshot()">GUARDAR SNAPSHOT</button>
-            <button class="secondary" onclick="lockSession()">BLOQUEAR SESIÓN</button>
-            <button class="secondary" onclick="openDocViewer('constitution')">ABRIR VAULT</button>
-            <button class="secondary" onclick="scrollToSection('section-challenges')">MISIONES</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-tag">RESUMEN</div>
-          <div class="small" style="margin-top:12px;line-height:2;">
-            <div>Identidad: activa</div>
-            <div>Censo: sincronizado</div>
-            <div>Acceso: privado</div>
-            <div>Cuenta atrás: activa</div>
-            <div>Mensajes: vivos</div>
-            <div>Documentos: disponibles</div>
-            <div>Solicitudes: activas</div>
-            <div>Créditos: diarios + misiones</div>
-          </div>
-          <div class="side-block">
-            <div class="card-tag">ATAJOS</div>
-            <div class="dock">
-              <button class="secondary" onclick="showTab('docs')">Docs</button>
-              <button class="secondary" onclick="showTab('requests')">Solicitudes</button>
-              <button class="secondary" onclick="showTab('credits')">Créditos</button>
-            </div>
-          </div>
-        </div>
-      </div>
+<nav>
+  <div class="brand" onclick="openAccess()">HEIDENBILLG</div>
+  <div class="right">
+    <div class="chip" id="censusChip">0 ciudadanos</div>
+    <div class="chip" id="creditChip">0 créditos</div>
+  </div>
+</nav>
+
+<section>
+  <div class="orb" style="top:10%;left:50%;transform:translateX(-50%);"></div>
+  <div class="stack hidden-reveal">
+    <div class="eyebrow">HID • acceso civil</div>
+    <h1>HEIDENBILLG</h1>
+    <p>Sistema minimalista. Un acceso. Un HID. Un archivo. Movimiento suave. Conversión limpia.</p>
+    <div class="actions">
+      <button class="secondary" onclick="scrollToId('info')">Info</button>
+      <button class="primary" onclick="openBuy()">Comprar HID</button>
     </div>
+    <div class="quote">Diseñado para parecer premium. Hecho para funcionar.</div>
+  </div>
+</section>
 
-    <div id="panel-docs" class="panel">
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="card">
-          <div class="card-tag">VAULT DE DOCUMENTOS</div>
-          <div id="dashboard-docs" class="docs-grid" style="margin-top:14px;"></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div><div class="card-tag">GUARDADOS</div><h3>Cache local</h3></div><div class="badge" id="saved-count-dash">0</div></div>
-          <div id="dashboard-saved" class="saved-list" style="margin-top:12px;"></div>
-          <div class="dock">
-            <button class="secondary" onclick="clearSavedDocs()">BORRAR</button>
-            <button class="secondary" onclick="openDocViewer('briefing')">ABRIR BRIEFING</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="panel-messages" class="panel"><div class="card" style="margin-top:18px;"><div class="card-tag">FLUJO DE MENSAJES</div><div id="messages" class="feed" style="margin-top:14px;"></div></div></div>
-
-    <div id="panel-identity" class="panel">
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="card">
-          <div class="card-tag">FICHA CIUDADANA</div>
-          <div class="small" style="margin-top:12px;line-height:2;">
-            <div><strong>HID:</strong> <span id="identity-hid">---</span></div>
-            <div><strong>Nombre:</strong> <span id="identity-name">---</span></div>
-            <div><strong>Email:</strong> <span id="identity-email">---</span></div>
-            <div><strong>Rol:</strong> <span id="identity-role">---</span></div>
-            <div><strong>Créditos:</strong> <span id="identity-credits">0</span></div>
-            <div><strong>Emitido:</strong> <span id="identity-issue">---</span></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-tag">ESTADO PERSONAL</div>
-          <div class="dock">
-            <button class="secondary" onclick="copyHID()">COPIAR HID</button>
-            <button class="secondary" onclick="exportProfile()">EXPORTAR PERFIL</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="panel-requests" class="panel">
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="card">
-          <div class="card-tag">CENTRO DE SOLICITUDES</div>
-          <div class="request-grid" style="margin-top:18px;">
-            <div><div class="small" style="margin-bottom:8px;">Tipo</div><select id="dash-request-type"><option>Ayuda</option><option>Documento</option><option>Cita</option><option>Mensaje</option></select></div>
-            <div><div class="small" style="margin-bottom:8px;">Día</div><input id="dash-request-day" type="date"></div>
-          </div>
-          <div style="margin-top:14px;"><div class="small" style="margin-bottom:8px;">Mensaje</div><textarea id="dash-request-text" placeholder="Explica brevemente..."></textarea></div>
-          <div class="dock"><button onclick="submitDashboardRequest()">ENVIAR</button><button class="secondary" onclick="showTab('overview')">VOLVER</button></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div><div class="card-tag">SOLICITUDES</div><h3>Tu cola</h3></div><div class="badge" id="request-count-dash">0</div></div>
-          <div id="dashboard-request-list" class="request-list"></div>
-        </div>
-      </div>
-    </div>
-
-    <div id="panel-updates" class="panel">
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="card"><div class="card-tag">ÚLTIMAS NOTICIAS</div><div id="dashboard-updates" class="update-grid" style="margin-top:14px;"></div></div>
-        <div class="card"><div class="card-head"><div><div class="card-tag">ADMIN RÁPIDO</div><h3>Tablón público</h3></div><div class="badge info">ADMIN</div></div><div class="dock"><button class="secondary" onclick="scrollToSection('section-updates')">ABRIR EDITOR</button><button class="secondary" onclick="toggleEmergency()">EMERGENCIA</button></div></div>
-      </div>
-    </div>
-
-    <div id="panel-credits" class="panel">
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="card">
-          <div class="card-tag">BOLSA CIVIL</div>
-          <h2 id="credit-balance-large">0</h2>
-          <div class="small">Diario: +100. Misiones: extra. Inicio: 0.</div>
-          <div class="credit-bar-row">
-            <div class="bar"><div id="credit-bar" class="fill"></div></div>
-            <div class="badge" id="daily-status-dash">LISTO</div>
-          </div>
-          <div class="dock">
-            <button id="daily-btn" onclick="claimDailyCredits()">RECLAMAR 100</button>
-            <button class="secondary" onclick="grantBonus(25,'lectura')">LEER +25</button>
-            <button class="secondary" onclick="grantBonus(20,'aviso')">AVISO +20</button>
-            <button class="secondary" onclick="grantBonus(15,'documento')">DOC +15</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div><div class="card-tag">MISIÓN</div><h3>Progreso</h3></div><div class="badge ok">GANA</div></div>
-          <div id="challenge-grid-dash" class="challenge-grid"></div>
-        </div>
-      </div>
+<section id="info">
+  <div class="stack hidden-reveal">
+    <div class="eyebrow">01 • visión</div>
+    <h2>Una sola idea por pantalla.</h2>
+    <p>Menos ruido, más intención. Más movimiento, menos texto. Todo conduce al acceso, a la identidad y al archivo.</p>
+    <div class="actions">
+      <button class="secondary" onclick="scrollToId('buy')">Ver compra</button>
+      <button class="primary" onclick="openAccess()">Acceder</button>
     </div>
   </div>
-</main>
+</section>
 
+<section id="buy">
+  <div class="stack hidden-reveal">
+    <div class="eyebrow">02 • compra simulada</div>
+    <h2>Obtener HID</h2>
+    <p>Flujo estilo Apple: corto, limpio y claro. El pago es simulado; el objetivo es experiencia y presentación.</p>
+    <div class="actions">
+      <button class="secondary" onclick="openDocs()">Info</button>
+      <button class="primary" onclick="openCheckout()">Comprar</button>
+    </div>
   </div>
-</div><div class="footer">Heidenbillg OS es un portal civil: noticias, documentos, servicios, misiones y una zona privada del ciudadano. Menos texto. Más acción.</div><script>
-const STORAGE_KEY = "HB_DB_GOV_OS_V6_ES";
-const ADMIN_CODE = "HEIDEN-ADMIN-001";
-const DOCS = [
-  { id: "constitution", title: "Constitución", file: "The_Heidenbillg_Constitution (6).pdf", desc: "Normas y derechos." },
-  { id: "codes", title: "Códigos", file: "The_Heidenbillg_Codes (1).pdf", desc: "Protocolos." },
-  { id: "briefing", title: "Briefing", file: "HSA_13_and_TDS_Missions (2).pdf", desc: "Nave." }
-];
-const CHALLENGES = [
-  { id: "read-doc", title: "Leer documento", reward: 25, text: "Abre cualquier documento." },
-  { id: "read-notice", title: "Leer aviso", reward: 20, text: "Mira el tablón o las noticias." },
-  { id: "send-msg", title: "Escribir mensaje", reward: 15, text: "Envía un mensaje corto." },
-  { id: "submit-req", title: "Enviar solicitud", reward: 30, text: "Usa el centro de solicitudes." },
-  { id: "export-profile", title: "Exportar perfil", reward: 20, text: "Descarga tu ficha." },
-  { id: "open-help", title: "Abrir ayuda", reward: 10, text: "Visita la ayuda." }
-];
+</section>
 
-let DB = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
-  users: [],
-  messages: [],
-  requests: [],
-  updates: [
-    { type: "general", title: "Bienvenido", body: "Portal público en línea.", pinned: true, time: new Date().toISOString() },
-    { type: "service", title: "Docs abiertos", body: "Vault disponible.", pinned: false, time: new Date().toISOString() },
-    { type: "alert", title: "Ayuda lista", body: "Solicitudes activas.", pinned: false, time: new Date().toISOString() }
-  ],
-  notices: [
-    { title: "Alta ciudadana", body: "Solo un ciudadano por navegador.", time: new Date().toISOString() },
-    { title: "Documentos", body: "Abrir, guardar, descargar.", time: new Date().toISOString() },
-    { title: "Solicitudes", body: "Ayuda, documento o cita.", time: new Date().toISOString() }
-  ],
-  census: 0,
-  savedDocs: [],
-  registrationLocked: false,
-  issuedAt: null,
-  emergency: false,
-  adminUnlocked: false,
-  daily: { lastGrant: null, streak: 0, claimedToday: false },
-  credits: 0,
-  missionProgress: {},
-  ui: { docFilter: "", updateFilter: "" }
-};
+<section id="docs">
+  <div class="stack hidden-reveal">
+    <div class="eyebrow">03 • documentos</div>
+    <h2>Constitución y códigos</h2>
+    <p>Acceso visual a la base documental. Puedes abrir, guardar y descargar desde un visor limpio.</p>
+    <div class="actions">
+      <button class="secondary" onclick="openAccess()">Info</button>
+      <button class="primary" onclick="openDocsViewer()">Abrir</button>
+    </div>
+  </div>
+</section>
 
-let currentUser = null;
-let currentDocId = null;
-let bootComplete = false;
+<section id="state">
+  <div class="panel hidden-reveal">
+    <div class="eyebrow">04 • estado</div>
+    <h2>0 → 1 → comunidad</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="label">Censo</div>
+        <div class="value" id="census">0</div>
+        <div class="mini">Se actualiza automáticamente.</div>
+      </div>
+      <div class="card">
+        <div class="label">Lanzamiento</div>
+        <div class="value" id="countdown">---</div>
+        <div class="mini">Ventana HSA-13.</div>
+      </div>
+      <div class="card">
+        <div class="label">Estado</div>
+        <div class="value">Activo</div>
+        <div class="mini">Interfaz viva y fluida.</div>
+      </div>
+    </div>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="foot">Créditos diarios automáticos. Acceso ordenado. Registro persistente.</div>
+  </div>
+</section>
 
-function el(id){ return document.getElementById(id); }
-function saveDB(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
-function nowTime(){ return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
-function escapeHtml(str){ return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;"); }
-function randChar(set){ return set[Math.floor(Math.random() * set.length)]; }
-function generateHID(){ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; let id = ""; for(let i=0;i<24;i++) id += randChar(chars); return id; }
-function generatePass(){ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let pass = ""; for(let i=0;i<16;i++) pass += randChar(chars); return pass; }
-function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
-function todayKey(){ return new Date().toISOString().slice(0,10); }
-function tomorrowKey(){ const t = new Date(); t.setDate(t.getDate()+1); return t.toISOString().slice(0,10); }
-function formatNextDaily(){ return "Mañana"; }
-function getTotalCredits(){ return currentUser ? currentUser.credits : (DB.credits || 0); }
+<section id="dashboard">
+  <div class="stack hidden-reveal">
+    <div class="eyebrow">05 • panel</div>
+    <h2>Zona ciudadana</h2>
+    <p>Identidad, credenciales, documentos y acciones en una sola vista.</p>
+    <div class="actions">
+      <button class="secondary" onclick="claimDaily()">+100 diario</button>
+      <button class="primary" onclick="logout()">Salir</button>
+    </div>
+    <div class="grid" style="margin-top:28px;">
+      <div class="card">
+        <div class="label">HID</div>
+        <div class="value" id="userHid">---</div>
+        <div class="mini">Tu identidad privada.</div>
+      </div>
+      <div class="card">
+        <div class="label">Clave</div>
+        <div class="value" style="font-size:20px;" id="userPass">---</div>
+        <div class="mini">Guárdala con cuidado.</div>
+      </div>
+      <div class="card">
+        <div class="label">Créditos</div>
+        <div class="value" id="userCredits">0</div>
+        <div class="mini">Saldo activo.</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="secondary" onclick="openDocsViewer()">Docs</button>
+      <button class="secondary" onclick="openMessages()">Mensajes</button>
+      <button class="secondary" onclick="exportProfile()">Exportar</button>
+    </div>
+  </div>
+</section>
 
-function refreshCreditUI(){
-  const credits = currentUser ? currentUser.credits : (DB.credits || 0);
-  el("credit-stat").textContent = `${credits} créditos`;
-  el("credit-balance").textContent = credits;
-  el("credit-balance-large").textContent = credits;
-  el("daily-status").textContent = DB.daily.claimedToday ? 'RECLAMADO' : 'LISTO';
-  el("daily-status-dash").textContent = DB.daily.claimedToday ? 'RECLAMADO' : 'LISTO';
-  el("daily-streak").textContent = DB.daily.streak || 0;
-  el("credit-bar").style.width = `${Math.min((credits / 1000) * 100, 100)}%`;
-  const btn = el("daily-btn");
-  if(btn) btn.disabled = DB.daily.claimedToday;
-  el("next-daily").textContent = DB.daily.claimedToday ? "Mañana" : "Hoy";
-}
-function addCredits(amount, reason){
-  if(!currentUser) return;
-  currentUser.credits += amount;
-  DB.credits = currentUser.credits;
-  saveDB();
-  populateDashboard();
-  refreshCreditUI();
-  logPrivate(`+${amount} créditos: ${reason}`);
-  serviceToast(`+${amount} créditos`);
-}
+<div class="modal" id="modalBuy">
+  <div class="box">
+    <h3>Comprar HID</h3>
+    <div class="sub">Experiencia simulada. Se genera tu HID al finalizar.</div>
+    <button class="secondary" onclick="nextToCheckout()">Continuar</button>
+    <div style="height:10px"></div>
+    <button class="primary" onclick="closeModals()">Cancelar</button>
+  </div>
+</div>
 
-const bootLines = [
-  "Inicializando núcleo civil...",
-  "Cargando interfaz humana...",
-  "Preparando tablón y ayuda...",
-  "Montando documentos...",
-  "Sincronizando memoria ciudadana...",
-  "Abriendo servicios...",
-  "HEIDENBILLG OS EN LÍNEA"
-];
-let bootIndex = 0;
-function runBoot(){
-  const log = el("boot-log");
-  const fill = el("boot-fill");
-  const state = el("boot-state");
-  if(bootIndex < bootLines.length){
-    const line = document.createElement("div");
-    line.className = "boot-line";
-    line.textContent = bootLines[bootIndex];
-    log.appendChild(line);
-    fill.style.width = Math.round((bootIndex / bootLines.length) * 100) + "%";
-    state.textContent = bootLines[bootIndex].toUpperCase();
-    bootIndex++;
-    setTimeout(runBoot, 680);
-  } else {
-    fill.style.width = "100%";
-    state.textContent = "ARRANQUE COMPLETO";
+<div class="modal" id="modalCheckout">
+  <div class="box">
+    <h3>Pago</h3>
+    <div class="sub">Solo para demo visual. No hay cobro real.</div>
+    <input id="buyerName" placeholder="Nombre">
+    <input id="buyerEmail" placeholder="Email">
+    <button class="primary" onclick="completePurchase()">Pagar</button>
+    <div style="height:10px"></div>
+    <button class="secondary" onclick="closeModals()">Cancelar</button>
+  </div>
+</div>
+
+<div class="modal" id="modalAccess">
+  <div class="box">
+    <h3>Acceso</h3>
+    <div class="sub">Entra con tu HID y tu clave.</div>
+    <input id="loginHid" placeholder="HID">
+    <input id="loginPass" placeholder="Clave" type="password">
+    <button class="primary" onclick="login()">Entrar</button>
+    <div style="height:10px"></div>
+    <button class="secondary" onclick="closeModals()">Cerrar</button>
+  </div>
+</div>
+
+<div class="modal" id="modalSuccess">
+  <div class="box">
+    <h3>Confirmado</h3>
+    <div class="sub">Tu identidad está lista.</div>
+    <div class="card" style="margin:14px 0; text-align:left;">
+      <div class="label">HID</div>
+      <div id="newHid" class="value" style="font-size:16px;"></div>
+      <div class="label" style="margin-top:12px;">Clave</div>
+      <div id="newPass" class="value" style="font-size:16px;"></div>
+    </div>
+    <button class="primary" onclick="openDashboard()">Ir al panel</button>
+    <div style="height:10px"></div>
+    <button class="secondary" onclick="closeModals()">Cerrar</button>
+  </div>
+</div>
+
+<div class="modal" id="modalDocs">
+  <div class="box">
+    <h3>Documentos</h3>
+    <div class="sub">Vista rápida del archivo.</div>
+    <button class="secondary" onclick="alert('Constitución')">Constitución</button>
+    <div style="height:10px"></div>
+    <button class="secondary" onclick="alert('Códigos')">Códigos</button>
+    <div style="height:14px"></div>
+    <button class="primary" onclick="closeModals()">Cerrar</button>
+  </div>
+</div>
+
+<div class="modal" id="modalMsgs">
+  <div class="box">
+    <h3>Mensajes</h3>
+    <div class="sub">Canal rápido.</div>
+    <input id="msgInput" placeholder="Escribe..." />
+    <button class="primary" onclick="sendMessage()">Enviar</button>
+    <div id="msgLog" style="margin-top:12px; text-align:left; font-size:13px; max-height:160px; overflow:auto;"></div>
+    <div style="height:10px"></div>
+    <button class="secondary" onclick="closeModals()">Cerrar</button>
+  </div>
+</div>
+
+<script>
+  const KEY = "HB_MINI_APPLE";
+  const APP = JSON.parse(localStorage.getItem(KEY)) || {
+    users: [],
+    census: 0,
+    messages: [],
+    daily: { last: null, claimed: false }
+  };
+
+  let current = null;
+
+  function save(){ localStorage.setItem(KEY, JSON.stringify(APP)); }
+
+  function genHID(){
+    const c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    return Array.from({length:24}, () => c[Math.floor(Math.random()*c.length)]).join("");
+  }
+
+  function genPASS(){
+    const c = "abcdef0123456789";
+    return Array.from({length:12}, () => c[Math.floor(Math.random()*c.length)]).join("");
+  }
+
+  function scrollToId(id){
+    document.getElementById(id).scrollIntoView({behavior:"smooth"});
+  }
+
+  function openModals(id){
+    closeModals();
+    document.getElementById(id).classList.add("open");
+  }
+
+  function openBuy(){ openModals("modalBuy"); }
+  function openAccess(){ openModals("modalAccess"); }
+  function openDocs(){ scrollToId("docs"); }
+  function openDocsViewer(){ openModals("modalDocs"); }
+  function openMessages(){ renderMessages(); openModals("modalMsgs"); }
+
+  function closeModals(){
+    document.querySelectorAll(".modal").forEach(m => m.classList.remove("open"));
+  }
+
+  function nextToCheckout(){
+    closeModals();
+    openModals("modalCheckout");
+  }
+
+  function completePurchase(){
+    const name = buyerName.value.trim();
+    const email = buyerEmail.value.trim();
+    if(!name || !email) return alert("Completa nombre y email.");
+
+    const user = {
+      name,
+      email,
+      hid: genHID(),
+      pass: genPASS(),
+      credits: 0,
+      lastClaim: null
+    };
+
+    APP.users.push(user);
+    APP.census++;
+    current = user;
+    save();
+
+    newHid.textContent = user.hid;
+    newPass.textContent = user.pass;
+
+    updateUI();
+    closeModals();
+    openModals("modalSuccess");
+    revealDashboard();
+  }
+
+  function login(){
+    const u = APP.users.find(x => x.hid === loginHid.value.trim() && x.pass === loginPass.value.trim());
+    if(!u) return alert("Acceso denegado.");
+    current = u;
+    closeModals();
+    revealDashboard();
+    updateUserPanel();
+  }
+
+  function revealDashboard(){
+    document.getElementById("dashboard").scrollIntoView({behavior:"smooth"});
     setTimeout(() => {
-      el("boot").classList.add("hidden");
-      bootComplete = true;
-      document.body.style.overflow = "auto";
-      renderEverything();
-      startShipCountdown();
-      renderDocs();
-      renderPublicFeed();
-      renderServiceFeed();
-      renderNotices();
-      renderUpdates();
-      renderSavedDocs();
-      renderHelpFeed();
-      renderRequests();
-      renderChallenges();
-      loadMessages();
-      updateEnrollmentUI();
-      showTab("overview");
-      maybeGrantDailyOnOpen();
-      if(DB.registrationLocked || DB.users.length >= 1){ DB.registrationLocked = true; saveDB(); }
-    }, 600);
+      document.querySelector("#dashboard .hidden-reveal").classList.add("show");
+    }, 150);
+    updateUserPanel();
   }
-}
-document.body.style.overflow = "hidden";
-runBoot();
 
-function renderPublicFeed(){
-  const feed = el("public-feed");
-  const entries = [
-    "Portal público activo.",
-    "Docs, noticias, servicios y misiones abiertos.",
-    "Botones primero. Texto después.",
-    `Censo actual: ${DB.census} ciudadano${DB.census === 1 ? "" : "s"}.`
-  ];
-  feed.innerHTML = entries.map(t => `<div class="feed-item"><div class="card-tag">PÚBLICO</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
-}
-function renderServiceFeed(){
-  const feed = el("service-feed");
-  const items = ["Ayuda lista.","Noticias activas.","Documentos abiertos.","Solicitudes listas.","Misiones activas."];
-  feed.innerHTML = items.map(t => `<div class="feed-item"><div class="card-tag">SERVICIO</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
-}
-function renderNotices(){
-  let notices = DB.notices.slice();
-  if(DB.emergency){ notices.unshift({ title: "Emergencia activa", body: "Sigue el último aviso oficial.", time: new Date().toISOString() }); }
-  const q = (DB.ui.updateFilter || el("updates-search")?.value || "").trim().toLowerCase();
-  if(q){ notices = notices.filter(n => (n.title + " " + n.body).toLowerCase().includes(q)); }
-  el("notice-list").innerHTML = notices.map(n => `<div class="notice"><div class="card-tag">AVISO</div><strong style="font-size:15px;">${escapeHtml(n.title)}</strong><div class="small">${escapeHtml(n.body)}</div><div class="dock" style="margin-top:10px;"><button class="secondary" onclick="claimMissionIfNeeded('read-notice');">LEÍDO</button></div></div>`).join("");
-}
-function renderUpdates(){
-  let list = [...DB.updates].sort((a,b) => (b.pinned - a.pinned) || (new Date(b.time) - new Date(a.time)));
-  const q = (DB.ui.updateFilter || el("updates-search")?.value || "").trim().toLowerCase();
-  if(q){ list = list.filter(u => (u.title + " " + u.body + " " + u.type).toLowerCase().includes(q)); }
-  el("dashboard-updates").innerHTML = list.map(u => `<div class="update-item"><div class="card-tag">${u.pinned ? "FIJADO" : u.type.toUpperCase()} • ${new Date(u.time).toLocaleDateString()}</div><strong style="display:block;margin-top:6px;font-size:16px;">${escapeHtml(u.title)}</strong><div class="small" style="margin-top:8px;">${escapeHtml(u.body)}</div><div class="dock" style="margin-top:12px;"><button class="secondary" onclick="pinUpdate('${encodeURIComponent(u.time)}')">${u.pinned ? 'QUITAR' : 'FIJAR'}</button><button class="secondary" onclick="copyUpdate('${encodeURIComponent(u.time)}')">COPIAR</button></div></div>`).join("");
-}
-function renderHelpFeed(){
-  const items = ["Usa la puerta para crear una identidad.","Abre documentos y guárdalos.","Envía solicitudes o citas.","Reclama créditos diarios.","Haz misiones para ganar más."];
-  el("help-feed").innerHTML = items.map(t => `<div class="feed-item"><div class="card-tag">AYUDA</div><div style="margin-top:6px;">${escapeHtml(t)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div></div>`).join("");
-}
-function renderRequests(){
-  el("request-count").textContent = DB.requests.length;
-  el("request-count-dash").textContent = DB.requests.length;
-  const list = DB.requests.length === 0 ? `<div class="request-item">No hay solicitudes.</div>` : DB.requests.map(r => `<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join("");
-  el("request-list").innerHTML = list;
-  el("dashboard-request-list").innerHTML = list;
-}
-function renderChallenges(){
-  const html = CHALLENGES.map(ch => {
-    const done = !!DB.missionProgress[ch.id];
-    return `<div class="challenge"><div class="card-tag">MISIÓN</div><strong>${escapeHtml(ch.title)}</strong><div class="small">${escapeHtml(ch.text)}</div><div class="reward">+${ch.reward} créditos</div><button class="secondary" onclick="claimMission('${ch.id}', ${ch.reward}, '${encodeURIComponent(ch.title)}')">${done ? 'HECHA' : 'RECLAMAR'}</button></div>`;
-  }).join("");
-  el("challenge-grid").innerHTML = html;
-  el("challenge-grid-dash").innerHTML = html;
-}
-function renderDocs(){
-  let docs = DOCS.slice();
-  const q = (DB.ui.docFilter || el("docs-search")?.value || "").trim().toLowerCase();
-  if(q){ docs = docs.filter(d => (d.title + " " + d.desc).toLowerCase().includes(q)); }
-  const html = docs.map(doc => {
-    const saved = DB.savedDocs.includes(doc.id);
-    return `<div class="doc-card"><div><div class="card-tag">${saved ? "GUARDADO" : "DOC"}</div><h3 style="margin-top:6px;">${escapeHtml(doc.title)}</h3><div class="small">${escapeHtml(doc.desc)}</div></div><div class="doc-actions"><button onclick="openDocViewer('${doc.id}')">ABRIR</button><button class="secondary" onclick="toggleSaveDoc('${doc.id}')">${saved ? 'QUITAR' : 'GUARDAR'}</button><button class="secondary" onclick="downloadDoc('${doc.id}')">DESCARGAR</button></div></div>`;
-  }).join("");
-  el("docs-grid").innerHTML = html || `<div class="card"><div class="small">Sin resultados.</div></div>`;
-  el("dashboard-docs").innerHTML = html || `<div class="card"><div class="small">Sin resultados.</div></div>`;
-}
-function renderSavedDocs(){
-  el("saved-count").textContent = `${DB.savedDocs.length}`;
-  el("saved-count-dash").textContent = `${DB.savedDocs.length}`;
-  const html = DB.savedDocs.length === 0 ? `<div class="saved-item"><span>No hay documentos guardados.</span><span class="muted">Vacío</span></div>` : DB.savedDocs.map(id => { const doc = getDocById(id); if(!doc) return ""; return `<div class="saved-item"><span>${escapeHtml(doc.title)}</span><span style="display:flex;gap:8px;flex-wrap:wrap;"><button class="secondary" onclick="openDocViewer('${doc.id}')">ABRIR</button><button class="secondary" onclick="toggleSaveDoc('${doc.id}')">BORRAR</button></span></div>`; }).join("");
-  el("saved-list").innerHTML = html;
-  el("dashboard-saved").innerHTML = html;
-}
-function renderEverything(){
-  el("landing-census").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
-  el("census-num").textContent = DB.census.toLocaleString();
-  el("census-stat").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
-  el("credit-stat").textContent = `${getTotalCredits()} créditos`;
-  el("census-bar").style.width = `${Math.min((DB.census / 100000) * 100, 100)}%`;
-  el("public-enrollment").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
-  el("enroll-state").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
-  el("reg-lock-badge").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
-  el("register-btn").disabled = DB.registrationLocked;
-  el("register-btn").style.opacity = DB.registrationLocked ? "0.45" : "1";
-  el("register-btn").textContent = DB.registrationLocked ? "ALTA CERRADA" : "GENERAR HID";
-  updateScrollStat();
-  renderCreditUI();
-}
-function updateEnrollmentUI(){
-  const locked = DB.registrationLocked || DB.users.length >= 1;
-  DB.registrationLocked = locked;
-  saveDB();
-  el("reg-lock-badge").textContent = locked ? "CERRADA" : "ABIERTA";
-  el("register-btn").disabled = locked;
-  el("register-btn").style.opacity = locked ? "0.45" : "1";
-  el("register-btn").textContent = locked ? "ALTA CERRADA" : "GENERAR HID";
-  el("public-enrollment").textContent = locked ? "CERRADA" : "ABIERTA";
-  el("enroll-state").textContent = locked ? "CERRADA" : "ABIERTA";
-}
-function updateScrollStat(){ const max = document.documentElement.scrollHeight - window.innerHeight; const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0; el("scroll-stat").textContent = pct + "%"; }
-window.addEventListener("scroll", updateScrollStat);
-function startShipCountdown(){ const target = new Date("2028-04-01T00:00:00").getTime(); const terminal = el("ship-terminal"); function tick(){ const dist = target - Date.now(); if(dist <= 0){ terminal.innerHTML = "Lanzamiento alcanzado."; el("countdown").textContent = "DESPEGUE"; return; } const days = Math.floor(dist/(1000*60*60*24)); const hours = Math.floor((dist%(1000*60*60*24))/(1000*60*60)); const minutes = Math.floor((dist%(1000*60*60))/(1000*60)); const seconds = Math.floor((dist%(1000*60))/1000); const cd = `${String(days).padStart(3,"0")}D : ${String(hours).padStart(2,"0")}H : ${String(minutes).padStart(2,"0")}M : ${String(seconds).padStart(2,"0")}S`; el("countdown").textContent = cd; terminal.innerHTML = [`> Cuenta atrás: ${cd}`,`> Corriente orbital: estable`,`> Núcleo: monitorizado`,`> Nave: preparada`].join("<br>"); } tick(); setInterval(tick,1000); }
-function openAuth(){ if(!bootComplete) return; el("auth-modal").classList.add("open"); document.body.style.overflow="hidden"; }
-function closeAuth(){ el("auth-modal").classList.remove("open"); document.body.style.overflow=currentUser?"hidden":"auto"; }
-el("auth-modal").addEventListener("click",e=>{ if(e.target.id==="auth-modal") closeAuth(); });
-function getDocById(id){ return DOCS.find(d=>d.id===id); }
-function openDocViewer(id){ const doc=getDocById(id); if(!doc) return; currentDocId=id; el("doc-title").textContent=doc.title; el("doc-frame").src=doc.file; el("doc-saved-badge").textContent=DB.savedDocs.includes(id)?"GUARDADO":"NO GUARDADO"; el("doc-modal").classList.add("open"); document.body.style.overflow="hidden"; if(currentUser) claimMissionIfNeeded('read-doc'); }
-function closeDocViewer(){ el("doc-modal").classList.remove("open"); document.body.style.overflow=currentUser?"hidden":"auto"; }
-el("doc-modal").addEventListener("click",e=>{ if(e.target.id==="doc-modal") closeDocViewer(); });
-function openDocExternal(){ const doc=getDocById(currentDocId); if(!doc) return; window.open(doc.file,"_blank"); }
-function downloadDoc(id){ const doc=getDocById(id); if(!doc) return; const a=document.createElement("a"); a.href=doc.file; a.download=doc.file.split("/").pop(); document.body.appendChild(a); a.click(); a.remove(); }
-function downloadCurrentDoc(){ if(currentDocId) downloadDoc(currentDocId); }
-function toggleSaveDoc(id){ const idx=DB.savedDocs.indexOf(id); if(idx>=0) DB.savedDocs.splice(idx,1); else DB.savedDocs.push(id); saveDB(); renderDocs(); renderSavedDocs(); refreshDocViewerBadge(); serviceToast(DB.savedDocs.includes(id)?"Guardado." : "Eliminado."); }
-function toggleSaveCurrentDoc(){ if(currentDocId) toggleSaveDoc(currentDocId); }
-function refreshDocViewerBadge(){ if(!currentDocId) return; el("doc-saved-badge").textContent = DB.savedDocs.includes(currentDocId)?"GUARDADO":"NO GUARDADO"; }
-function clearSavedDocs(){ DB.savedDocs=[]; saveDB(); renderDocs(); renderSavedDocs(); refreshDocViewerBadge(); serviceToast("Vault borrado."); }
-
-function unlockAdmin(){ const code=el("admin-code").value.trim(); if(code===ADMIN_CODE){ DB.adminUnlocked=true; saveDB(); serviceToast("Editor desbloqueado."); el("admin-hint").textContent = "Editor activado. Ya puedes publicar, fijar y buscar con normalidad."; } else { serviceToast("Código inválido."); } }
-function postUpdate(){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } const title=el("update-title").value.trim(); const body=el("update-body").value.trim(); const type=el("update-type").value; if(!title||!body){ serviceToast("Falta título o texto."); return; } DB.updates.unshift({ title, body, type, pinned:false, time:new Date().toISOString() }); saveDB(); renderUpdates(); renderNotices(); renderHelpFeed(); logPublic(`Aviso publicado: ${title}`); el("update-title").value=""; el("update-body").value=""; }
-function pinLatestUpdate(){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } if(DB.updates.length===0) return; DB.updates[0].pinned=!DB.updates[0].pinned; saveDB(); renderUpdates(); }
-function pinUpdate(timeEncoded){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } const time=decodeURIComponent(timeEncoded); const item=DB.updates.find(u=>u.time===time); if(!item) return; item.pinned=!item.pinned; saveDB(); renderUpdates(); }
-function copyUpdate(timeEncoded){ const time=decodeURIComponent(timeEncoded); const item=DB.updates.find(u=>u.time===time); if(!item) return; navigator.clipboard?.writeText(`${item.title}\n\n${item.body}`).catch(()=>{}); serviceToast("Copiado."); }
-function toggleEmergency(){ if(!DB.adminUnlocked){ serviceToast("Primero desbloquea el editor."); return; } DB.emergency=!DB.emergency; saveDB(); renderNotices(); renderPublicFeed(); serviceToast(DB.emergency?"Emergencia activa." : "Emergencia desactivada."); }
-
-function register(){
-  if(DB.registrationLocked || DB.users.length >= 1){ DB.registrationLocked=true; saveDB(); updateEnrollmentUI(); el("credentials").textContent = "ALTA CERRADA. Ya hay un ciudadano emitido en este navegador."; alert("ALTA CERRADA: ya hay un ciudadano emitido."); return; }
-  const name=el("reg-name").value.trim(); const email=el("reg-email").value.trim(); const role=el("reg-role").value.trim();
-  if(!name || !email || !role){ el("credentials").textContent = "NOMBRE, EMAIL Y ROL obligatorios."; return; }
-  const user={ hid:generateHID(), pass:generatePass(), name, email, role, credits:0, issuedAt:new Date().toISOString() };
-  DB.users.push(user); DB.census += 1; DB.registrationLocked=true; DB.issuedAt=user.issuedAt; DB.credits=0; saveDB();
-  el("credentials").textContent = `HID:\n${user.hid}\n\nCLAVE:\n${user.pass}\n\nGUÁRDALO AHORA.`;
-  renderPublicFeed(); renderEverything(); renderDocs(); renderNotices(); updateEnrollmentUI(); logPublic(`Ciudadano emitido: ${name}`); serviceToast("Ciudadano creado.");
-}
-function login(){
-  const hid=el("login-hid").value.trim(); const pass=el("login-pass").value.trim(); const u=DB.users.find(x=>x.hid===hid && x.pass===pass);
-  if(!u){ alert("ACCESO DENEGADO"); return; }
-  currentUser=u; if(typeof currentUser.credits !== 'number') currentUser.credits = 0; DB.credits=currentUser.credits; saveDB();
-  el("dashboard").style.display="block"; closeAuth(); document.body.style.overflow="hidden"; populateDashboard(); showTab("overview"); logPrivate("ACCESO CONCEDIDO"); loadMessages(); renderRequests(); renderUpdates(); renderChallenges(); refreshCreditUI(); maybeGrantDailyOnOpen(); serviceToast(`Bienvenido, ${u.name}.`);
-}
-function logout(){ currentUser=null; el("dashboard").style.display="none"; document.body.style.overflow="auto"; logPublic("Sesión cerrada."); serviceToast("Sesión cerrada."); }
-function populateDashboard(){
-  el("user-hid").textContent = currentUser.hid; el("user-name").textContent = currentUser.name; el("user-role").textContent = currentUser.role; el("user-credits").textContent = currentUser.credits.toLocaleString();
-  el("identity-hid").textContent = currentUser.hid; el("identity-name").textContent = currentUser.name; el("identity-email").textContent = currentUser.email; el("identity-role").textContent = currentUser.role; el("identity-credits").textContent = currentUser.credits.toLocaleString(); el("identity-issue").textContent = currentUser.issuedAt ? new Date(currentUser.issuedAt).toLocaleString() : "—";
-  const health = Math.min(18 + DB.census, 100); el("health-bar").style.width = health + "%"; el("health-text").textContent = `${health}%`; el("system-mode").textContent = "NODO PRIVADO"; refreshCreditUI();
-}
-function showTab(tab){ ["overview","docs","messages","identity","requests","updates","credits"].forEach(t=>{ el("panel-"+t).classList.toggle("active", t===tab); const btn=document.querySelector(`.tab[data-tab="${t}"]`); if(btn) btn.classList.toggle("active", t===tab); }); if(tab==='credits') renderChallenges(); }
-function sendMessage(){ if(!currentUser) return; const text=el("msg").value.trim(); if(!text) return; DB.messages.push({ from:currentUser.hid, name:currentUser.name, text, time:nowTime() }); saveDB(); el("msg").value=""; loadMessages(); logPrivate("Mensaje enviado."); claimMissionIfNeeded('send-msg'); }
-function loadMessages(){ const box=el("messages"); if(DB.messages.length===0){ box.innerHTML = `<div class="feed-item">No hay mensajes.</div>`; return; } box.innerHTML = DB.messages.map(m => `<div class="feed-item"><div class="card-tag">${escapeHtml(m.time)} • ${escapeHtml(m.name || m.from)}</div><div style="margin-top:8px;">${escapeHtml(m.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(m.from)}</div></div>`).join(""); }
-function logPublic(message){ const feed=el("public-feed"); const item=document.createElement("div"); item.className="feed-item"; item.innerHTML=`<div class="card-tag">PÚBLICO</div><div style="margin-top:6px;">${escapeHtml(message)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div>`; feed.prepend(item); }
-function logPrivate(message){ const log=el("log"); log.innerHTML += `> [${nowTime()}] ${escapeHtml(message)}<br>`; log.scrollTop = log.scrollHeight; }
-function serviceToast(message){ const feed=el("service-feed"); const item=document.createElement("div"); item.className="feed-item"; item.innerHTML=`<div class="card-tag">NOTIFICACIÓN</div><div style="margin-top:6px;">${escapeHtml(message)}</div><div class="small" style="margin-top:8px;">${nowTime()}</div>`; feed.prepend(item); }
-function submitRequest(){ const type=el("request-type").value; const day=el("request-day").value || "Sin día preferido"; const text=el("request-text").value.trim(); if(!text){ serviceToast("Escribe algo primero."); return; } DB.requests.unshift({ type, day, text, time:nowTime(), from:currentUser?currentUser.name:"Usuario público" }); saveDB(); renderRequests(); el("request-text").value=""; serviceToast("Solicitud enviada."); claimMissionIfNeeded('submit-req'); }
-function submitDashboardRequest(){ const type=el("dash-request-type").value; const day=el("dash-request-day").value || "Sin día preferido"; const text=el("dash-request-text").value.trim(); if(!text){ logPrivate("Solicitud rechazada: falta descripción."); return; } DB.requests.unshift({ type, day, text, time:nowTime(), from:currentUser?currentUser.name:"Ciudadano" }); saveDB(); renderRequests(); el("dash-request-text").value=""; logPrivate("Solicitud enviada."); serviceToast("Solicitud enviada."); claimMissionIfNeeded('submit-req'); }
-function prefillRequest(type){ el("request-type").value=type; scrollToSection('section-requests'); }
-function renderRequests(){ el("request-count").textContent = DB.requests.length; el("request-count-dash").textContent = DB.requests.length; const list = DB.requests.length===0 ? `<div class="request-item">No hay solicitudes.</div>` : DB.requests.map(r=>`<div class="request-item"><div class="card-tag">${escapeHtml(r.type)} • ${escapeHtml(r.time)}</div><div style="margin-top:8px;">${escapeHtml(r.text)}</div><div class="small" style="margin-top:8px;">${escapeHtml(r.day)} • ${escapeHtml(r.from)}</div></div>`).join(""); el("request-list").innerHTML = list; el("dashboard-request-list").innerHTML = list; }
-function saveSessionSnapshot(){ const snapshot={ currentUser, census:DB.census, credits:currentUser?currentUser.credits:0, savedDocs:DB.savedDocs, messages:DB.messages.slice(-25), requests:DB.requests.slice(-25), updates:DB.updates.slice(0,10), at:new Date().toISOString() }; const blob=new Blob([JSON.stringify(snapshot,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="heidenbillg-session-snapshot.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); logPrivate("Snapshot exportado."); }
-function exportProfile(){ if(!currentUser) return; const profile={ hid:currentUser.hid, name:currentUser.name, email:currentUser.email, role:currentUser.role, credits:currentUser.credits, issuedAt:currentUser.issuedAt, census:DB.census, savedDocs:DB.savedDocs, requests:DB.requests.length }; const blob=new Blob([JSON.stringify(profile,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="heidenbillg-perfil.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); logPrivate("Perfil exportado."); claimMissionIfNeeded('export-profile'); }
-async function copyHID(){ if(!currentUser) return; try{ await navigator.clipboard.writeText(currentUser.hid); logPrivate("HID copiado."); }catch{ alert("Portapapeles no disponible."); } }
-function copyLaunchStatus(){ const text = `HEIDENBILLG OS // HSA-13 WAVERIDER // lanzamiento: ${el("countdown").textContent}`; navigator.clipboard?.writeText(text).catch(()=>{}); logPublic("Estado de lanzamiento copiado."); }
-function lockSession(){ logout(); alert("Sesión bloqueada."); }
-function jumpToDashboard(){ if(currentUser){ el("dashboard").style.display="block"; document.body.style.overflow="hidden"; } else { openAuth(); } }
-function maybeGrantDailyOnOpen(){
-  const today = todayKey();
-  if(DB.daily.lastGrant !== today){
-    DB.daily.lastGrant = today;
-    DB.daily.claimedToday = false;
-    DB.daily.streak = (DB.daily.streak || 0) + 1;
-    if(currentUser){ currentUser.credits += 100; DB.credits = currentUser.credits; }
-    saveDB();
-    if(currentUser){ logPrivate("Crédito diario automático: +100"); }
+  function openDashboard(){
+    closeModals();
+    revealDashboard();
   }
-  refreshCreditUI();
-}
-function claimDailyCredits(){
-  if(!currentUser) return;
-  const today = todayKey();
-  if(DB.daily.lastGrant === today && DB.daily.claimedToday){ serviceToast("Ya reclamado hoy."); return; }
-  DB.daily.lastGrant = today;
-  DB.daily.claimedToday = true;
-  DB.daily.streak = (DB.daily.streak || 0) + 1;
-  currentUser.credits += 100;
-  DB.credits = currentUser.credits;
-  saveDB();
-  refreshCreditUI();
-  populateDashboard();
-  serviceToast("+100 créditos");
-  logPrivate("Crédito diario reclamado.");
-}
-function grantBonus(amount, reason){ if(!currentUser) return; currentUser.credits += amount; DB.credits = currentUser.credits; saveDB(); refreshCreditUI(); populateDashboard(); logPrivate(`+${amount} créditos: ${reason}`); serviceToast(`+${amount} créditos`); }
-function claimMissionIfNeeded(id){ if(!currentUser) return; if(DB.missionProgress[id]) return; }
-function claimMission(id, reward, labelEncoded){ if(!currentUser) return; if(DB.missionProgress[id]){ serviceToast('Misión ya hecha.'); return; } DB.missionProgress[id] = true; currentUser.credits += reward; DB.credits = currentUser.credits; saveDB(); renderChallenges(); refreshCreditUI(); populateDashboard(); const label = decodeURIComponent(labelEncoded); logPrivate(`Misión completada: ${label} (+${reward})`); serviceToast(`+${reward} créditos`); }
-function renderAllBase(){
-  el("landing-census").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
-  el("census-num").textContent = DB.census.toLocaleString();
-  el("census-stat").textContent = `${DB.census} ciudadano${DB.census===1?"":"s"}`;
-  el("credit-stat").textContent = `${getTotalCredits()} créditos`;
-  el("census-bar").style.width = `${Math.min((DB.census / 100000) * 100, 100)}%`;
-  el("public-enrollment").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
-  el("enroll-state").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
-  el("reg-lock-badge").textContent = DB.registrationLocked ? "CERRADA" : "ABIERTA";
-  el("register-btn").disabled = DB.registrationLocked;
-  el("register-btn").style.opacity = DB.registrationLocked ? "0.45" : "1";
-  el("register-btn").textContent = DB.registrationLocked ? "ALTA CERRADA" : "GENERAR HID";
-  updateScrollStat();
-}
-function renderCreditUI(){
-  refreshCreditUI();
-  el("daily-btn").disabled = DB.daily.claimedToday;
-}
-function filterDocs(){
-  DB.ui.docFilter = el("docs-search").value;
-  renderDocs();
-}
-function clearDocFilter(){
-  DB.ui.docFilter = "";
-  el("docs-search").value = "";
-  renderDocs();
-}
-function filterUpdates(){
-  DB.ui.updateFilter = el("updates-search").value;
-  renderNotices();
-  renderUpdates();
-}
-function clearUpdateFilter(){
-  DB.ui.updateFilter = "";
-  el("updates-search").value = "";
-  renderNotices();
-  renderUpdates();
-}
-function claimMissionIfNeededAuto(){ }
 
-renderDocs();
-renderSavedDocs();
-renderEverythingBase();
-renderServiceFeed();
-renderNotices();
-renderHelpFeed();
-renderRequests();
-renderUpdates();
-renderChallenges();
-loadMessages();
-updateEnrollmentUI();
-showTab("overview");
-
-// Mejoras automáticas y misiones
-const originalOpenDocViewer = openDocViewer;
-openDocViewer = function(id){
-  const doc = getDocById(id);
-  if(!doc) return;
-  currentDocId = id;
-  el("doc-title").textContent = doc.title;
-  el("doc-frame").src = doc.file;
-  el("doc-saved-badge").textContent = DB.savedDocs.includes(id)?"GUARDADO":"NO GUARDADO";
-  el("doc-modal").classList.add("open");
-  document.body.style.overflow="hidden";
-  if(currentUser) claimMissionIfNeeded('read-doc');
-};
-
-// Auto-claim seguro: una vez al día, una sola vez; sin repetición manual.
-setInterval(() => {
-  if(!bootComplete) return;
-  const today = todayKey();
-  if(DB.daily.lastGrant !== today && currentUser){
-    DB.daily.lastGrant = today;
-    DB.daily.claimedToday = false;
-    DB.daily.streak = (DB.daily.streak || 0) + 1;
-    currentUser.credits += 100;
-    DB.credits = currentUser.credits;
-    saveDB();
-    refreshCreditUI();
-    populateDashboard();
-    logPrivate("Crédito diario automático aplicado.");
+  function claimDaily(){
+    if(!current) return alert("Primero entra.");
+    const today = new Date().toDateString();
+    if(current.lastClaim === today) return alert("Ya reclamado hoy.");
+    current.credits += 100;
+    current.lastClaim = today;
+    save();
+    updateUserPanel();
+    updateUI();
   }
-  const secsToMidnight = (() => { const now = new Date(); const end = new Date(); end.setHours(24,0,0,0); return Math.max(0, Math.floor((end - now)/1000)); })();
-  const hh = String(Math.floor(secsToMidnight/3600)).padStart(2,'0');
-  const mm = String(Math.floor((secsToMidnight%3600)/60)).padStart(2,'0');
-  el("next-daily").textContent = `${hh}:${mm}`;
-  refreshCreditUI();
-  renderNotices();
-  renderUpdates();
-}, 15000);
 
-// Misiones automáticas por acciones
-window.addEventListener('click', () => { if(currentUser) claimMissionIfNeeded('open-help'); });
+  function sendMessage(){
+    if(!current) return alert("Primero entra.");
+    const text = msgInput.value.trim();
+    if(!text) return;
+    APP.messages.push({ from: current.name, text, time: new Date().toLocaleTimeString() });
+    msgInput.value = "";
+    save();
+    renderMessages();
+  }
 
-// Búsqueda en vivo
-el("docs-search").addEventListener("input", filterDocs);
-el("updates-search").addEventListener("input", filterUpdates);
+  function renderMessages(){
+    msgLog.innerHTML = APP.messages.slice(-12).map(m => `
+      <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);">
+        <div style="color:#fff">${m.from}</div>
+        <div style="color:var(--dim)">${m.text}</div>
+      </div>
+    `).join("");
+  }
 
-document.addEventListener("keydown", (e) => {
-  if(e.key === "Escape"){ closeAuth(); closeDocViewer(); }
-  if((e.key || '').toLowerCase() === 'd' && currentUser && !DB.daily.claimedToday){ claimDailyCredits(); }
-});
-</script></body>
+  function updateUserPanel(){
+    if(!current) return;
+    userHid.textContent = current.hid;
+    userPass.textContent = current.pass;
+    userCredits.textContent = current.credits;
+  }
+
+  function updateUI(){
+    census.textContent = APP.census;
+    censusChip.textContent = `${APP.census} ciudadanos`;
+    creditChip.textContent = current ? `${current.credits} créditos` : "0 créditos";
+    fill.style.width = Math.min((APP.census / 100000) * 100, 100) + "%";
+    renderMessages();
+    if(current) updateUserPanel();
+  }
+
+  function exportProfile(){
+    if(!current) return alert("Primero entra.");
+    const blob = new Blob([JSON.stringify(current, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "heidenbillg-profile.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function logout(){
+    current = null;
+    location.reload();
+  }
+
+  function getSecondsToMidnight(){
+    const now = new Date();
+    const end = new Date();
+    end.setHours(24,0,0,0);
+    return Math.max(0, Math.floor((end - now)/1000));
+  }
+
+  function updateCountdown(){
+    const s = getSecondsToMidnight();
+    const h = String(Math.floor(s/3600)).padStart(2,"0");
+    const m = String(Math.floor((s%3600)/60)).padStart(2,"0");
+    countdown.textContent = `${h}:${m}`;
+  }
+
+  function updateReveal(){
+    document.querySelectorAll(".hidden-reveal").forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if(top < window.innerHeight - 90) el.classList.add("show");
+    });
+  }
+
+  function updateUIEverywhere(){
+    updateCountdown();
+    updateReveal();
+    updateUI();
+  }
+
+  updateUIEverywhere();
+  setInterval(updateCountdown, 1000);
+  setInterval(updateUIEverywhere, 2500);
+  window.addEventListener("scroll", updateReveal);
+  window.addEventListener("click", updateReveal);
+
+  function handleScrollChip(){
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 0;
+    scroll.textContent = `${pct}%`;
+  }
+  window.addEventListener("scroll", handleScrollChip);
+
+  handleScrollChip();
+</script>
+</body>
 </html>
